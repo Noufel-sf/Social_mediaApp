@@ -1,13 +1,8 @@
 const token = localStorage.getItem('accessToken');
-const API_URL1 = `${process.env.API_URL}/api/auth`;
-const API_URL2 = `${process.env.API_URL}/api/messages`;
+const API_URL1 = "http://localhost:8000/api/auth";
+const API_URL2 = "http://localhost:8000/api/messages";
 
-import {config} from 'dotenv';
-
-
-config({path: '.env.development'});
-
-const socket = io(`${process.env.API_URL}`, {
+const socket = io('http://localhost:8000', {
     auth: {
         token: token,
     }
@@ -20,6 +15,7 @@ socket.on('connect', () => {
 socket.on('connect_error', (error) => {
     console.log('Connection error: ', error.message)
 });
+
 
 
 function scrollToBottom() {
@@ -54,6 +50,8 @@ async function showFriends() {
         // console.log(friends);
 
         const container = document.getElementById("friends");
+
+        container.innerHTML = '';
 
         friends.forEach((friend) => {
             const div = document.createElement("div");
@@ -100,6 +98,7 @@ async function showFriends() {
 
                 const messages = Array.isArray(data) ? data : data.message || [];
 
+                messageContainer.innerHTML = '';
 
                 messages.forEach((message) => {
                     const messageDiv = document.createElement('div');

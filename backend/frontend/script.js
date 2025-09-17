@@ -1,9 +1,4 @@
-import {config} from 'dotenv';
-
-
-config({path: '.env.development'});
-
-const API_URL = `${process.env.API_URL}/api/auth`;
+const API_URL = "http://localhost:8000/api/auth";
 
 
 // Handle Signup
