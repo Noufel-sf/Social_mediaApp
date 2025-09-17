@@ -23,7 +23,7 @@ socket.on('connect_error', (error) => {
 
 document.getElementById("logoutButton").addEventListener("click", async () => {
     try {
-        await fetch(`${process.env.API_URL}/api/auth/logout`, {
+        await fetch("http://localhost:8000/api/auth/logout", {
             method: "POST",
             credentials: "include",
         });
@@ -68,8 +68,6 @@ async function showFriends() {
         // console.log(friends);
 
         const container = document.getElementById("friends");
-
-        container.innerHTML = '';
 
         friends.forEach((friend) => {
             const div = document.createElement("div");
@@ -116,7 +114,6 @@ async function showFriends() {
 
                 const messages = Array.isArray(data) ? data : data.message || [];
 
-                messageContainer.innerHTML = '';
 
                 messages.forEach((message) => {
                     const messageDiv = document.createElement('div');

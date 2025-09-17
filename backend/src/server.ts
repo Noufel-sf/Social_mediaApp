@@ -27,6 +27,9 @@ io.on('connection', (socket) => {
 
     chatSocket(io, socket);
 
+    socket.on('disconnect', () => {
+        console.log('User disconnected: ', socket.id);
+    })
 });
 
 
