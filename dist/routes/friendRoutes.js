@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const isAuth_1 = require("../middlewares/isAuth");
+const requestController_1 = require("../controllers/requestController");
+const router = (0, express_1.Router)();
+router.post('/request/:id', isAuth_1.isAuth, requestController_1.SendRequest);
+router.get('/request/all', isAuth_1.isAuth, requestController_1.ShowFriendRequests);
+router.patch('/request/:id/accept', isAuth_1.isAuth, requestController_1.AcceptRequest);
+router.patch('/request/:id/reject', isAuth_1.isAuth, requestController_1.RejectRequest);
+exports.default = router;

@@ -1,0 +1,120 @@
+/* Overall chat layout */
+.chat-layout {
+  display: flex;
+  justify-content: center;   /* center the whole thing */
+  gap: 20px;                 /* spacing between friends and chat */
+  max-width: 1000px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+/* Friends list */
+.friends-container {
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+  height: 500px;             /* same height as chat */
+}
+
+.friends-container h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+#friends {
+  flex: 1;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px;
+  background: white;
+}
+
+#friends div {
+  padding: 6px 8px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  background: #e5e5ea;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#friends div:hover {
+  background: #d6d6db;
+}
+
+/* Chat container */
+.messages-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  padding: 10px;
+  height: 500px;             /* fixed height */
+}
+
+/* Messages area */
+.messages {
+  flex: 1;
+  overflow-y: auto;          /* scroll here */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Message bubbles */
+.message {
+  padding: 6px 10px;
+  border-radius: 12px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.message.sent {
+  background: #007bff;
+  color: white;
+  align-self: flex-end;
+}
+
+.message.received {
+  background: #e5e5ea;
+  align-self: flex-start;
+}
+
+/* Input area */
+.input-container {
+  display: flex;
+  gap: 8px;
+}
+
+.input-container input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.input-container button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.input-container button:hover {
+  background: #0056b3;
+}
