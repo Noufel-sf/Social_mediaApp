@@ -26,7 +26,8 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
             const message = await Message.create({
                 senderId: userId,
                 recieverId: recieverId,
-                text: text
+                text: text,
+                delivered: false
             });
 
             const messageWithInfo = await Message.findOne({
@@ -37,11 +38,13 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
 
             if(recieverSockets) {
                 recieverSockets.forEach((sockId) => {
-                    io.to(sockId).emit('private_message', messageWithInfo)
+                    io.to(sockId).emit('private_message', messageWithInfo);
                 });
+
+                message.delivered = true;
             };
 
-            message.delivered = true
+            
 
             await message.save();
 
@@ -54,7 +57,6 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
         }
     });
 
-    socket.on('disconnect', () => {
         socket.on("disconnect", () => {
             
             const sockets = onlineUsers.get(userId);
@@ -67,14 +69,9 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
                 }
             }
 
-            console.log(`User ${userId} disconnected from socket ${socket.id}`);
+            console.log(`User ${socket.user?.firstName} disconnected from socket ${socket.id}`);
 
         });
-    });
-
-
-
-
 
 }
 

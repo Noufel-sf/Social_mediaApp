@@ -28,6 +28,14 @@ export const getMessages = async (req: AuthenticatedRequest, res: Response) => {
             ]
         }).populate("senderId recieverId", "firstName lastName");
 
+        messages.forEach(async (message) => {
+            
+                message.delivered = true;
+                await message.save();
+        });
+
+        
+
 
         res.status(200).json(messages);
 
