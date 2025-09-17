@@ -6,7 +6,7 @@ if (!token) {
 
 document.getElementById("logoutButton").addEventListener("click", async () => {
     try {
-        await fetch("http://localhost:8000/api/auth/logout", {
+        await fetch(`${process.env.API_URL}/api/auth/logout`, {
             method: "POST",
             credentials: "include",
         });
@@ -21,7 +21,7 @@ document.getElementById("logoutButton").addEventListener("click", async () => {
 async function showRequests() {
     try {
         const token = localStorage.getItem("accessToken");
-        const API_URL1 = "http://localhost:8000/api/friends";
+        const API_URL1 = `${process.env.API_URL}/api/friends`;
 
         const res = await fetch(`${API_URL1}/request/all/`, {
             method: "GET",
@@ -63,7 +63,7 @@ async function showRequests() {
             acceptBtn.addEventListener("click", async () => {
                 console.log(request._id);
                 const res = await fetch(
-                    `http://localhost:8000/api/friends/request/${request._id}/accept`,
+                    `${process.env.API_URL}/api/friends/request/${request._id}/accept`,
                     {
                         method: "PUT",
                         headers: {
@@ -84,7 +84,7 @@ async function showRequests() {
             rejectBtn.addEventListener("click", async () => {
                 console.log(request._id);
                 const res = await fetch(
-                    `http://localhost:8000/api/friends/request/${request._id}/reject`,
+                    `${process.env.API_URL}/api/friends/request/${request._id}/reject`,
                     {
                         method: "PUT",
                         headers: {
@@ -110,7 +110,7 @@ async function showRequests() {
 async function getUsers() {
     try {
         const token = localStorage.getItem("accessToken");
-        const API_URL = "http://localhost:8000/api/auth";
+        const API_URL = `${process.env.API_URL}/api/auth`;
 
         const res = await fetch(`${API_URL}/recommended`, {
             method: "GET",
@@ -144,7 +144,7 @@ async function getUsers() {
 
             sendBtn.addEventListener("click", async () => {
                 const res = await fetch(
-                    `http://localhost:8000/api/friends/request/${user._id}`,
+                    `${process.env.API_URL}/api/friends/request/${user._id}`,
                     {
                         method: "POST",
                         headers: {

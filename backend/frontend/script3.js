@@ -1,8 +1,8 @@
 const token = localStorage.getItem('accessToken');
-const API_URL1 = "http://localhost:8000/api/auth";
-const API_URL2 = "http://localhost:8000/api/messages";
+const API_URL1 = `${process.env.API_URL}/api/auth`;
+const API_URL2 = `${process.env.API_URL}/api/messages`;
 
-const socket = io('http://localhost:8000', {
+const socket = io(`${process.env.API_URL}`, {
     auth: {
         token: token,
     }
@@ -18,7 +18,7 @@ socket.on('connect_error', (error) => {
 
 document.getElementById("logoutButton").addEventListener("click", async () => {
     try {
-        await fetch("http://localhost:8000/api/auth/logout", {
+        await fetch(`${process.env.API_URL}/api/auth/logout`, {
             method: "POST",
             credentials: "include",
         });
