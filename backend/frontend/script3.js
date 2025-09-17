@@ -21,20 +21,6 @@ socket.on('connect_error', (error) => {
     console.log('Connection error: ', error.message)
 });
 
-document.getElementById("logoutButton").addEventListener("click", async () => {
-    try {
-        await fetch("http://localhost:8000/api/auth/logout", {
-            method: "POST",
-            credentials: "include",
-        });
-    } catch (error) {
-        console.error("logout error", error);
-    } finally {
-        localStorage.removeItem("accessToken");
-        window.location.href = "index.html";
-    }
-});
-
 
 function scrollToBottom() {
   const messagesDiv = document.getElementById("messages");
