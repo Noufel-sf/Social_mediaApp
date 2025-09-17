@@ -2,6 +2,11 @@ const token = localStorage.getItem('accessToken');
 const API_URL1 = `${process.env.API_URL}/api/auth`;
 const API_URL2 = `${process.env.API_URL}/api/messages`;
 
+import {config} from 'dotenv';
+
+
+config({path: '.env.development'});
+
 const socket = io(`${process.env.API_URL}`, {
     auth: {
         token: token,
