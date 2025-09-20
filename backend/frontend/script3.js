@@ -158,8 +158,15 @@ async function showFriends() {
                 textInput.type = "text";
                 sendBtn.textContent = 'send';
 
-                const inputContainer = document.createElement('div');
-                inputContainer.classList.add("input-container");
+                textInput.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            sendBtn.click();
+                        }
+                    });
+
+
+                const inputContainer = document.getElementById('input-container');
 
                 const res = await fetch(`${API_URL2}/${friend._id}`, {
                     method: "GET",
@@ -218,6 +225,8 @@ async function showFriends() {
                     const loggedInUser1 = await loggedInUser.json();
 
                     const text = textInput.value.trim();
+                    if(!text) return;
+
                     const friendId = friend._id;
                     
                     socket.emit('private_message', {recieverId: friendId, text});
@@ -229,8 +238,11 @@ async function showFriends() {
 
                     messageContainer.appendChild(messageDiv);
 
+                    textInput.value = '';
+
                     scrollToBottom();
 
+                    
                 });
 
                 if(!textInputThing) {

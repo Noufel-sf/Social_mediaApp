@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chat App</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
     
     <h2>Show friends</h2>
-        <div class="friends-container">
-            <div class="friends" id="friends"></div>
-            <button onclick="showFriends()">show friends</button>
-        </div> <br><br><br>
 
-        <div class="messages-container" id="messages-container">
-            <div class="messages" id="messages"></div>
-            <!-- <input type="text" id="textInput"> <button id="sendBtn">send</button> -->
+    <!-- Chat Layout Wrapper -->
+    <div class="chat-layout">
+
+        <!-- Friends list -->
+        <div class="friends-container">
+            <h3>Friends</h3>
+            <div class="friends" id="friends"></div>
+            <button onclick="showFriends()">Show friends</button>
         </div>
 
+        <!-- Messages Section -->
+        <div class="messages-container" id="messages-container">
+            <div class="messages" id="messages"></div>
+            <div class="input-container" id="input-container">
+            </div>
+        </div>
+
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="script3.js"></script>
     
-        
 </body>
 </html>
