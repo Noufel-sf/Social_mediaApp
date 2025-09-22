@@ -8,6 +8,54 @@ const socket = io('http://localhost:8000', {
     }
 });
 
+async function checkAuth() {
+    const accessToken = localStorage.getItem("accessToken");
+
+    // If no access token → go back to login
+    if (!accessToken) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    try {
+        // Try to call the "me" endpoint with access token
+        const res = await fetch("http://localhost:8000/api/auth/me", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+            credentials: "include",
+        });
+
+        if (res.status === 401) {
+            // Token expired → try refreshing
+            const refreshRes = await fetch("http://localhost:8000/api/auth/refresh", {
+                method: "POST",
+                credentials: "include", // sends cookies
+            });
+
+            if (!refreshRes.ok) {
+                // Refresh also failed → logout
+                localStorage.removeItem("accessToken");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const data = await refreshRes.json();
+            localStorage.setItem("accessToken", data.accessToken);
+        }
+
+    } catch (err) {
+        console.error("Auth check failed:", err);
+        localStorage.removeItem("accessToken");
+        window.location.href = "index.html";
+    }
+}
+
+
+checkAuth();
+
 socket.on('connect', () => {
     console.log('Connected to server with socket: ', socket.id);
 });
@@ -17,6 +65,7 @@ socket.on('connect_error', (error) => {
 });
 
 
+
 function scrollToBottom() {
   const messagesDiv = document.getElementById("messages");
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -24,7 +73,31 @@ function scrollToBottom() {
 
 let textInputThing = false;
 
+socket.on('user_status', ({userId, status}) => {
+            const friendDiv = document.getElementById(`status-${userId}`);
 
+            if(status == 'online'){
+                friendDiv.classList.add('online');
+                friendDiv.classList.remove('offline');
+                friendDiv.textContent='(online)'
+            }else{
+                friendDiv.classList.remove('online');
+                friendDiv.classList.add('offline');
+                friendDiv.textContent='(offline)';
+            }
+});
+
+socket.on('online_users', (usersIds) => {
+    usersIds.forEach((userId) => {
+        const friendDiv = document.getElementById(`status-${userId}`);
+
+        if(friendDiv) {
+            friendDiv.classList.add('online');
+            friendDiv.classList.remove('offline');
+            friendDiv.textContent = '(online)';
+        }
+    })
+});
 
 async function showFriends() {
     try {
@@ -50,18 +123,27 @@ async function showFriends() {
 
         const container = document.getElementById("friends");
 
+        container.innerHTML = '';
+
         friends.forEach((friend) => {
             const div = document.createElement("div");
+            const statusDiv = document.createElement('div');
             const chatBtn = document.createElement("button");
             
-
+            div.id = `friend-${friend._id}`;
             div.classList.add("friend");
+            
+            statusDiv.id = `status-${friend._id}`;
+            statusDiv.classList.add('offline');
+            statusDiv.textContent = '(offline)';
 
             div.textContent = friend.firstName + " " + friend.lastName;
             chatBtn.textContent = 'Chat';
 
             container.appendChild(div);
+            container.appendChild(statusDiv);
             container.appendChild(chatBtn);
+            
 
             
             chatBtn.addEventListener('click', async () => {
@@ -76,8 +158,15 @@ async function showFriends() {
                 textInput.type = "text";
                 sendBtn.textContent = 'send';
 
-                const inputContainer = document.createElement('div');
-                inputContainer.classList.add("input-container");
+                textInput.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            sendBtn.click();
+                        }
+                    });
+
+
+                const inputContainer = document.getElementById('input-container');
 
                 const res = await fetch(`${API_URL2}/${friend._id}`, {
                     method: "GET",
@@ -95,6 +184,7 @@ async function showFriends() {
 
                 const messages = Array.isArray(data) ? data : data.message || [];
 
+                messageContainer.innerHTML = '';
 
                 messages.forEach((message) => {
                     const messageDiv = document.createElement('div');
@@ -135,6 +225,8 @@ async function showFriends() {
                     const loggedInUser1 = await loggedInUser.json();
 
                     const text = textInput.value.trim();
+                    if(!text) return;
+
                     const friendId = friend._id;
                     
                     socket.emit('private_message', {recieverId: friendId, text});
@@ -146,8 +238,11 @@ async function showFriends() {
 
                     messageContainer.appendChild(messageDiv);
 
+                    textInput.value = '';
+
                     scrollToBottom();
 
+                    
                 });
 
                 if(!textInputThing) {
@@ -163,8 +258,13 @@ async function showFriends() {
             });
 
         });
+
+        socket.emit('request_online_users');
+
+        
     } catch (error) {
         console.error("Error loading friends:", error);
     }
 };
+
 

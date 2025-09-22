@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="style4.css">
+</head>
+<body>
+    <div class="home-container">
         <h1>Welcome</h1>
-        <button id="logoutButton">Logout</button>
+        <button id="logoutButton" class="logout-btn">Logout</button>
 
-        <h2>Friend Requests:</h2>
-        <div class="friend-request-container">
+        <h2>Friend Requests</h2>
+        <div class="card">
             <div class="requests" id="requests"></div>
-            <button onclick="showRequests()">show requests</button>
+            <button onclick="showRequests()">Show Requests</button>
         </div>
 
-        <h2>Recommended Users:</h2>
-        <div class="recommended-users-container">
+        <h2>Recommended Users</h2>
+        <div class="card">
             <div class="users" id="users"></div>
-            <button onclick="getUsers()">show recommended users</button>
+            <button onclick="getUsers()">Show Recommended Users</button>
         </div>
-
-        
-
 
         <h2>Messages</h2>
         <a href="messages.html">
             <button>Messenger</button>
         </a>
-        
-        <script src="script2.js"></script>
-        
-    </body>
+    </div>
+
+    <script src="script2.js"></script>
+</body>
 </html>

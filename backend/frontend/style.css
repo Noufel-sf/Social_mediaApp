@@ -118,3 +118,10 @@
 .input-container button:hover {
   background: #0056b3;
 }
+
+.online {
+  color: green;
+}
+.offline {
+  color: gray;
+}

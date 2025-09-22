@@ -1,8 +1,51 @@
-const token = localStorage.getItem("accessToken");
+async function checkAuth() {
+    const accessToken = localStorage.getItem("accessToken");
 
-if (!token) {
-    window.location.href = "index.html";
+    // If no access token → go back to login
+    if (!accessToken) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    try {
+        // Try to call the "me" endpoint with access token
+        const res = await fetch("http://localhost:8000/api/auth/me", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+            credentials: "include",
+        });
+
+        if (res.status === 401) {
+            // Token expired → try refreshing
+            const refreshRes = await fetch("http://localhost:8000/api/auth/refresh", {
+                method: "POST",
+                credentials: "include", // sends cookies
+            });
+
+            if (!refreshRes.ok) {
+                // Refresh also failed → logout
+                localStorage.removeItem("accessToken");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const data = await refreshRes.json();
+            localStorage.setItem("accessToken", data.accessToken);
+        }
+
+    } catch (err) {
+        console.error("Auth check failed:", err);
+        localStorage.removeItem("accessToken");
+        window.location.href = "index.html";
+    }
 }
+
+
+checkAuth();
+
 
 document.getElementById("logoutButton").addEventListener("click", async () => {
     try {
@@ -131,16 +174,21 @@ async function getUsers() {
         const container = document.getElementById("users");
 
         users.forEach((user) => {
+            const userContainer = document.createElement('div');
             const div = document.createElement("div");
             const sendBtn = document.createElement("button");
 
             div.classList.add("user");
 
+            userContainer.id=`user-${user._id}`;
+
             div.textContent = user.firstName + " " + user.lastName;
             sendBtn.textContent = "send";
 
-            container.appendChild(div);
-            container.appendChild(sendBtn);
+            userContainer.appendChild(div);
+            userContainer.appendChild(sendBtn);
+
+            container.appendChild(userContainer);
 
             sendBtn.addEventListener("click", async () => {
                 const res = await fetch(
@@ -160,6 +208,10 @@ async function getUsers() {
                 }
 
                 if (res.ok) alert("friend request sent succefully");
+
+                const userC = document.getElementById(`user-${user._id}`);
+                userC.innerHTML = '';
+
             });
         });
     } catch (error) {}

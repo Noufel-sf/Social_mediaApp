@@ -14,7 +14,15 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
 
     if(!onlineUsers.has(userId)){
         onlineUsers.set(userId, new Set());
-    }
+    };
+
+    
+
+    socket.on('request_online_users', () => {
+        socket.emit('online_users', Array.from(onlineUsers.keys()));
+    });
+
+    socket.broadcast.emit("user_status", {userId: userId, status: 'online'});
 
     onlineUsers.get(userId)?.add(socket.id);
 
@@ -54,25 +62,28 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
         }
     });
 
-    socket.on('disconnect', () => {
         socket.on("disconnect", () => {
             
             const sockets = onlineUsers.get(userId);
+
 
             if (sockets) {
                 sockets.delete(socket.id);
 
                 if (sockets.size === 0) {
                     onlineUsers.delete(userId);
+
+                    io.emit('user_status', {userId, status: 'offline'});
+
+                    console.log(`User ${user.firstName} ${user.lastName} is offline`);
                 }
             }
 
-            console.log(`User ${userId} disconnected from socket ${socket.id}`);
+            console.log(`User ${user.firstName} ${user.lastName} has disconnected with socket ${socket.id}`);
+
+                
 
         });
-    });
-
-
 
 
 
