@@ -1,0 +1,19 @@
+@import "tailwindcss";
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #3b82f6;
+  --background-color: #f3f4f6;
+  --text-color: #111827;
+  --dark-bg: #000f;
+  
+  /* heading sizes */
+}
+
+
+*{
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  box-sizing: border-box;
+}
