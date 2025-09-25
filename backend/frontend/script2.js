@@ -95,7 +95,7 @@ async function showRequests() {
             div.classList.add("request");
 
             div.textContent =
-                request.senderId.firstName + " " + request.senderId.lastName;
+                request.senderId.username
             acceptBtn.textContent = "accept";
             rejectBtn.textContent = "reject";
 
@@ -182,7 +182,7 @@ async function getUsers() {
 
             userContainer.id=`user-${user._id}`;
 
-            div.textContent = user.firstName + " " + user.lastName;
+            div.textContent = user.username
             sendBtn.textContent = "send";
 
             userContainer.appendChild(div);

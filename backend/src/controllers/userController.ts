@@ -10,31 +10,31 @@ import { FriendRequest } from "../models/FriendRequest";
 import { AuthenticatedRequest } from "../middlewares/isAuth";
 
 export const Register = async (req: Request<{}, {}, UserI>, res: Response) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { username, email, nickname, password } = req.body;
 
     try {
-        if (!firstName || !lastName || !email || !password) {
+        if (!username || !email || !password) {
             return res.status(400).json({ message: "all fields are required" });
         }
 
-        const userExists = await User.findOne({ email });
+        const userExists = await User.findOne({ username });
 
         if (userExists) {
             return res.status(400).json({ message: "User already exists" });
         }
 
         const user = await User.create({
-            firstName,
-            lastName,
+            username,
             email,
+            nickname,
             password,
         });
 
         return res.status(201).json({
             _id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            username: user.username,
             email: user.email,
+            nickname: user.nickname,
             token: generateAccessToken(user._id.toString()),
         });
     } catch (error) {
@@ -43,13 +43,13 @@ export const Register = async (req: Request<{}, {}, UserI>, res: Response) => {
 };
 
 export const Login = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
-        if (!email || !password)
+        if (!username || !password)
             return res.status(400).json({ message: "all fields are required" });
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ username });
 
         if (user && (await bcrypt.compare(password, user.password))) {
             const accessToken = generateAccessToken(user._id.toString());
@@ -65,7 +65,7 @@ export const Login = async (req: Request, res: Response) => {
 
             res.status(200).json({
                 _id: user._id,
-                email: user.email,
+                username: user.username,
                 token: accessToken,
             });
         } else {
@@ -154,7 +154,7 @@ export const getFriends = async (req: AuthenticatedRequest, res: Response) => {
     if(!loggedInUser) return res.status(400).json({ message: 'No user logged in' });
 
     const user = await User.findById(loggedInUser._id)
-      .populate("friends", "firstName lastName email"); 
+      .populate("friends", "username email"); 
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

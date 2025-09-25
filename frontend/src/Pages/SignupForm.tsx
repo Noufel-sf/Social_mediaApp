@@ -44,21 +44,7 @@ export default function SignupForm() {
           className="space-y-3 flex flex-col gap-2"
           onSubmit={handleSubmit(onSubmit)}
         >
-          {/* Name */}
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-white">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              {...register("name")}
-              className="mt-1 block w-full px-5 py-3 text-white rounded-md outline-none bg-gray-600"
-            />
-            {errors.name && (
-              <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>
-            )}
-          </div>
+          
 
           {/* Username */}
           <div>
@@ -90,6 +76,22 @@ export default function SignupForm() {
             />
             {errors.email && (
               <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
+            )}
+          </div>
+
+          {/* Nickname */}
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-white">
+              Nickname
+            </label>
+            <input
+              id="name"
+              type="text"
+              {...register("nickname")}
+              className="mt-1 block w-full px-5 py-3 text-white rounded-md outline-none bg-gray-600"
+            />
+            {errors.nickname && (
+              <p className="text-sm text-red-600 mt-1">{errors.nickname.message}</p>
             )}
           </div>
 

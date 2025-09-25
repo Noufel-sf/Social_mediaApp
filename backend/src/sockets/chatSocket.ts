@@ -26,7 +26,7 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
 
     onlineUsers.get(userId)?.add(socket.id);
 
-    console.log(`User ${user.firstName} ${user.lastName} has connected with socket ${socket.id}`);
+    console.log(`User ${user.username} has connected with socket ${socket.id}`);
 
     socket.on('private_message', async ({recieverId, text}) => {
         try {
@@ -39,7 +39,7 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
 
             const messageWithInfo = await Message.findOne({
                 _id: message._id
-            }).populate("senderId", "firstName lastName");
+            }).populate("senderId", "username");
 
             const recieverSockets = onlineUsers.get(recieverId);
 
@@ -75,11 +75,11 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
 
                     io.emit('user_status', {userId, status: 'offline'});
 
-                    console.log(`User ${user.firstName} ${user.lastName} is offline`);
+                    console.log(`User ${user.username} is offline`);
                 }
             }
 
-            console.log(`User ${user.firstName} ${user.lastName} has disconnected with socket ${socket.id}`);
+            console.log(`User ${user.username} has disconnected with socket ${socket.id}`);
 
                 
 

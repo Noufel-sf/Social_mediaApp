@@ -4,9 +4,9 @@ import bcrypt from 'bcryptjs'
 
 export interface UserI extends Document {
 
-    firstName: string;
-    lastName: string;
+    username: string;
     email: string;
+    nickname: string;
     password: string;
     friends: mongoose.Types.ObjectId[];
 
@@ -17,14 +17,12 @@ export interface UserI1 extends Document, UserI {
 }
 
 const userSchema = new Schema<UserI1>({
-    firstName: {
+    username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    lastName: {
-        type: String,
-        required: true
-    },
+    
     email: {
         type: String,
         required: true
@@ -33,6 +31,10 @@ const userSchema = new Schema<UserI1>({
         type: String,
         required: true
     },
+    nickname: {
+        type: String,
+    },
+    
     friends: [
         {
             type: Schema.Types.ObjectId,

@@ -6,15 +6,14 @@ const signupForm = document.getElementById("signupForm");
 if (signupForm) {
   signupForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
+    const username = document.getElementById("username").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     const res = await fetch(`${API_URL}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firstName, lastName, email, password }),
+      body: JSON.stringify({ username, email, password }),
     });
 
     const data = await res.json();
@@ -35,7 +34,7 @@ const loginForm = document.getElementById("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("loginEmail").value;
+    const username = document.getElementById("username").value;
     const password = document.getElementById("loginPassword").value;
 
     const res = await fetch(`${API_URL}/login`, {
@@ -43,7 +42,7 @@ if (loginForm) {
       headers: { "Content-Type": "application/json" },
       credentials: "include" // so cookies (refreshToken) are stored
       ,
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     });
 
     const data = await res.json();

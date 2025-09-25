@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 import { FriendRequest } from "../models/FriendRequest";
 import User from "../models/User";
+import { AuthenticatedRequest } from "../middlewares/isAuth";
 
-export const SendRequest = async (req: Request, res: Response) => {
+export const SendRequest = async (req: AuthenticatedRequest, res: Response) => {
     try {
+
+        if(!req.user) return res.status(400).json({ message: 'No user logged in '}); 
+
         const recieverId = req.params.id;
-        //@ts-ignore
+        
         const senderId = req.user._id;
 
         if (!recieverId)
@@ -43,10 +47,10 @@ export const SendRequest = async (req: Request, res: Response) => {
     }
 };
 
-export const AcceptRequest = async (req: Request, res: Response) => {
+export const AcceptRequest = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        //@ts-ignore
         const reciever = req.user;
+        if(!reciever) return res.status(400).json({ message: 'No user logged in '}); 
         const friendRequestId = req.params.id;
 
         if (!friendRequestId)
@@ -76,15 +80,14 @@ export const AcceptRequest = async (req: Request, res: Response) => {
         });
 
         await User.findByIdAndUpdate(
-            //@ts-ignore
-            req.user._id,
+            reciever._id,
             { $push: { friends: senderId } },
             { new: true }
         );
 
         await User.findByIdAndUpdate(
-            senderId, //@ts-ignore
-            { $push: { friends: req.user._id } },
+            senderId, 
+            { $push: { friends: reciever._id } },
             { new: true }
         );
 
@@ -98,10 +101,10 @@ export const AcceptRequest = async (req: Request, res: Response) => {
     }
 };
 
-export const RejectRequest = async (req: Request, res: Response) => {
+export const RejectRequest = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        //@ts-ignore
         const reciever = req.user;
+        if(!reciever) return res.status(400).json({ message: 'No user logged in '}); 
 
         const friendRequestId = req.params.id;
 
@@ -137,16 +140,17 @@ export const RejectRequest = async (req: Request, res: Response) => {
     }
 };
 
-export const ShowFriendRequests = async (req: Request, res: Response) => {
+export const ShowFriendRequests = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        //@ts-ignore
+
         const reciever = req.user;
+        if(!reciever) return res.status(400).json({ message: 'No user logged in '}); 
 
         const friendRequests = await FriendRequest.find({
             recieverId: reciever._id,
             status: "pending",
         })
-            .populate("senderId", "firstName lastName")
+            .populate("senderId", "username")
             .select("_id senderId");
 
         if (!friendRequests || friendRequests.length == 0)

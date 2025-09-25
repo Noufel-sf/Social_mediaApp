@@ -26,7 +26,7 @@ export const getMessages = async (req: AuthenticatedRequest, res: Response) => {
                     recieverId: user._id
                 }
             ]
-        }).populate("senderId recieverId", "firstName lastName");
+        }).populate("senderId recieverId", "username");
 
 
         res.status(200).json(messages);

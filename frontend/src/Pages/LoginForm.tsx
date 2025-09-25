@@ -56,18 +56,18 @@ export default function LoginForm() {
               htmlFor="email"
               className="block text-sm font-medium text-white"
             >
-              Email
+              Username
             </label>
             <input
               id="email"
-              type="email"
+              type="text"
               autoComplete="email"
-              {...register("email")}
+              {...register("username")}
               className="mt-1 w-full px-5 py-3 text-xl text-white bg-gray-600 rounded-md outline-none shadow-sm"
             />
-            {errors.email && (
+            {errors.username && (
               <p className="text-sm text-red-600 mt-1">
-                {errors.email.message}
+                {errors.username.message}
               </p>
             )}
           </div>

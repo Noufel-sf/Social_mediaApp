@@ -137,7 +137,7 @@ async function showFriends() {
             statusDiv.classList.add('offline');
             statusDiv.textContent = '(offline)';
 
-            div.textContent = friend.firstName + " " + friend.lastName;
+            div.textContent = friend.username;
             chatBtn.textContent = 'Chat';
 
             container.appendChild(div);
@@ -191,7 +191,7 @@ async function showFriends() {
 
                     messageDiv.classList.add("message");
 
-                    messageDiv.textContent = `(${message.senderId.firstName}): ${message.text}`;
+                    messageDiv.textContent = `(${message.senderId.username}): ${message.text}`;
 
                     messageContainer.appendChild(messageDiv);
                 });
@@ -199,7 +199,7 @@ async function showFriends() {
                 scrollToBottom();
 
                 socket.on("private_message", (message) => {
-                    const sender = message.senderId.firstName;
+                    const sender = message.senderId.username;
                     const text = message.text;
 
                     const messageDiv = document.createElement('div');
@@ -234,7 +234,7 @@ async function showFriends() {
                     const messageDiv = document.createElement('div');
 
 
-                    messageDiv.textContent = `(${loggedInUser1.firstName}): ${text}`;
+                    messageDiv.textContent = `(${loggedInUser1.username}): ${text}`;
 
                     messageContainer.appendChild(messageDiv);
 
