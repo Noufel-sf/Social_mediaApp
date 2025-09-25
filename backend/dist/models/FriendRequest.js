@@ -42,7 +42,7 @@ const RequestSchema = new mongoose_1.Schema({
         required: true,
         ref: 'user'
     },
-    recieverId: {
+   receiverId: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
         ref: 'user'

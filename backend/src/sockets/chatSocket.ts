@@ -28,12 +28,12 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
 
     console.log(`User ${user.username} has connected with socket ${socket.id}`);
 
-    socket.on('private_message', async ({recieverId, text}) => {
+    socket.on('private_message', async ({receiverId, text}) => {
         try {
             
             const message = await Message.create({
                 senderId: userId,
-                recieverId: recieverId,
+               receiverId:receiverId,
                 text: text
             });
 
@@ -41,10 +41,10 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
                 _id: message._id
             }).populate("senderId", "username");
 
-            const recieverSockets = onlineUsers.get(recieverId);
+            const receiverSockets = onlineUsers.get(receiverId);
 
-            if(recieverSockets) {
-                recieverSockets.forEach((sockId) => {
+            if(receiverSockets) {
+               receiverSockets.forEach((sockId) => {
                     io.to(sockId).emit('private_message', messageWithInfo)
                 });
             };

@@ -118,15 +118,15 @@ export const getRecommendedUsers  = async (req: AuthenticatedRequest, res: Respo
 
         const alreadySent = await FriendRequest.find({
             senderId: loggedInUser._id
-        }).select('recieverId');
+        }).select('receiverId');
 
         const alreadySentToUser = await FriendRequest.find({
-            recieverId: loggedInUser._id,
+           receiverId: loggedInUser._id,
         }).select("senderId");
 
         const alreadySentToUserIds = alreadySentToUser.map((req) => req.senderId);
 
-        const alreadySentIds = alreadySent.map((req) => req.recieverId);
+        const alreadySentIds = alreadySent.map((req) => req.receiverId);
 
         const excludeIds = [loggedInUser._id, ...loggedInUser.friends, ...alreadySentIds, ...alreadySentToUserIds];
 

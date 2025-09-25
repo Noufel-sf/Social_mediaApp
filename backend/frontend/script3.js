@@ -229,7 +229,7 @@ async function showFriends() {
 
                     const friendId = friend._id;
                     
-                    socket.emit('private_message', {recieverId: friendId, text});
+                    socket.emit('private_message', {receiverId: friendId, text});
 
                     const messageDiv = document.createElement('div');
 

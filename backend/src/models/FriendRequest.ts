@@ -2,7 +2,7 @@ import mongoose, {Schema} from 'mongoose';
 
 export interface FriendRequestI extends Document {
     senderId: mongoose.Types.ObjectId;
-    recieverId: mongoose.Types.ObjectId;
+   receiverId: mongoose.Types.ObjectId;
     status: 'pending' | 'accepted' | 'rejected';
 };
 
@@ -20,7 +20,7 @@ const RequestSchema = new Schema<FriendRequestI1>({
         ref: 'user'
     },
 
-    recieverId: {
+   receiverId: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: 'user'

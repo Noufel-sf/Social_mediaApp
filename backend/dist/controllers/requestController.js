@@ -17,24 +17,24 @@ const FriendRequest_1 = require("../models/FriendRequest");
 const User_1 = __importDefault(require("../models/User"));
 const SendRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const recieverId = req.params.id;
+        constreceiverId = req.params.id;
         //@ts-ignore
         const senderId = req.user._id;
-        if (!recieverId)
-            return res.status(400).json({ message: 'reciever id not provided' });
+        if (!receiverId)
+            return res.status(400).json({ message: 'receiver id not provided' });
         //@ts-ignore
-        if (req.user.friends.includes(recieverId))
+        if (req.user.friends.includes(receiverId))
             return res.status(400).json({ message: 'already friends' });
         const existingRequest = yield FriendRequest_1.FriendRequest.findOne({
             senderId: senderId,
-            recieverId: recieverId,
+           receiverId:receiverId,
             status: 'pending'
         });
         if (existingRequest)
             return res.status(400).json({ message: 'friend request already sent ' });
         const request = yield FriendRequest_1.FriendRequest.create({
             senderId: senderId,
-            recieverId: recieverId
+           receiverId:receiverId
         });
         res.status(201).json({ success: true, message: 'Friend request sent successfully', request: request });
     }
@@ -47,17 +47,17 @@ exports.SendRequest = SendRequest;
 const AcceptRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //@ts-ignore
-        const reciever = req.user;
+        constreceiver = req.user;
         const friendRequestId = req.params.id;
         if (!friendRequestId)
             return res.status(400).json({ message: 'no request id provided' });
         const friendRequest = yield FriendRequest_1.FriendRequest.findById(friendRequestId);
         if (!friendRequest)
             return res.status(404).json({ message: 'friend request not found' });
-        // console.log(reciever._id)
-        // console.log(friendRequest.recieverId);
-        // console.log(friendRequest.recieverId.toString() != reciever._id.toString());
-        if (friendRequest.recieverId.toString() != reciever._id.toString())
+        // console.log(receiver._id)
+        // console.log(friendRequest.receiverId);
+        // console.log(friendRequest.receiverId.toString() !=receiver._id.toString());
+        if (friendRequest.receiverId.toString() !=receiver._id.toString())
             return res.status(301).json({ message: 'not authorized' });
         if (friendRequest.status == 'accepted')
             return res.status(400).json({ message: 'already accepted' });
@@ -71,7 +71,7 @@ const AcceptRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         { $push: { friends: req.user._id } }, { new: true });
         res.status(200).json({ message: 'friend request accepted',
             friendRequest: friendRequest,
-            friendList: reciever.friends
+            friendList:receiver.friends
         });
     }
     catch (error) {
@@ -82,14 +82,14 @@ exports.AcceptRequest = AcceptRequest;
 const RejectRequest = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //@ts-ignore
-        const reciever = req.user;
+        constreceiver = req.user;
         const friendRequestId = req.params.id;
         if (!friendRequestId)
             return res.status(400).json({ message: 'no request id provided' });
         const friendRequest = yield FriendRequest_1.FriendRequest.findById(friendRequestId);
         if (!friendRequest)
             return res.status(404).json({ message: 'friend request not found' });
-        if (friendRequest.recieverId.toString() != reciever._id.toString())
+        if (friendRequest.receiverId.toString() !=receiver._id.toString())
             return res.status(301).json({ message: 'not authorized' });
         if (friendRequest.status == 'rejected')
             return res.status(400).json({ message: 'already rejected' });
@@ -110,9 +110,9 @@ exports.RejectRequest = RejectRequest;
 const ShowFriendRequests = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //@ts-ignore
-        const reciever = req.user;
+        constreceiver = req.user;
         const friendRequests = yield FriendRequest_1.FriendRequest.find({
-            recieverId: reciever._id,
+           receiverId:receiver._id,
             // status: 'pending'
         }).select('senderId -_id');
         if (!friendRequests || friendRequests.length == 0)

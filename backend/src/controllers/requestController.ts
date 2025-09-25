@@ -8,22 +8,22 @@ export const SendRequest = async (req: AuthenticatedRequest, res: Response) => {
 
         if(!req.user) return res.status(400).json({ message: 'No user logged in '}); 
 
-        const recieverId = req.params.id;
+        const receiverId = req.params.id;
         
         const senderId = req.user._id;
 
-        if (!recieverId)
+        if (!receiverId)
             return res
                 .status(400)
-                .json({ message: "reciever id not provided" });
+                .json({ message: "receiver id not provided" });
 
         //@ts-ignore
-        if (req.user.friends.includes(recieverId))
+        if (req.user.friends.includes(receiverId))
             return res.status(400).json({ message: "already friends" });
 
         const existingRequest = await FriendRequest.findOne({
             senderId: senderId,
-            recieverId: recieverId,
+           receiverId:receiverId,
             status: "pending",
         });
 
@@ -34,7 +34,7 @@ export const SendRequest = async (req: AuthenticatedRequest, res: Response) => {
 
         const request = await FriendRequest.create({
             senderId: senderId,
-            recieverId: recieverId,
+           receiverId:receiverId,
         });
 
         res.status(201).json({
@@ -49,8 +49,8 @@ export const SendRequest = async (req: AuthenticatedRequest, res: Response) => {
 
 export const AcceptRequest = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const reciever = req.user;
-        if(!reciever) return res.status(400).json({ message: 'No user logged in '}); 
+        const receiver = req.user;
+        if(!receiver) return res.status(400).json({ message: 'No user logged in '}); 
         const friendRequestId = req.params.id;
 
         if (!friendRequestId)
@@ -63,11 +63,11 @@ export const AcceptRequest = async (req: AuthenticatedRequest, res: Response) =>
                 .status(404)
                 .json({ message: "friend request not found" });
 
-        // console.log(reciever._id)
-        // console.log(friendRequest.recieverId);
-        // console.log(friendRequest.recieverId.toString() != reciever._id.toString());
+        // console.log(receiver._id)
+        // console.log(friendRequest.receiverId);
+        // console.log(friendRequest.receiverId.toString() !=receiver._id.toString());
 
-        if (friendRequest.recieverId.toString() != reciever._id.toString())
+        if (friendRequest.receiverId.toString() !=receiver._id.toString())
             return res.status(301).json({ message: "not authorized" });
 
         if (friendRequest.status == "accepted")
@@ -80,21 +80,21 @@ export const AcceptRequest = async (req: AuthenticatedRequest, res: Response) =>
         });
 
         await User.findByIdAndUpdate(
-            reciever._id,
+           receiver._id,
             { $push: { friends: senderId } },
             { new: true }
         );
 
         await User.findByIdAndUpdate(
             senderId, 
-            { $push: { friends: reciever._id } },
+            { $push: { friends:receiver._id } },
             { new: true }
         );
 
         res.status(200).json({
             message: "friend request accepted",
             friendRequest: friendRequest,
-            friendList: reciever.friends,
+            friendList:receiver.friends,
         });
     } catch (error) {
         res.status(500).json(error);
@@ -103,8 +103,8 @@ export const AcceptRequest = async (req: AuthenticatedRequest, res: Response) =>
 
 export const RejectRequest = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        const reciever = req.user;
-        if(!reciever) return res.status(400).json({ message: 'No user logged in '}); 
+        const receiver = req.user;
+        if(!receiver) return res.status(400).json({ message: 'No user logged in '}); 
 
         const friendRequestId = req.params.id;
 
@@ -118,7 +118,7 @@ export const RejectRequest = async (req: AuthenticatedRequest, res: Response) =>
                 .status(404)
                 .json({ message: "friend request not found" });
 
-        if (friendRequest.recieverId.toString() != reciever._id.toString())
+        if (friendRequest.receiverId.toString() !=receiver._id.toString())
             return res.status(301).json({ message: "not authorized" });
 
         if (friendRequest.status == "rejected")
@@ -143,11 +143,11 @@ export const RejectRequest = async (req: AuthenticatedRequest, res: Response) =>
 export const ShowFriendRequests = async (req: AuthenticatedRequest, res: Response) => {
     try {
 
-        const reciever = req.user;
-        if(!reciever) return res.status(400).json({ message: 'No user logged in '}); 
+        const receiver = req.user;
+        if(!receiver) return res.status(400).json({ message: 'No user logged in '}); 
 
         const friendRequests = await FriendRequest.find({
-            recieverId: reciever._id,
+           receiverId:receiver._id,
             status: "pending",
         })
             .populate("senderId", "username")
