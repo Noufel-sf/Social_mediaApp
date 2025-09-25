@@ -66,6 +66,7 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
             
             const sockets = onlineUsers.get(userId);
 
+            console.log(`User ${user.username} has disconnected with socket ${socket.id}`);
 
             if (sockets) {
                 sockets.delete(socket.id);
@@ -79,9 +80,6 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
                 }
             }
 
-            console.log(`User ${user.username} has disconnected with socket ${socket.id}`);
-
-                
 
         });
 

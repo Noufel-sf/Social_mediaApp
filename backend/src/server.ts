@@ -1,7 +1,7 @@
 import http from 'http';
 import { Server } from 'socket.io';
 import app from './index';
-import { isAuthSocket } from './middlewares/isAuthSocket';
+import { isAuthSocket2 } from './middlewares/isAuthSocket';
 import dotenv from 'dotenv';
 import connectDB from "./config/db";
 
@@ -21,7 +21,7 @@ const io = new Server(server, {
     },
 });
 
-io.use(isAuthSocket);
+io.use(isAuthSocket2);
 
 io.on('connection', (socket) => {
 

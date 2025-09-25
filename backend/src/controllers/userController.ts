@@ -34,8 +34,7 @@ export const Register = async (req: Request<{}, {}, UserI>, res: Response) => {
             _id: user._id,
             username: user.username,
             email: user.email,
-            nickname: user.nickname,
-            token: generateAccessToken(user._id.toString()),
+            nickname: user.nickname
         });
     } catch (error) {
         res.status(500).json({ message: "server error!", error: error });
@@ -63,10 +62,16 @@ export const Login = async (req: Request, res: Response) => {
                 maxAge: 7 * 24 * 60 * 60 * 1000, //7 days
             });
 
+            res.cookie('accessToken', accessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV == 'production',
+                sameSite: 'strict',
+                maxAge: 60 * 60 * 1000
+            });
+
             res.status(200).json({
                 _id: user._id,
                 username: user.username,
-                token: accessToken,
             });
         } else {
             return res.status(400).json({
@@ -79,7 +84,14 @@ export const Login = async (req: Request, res: Response) => {
 };
 
 export const Logout = (req: Request, res: Response) => {
+
     res.clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "strict",
+    });
+
+    res.clearCookie("accessToken", {
         httpOnly: true,
         secure: false,
         sameSite: "strict",

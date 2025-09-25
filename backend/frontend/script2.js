@@ -13,7 +13,7 @@ async function checkAuth() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
+                // Authorization: `Bearer ${accessToken}`,
             },
             credentials: "include",
         });
@@ -70,8 +70,9 @@ async function showRequests() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+                // Authorization: `Bearer ${token}`,
             },
+            credentials: "include"
         });
 
         //   console.log(res.json());
@@ -111,7 +112,7 @@ async function showRequests() {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
+                            // Authorization: `Bearer ${token}`,
                         },
                         credentials: "include",
                     }
@@ -132,7 +133,7 @@ async function showRequests() {
                         method: "PUT",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
+                            // Authorization: `Bearer ${token}`,
                         },
                         credentials: "include",
                     }
@@ -159,8 +160,9 @@ async function getUsers() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+                // Authorization: `Bearer ${token}`,
             },
+            credentials: "include"
         });
 
         if (!res.ok) {
@@ -197,7 +199,7 @@ async function getUsers() {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
+                            // Authorization: `Bearer ${token}`,
                         },
                         credentials: "include",
                     }

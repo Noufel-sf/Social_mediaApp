@@ -23,7 +23,6 @@ async function checkAuth() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
             },
             credentials: "include",
         });
@@ -106,8 +105,8 @@ async function showFriends() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
+            credentials: "include"
         });
 
         //   console.log(res.json());
@@ -172,8 +171,9 @@ async function showFriends() {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
+                        // Authorization: `Bearer ${token}`,
                     },
+                    credentials: "include"
                 });
 
                 if (!res.ok) {
@@ -218,8 +218,9 @@ async function showFriends() {
                                             method: "GET",
                                             headers: {
                                                 "Content-Type": "application/json",
-                                                Authorization: `Bearer ${token}`,
+                                                // Authorization: `Bearer ${token}`,
                                             },
+                                            credentials: "include"
                                         });
 
                     const loggedInUser1 = await loggedInUser.json();
