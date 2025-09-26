@@ -47,9 +47,11 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
                receiverSockets.forEach((sockId) => {
                     io.to(sockId).emit('private_message', messageWithInfo)
                 });
+
+                message.delivered = true
             };
 
-            message.delivered = true
+            
 
             await message.save();
 
