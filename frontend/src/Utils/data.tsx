@@ -142,44 +142,44 @@ export const Friends = [
 
 export const FriendRequests = [
   {
-    id: 1,
-    from: {
-      id: 2,
-      Username: "Franca Delia",
-      profileimg: "/profile.jpg",
+    _id: 1,
+    senderId: {
+      _id: 2,
+      username: "Franca Delia",
+      imageUrl: "/profile.jpg",
     },
-    to: {
-      id: 1,
-      Username: "Edem Quist",
-      profileimg: "/profile.jpg",
+    receiverId: {
+      _id: 1,
+      username: "Edem Quist",
+      imageUrl: "/profile.jpg",
     },
     createdAt: "2023-10-01T12:00:00Z",
   },
   {
-    id: 2,
-    from: {
-      id: 3,
-      Username: "Daniella Jackson",
-      profileimg: "/profile.jpg",
+    _id: 2,
+    senderId: {
+      _id: 3,
+      username: "Daniella Jackson",
+      imageUrl: "/profile.jpg",
     },
-    to: {
-      id: 1,
-      Username: "Edem Quist",
-      profileimg: "/profile.jpg",
+    receiverId: {
+      _id: 1,
+      username: "Edem Quist",
+      imageUrl: "/profile.jpg",
     },
     createdAt: "2023-10-02T12:00:00Z",
   },
   {
-    id: 3,
-    from: {
-      id: 2,
-      Username: "Franca Delia",
-      profileimg: "/profile.jpg",
+    _id: 3,
+    senderId: {
+      _id: 2,
+      username: "Franca Delia",
+      imageUrl: "/profile.jpg",
     },
-    to: {
-      id: 3,
-      Username: "Daniella Jackson",
-      profileimg: "/profile.jpg",
+    receiverId: {
+      _id: 3,
+      username: "Daniella Jackson",
+      imageUrl: "/profile.jpg",
     },
     createdAt: "2023-10-03T12:00:00Z",
   },

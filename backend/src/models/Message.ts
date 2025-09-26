@@ -2,7 +2,7 @@ import mongoose, {Schema} from 'mongoose';
 
 export interface MessageI extends Document {
     senderId: mongoose.Types.ObjectId;
-   receiverId: mongoose.Types.ObjectId;
+    receiverId: mongoose.Types.ObjectId;
     text: string;
     delivered: boolean;
 };

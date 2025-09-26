@@ -37,9 +37,9 @@ export default function FriendsRequestsList() {
       <div className="flex flex-col gap-4">
         {requests.map((request) => (
           <FriendRequestsItem
-            key={request.id}
-            RequestUsername={request.from.Username}
-            RequestUserImg={request.from.profileimg}
+            key={request._id}
+            RequestUsername={request.senderId.username}
+            RequestUserImg={request.senderId.imageUrl}
           />
         ))}
       </div>

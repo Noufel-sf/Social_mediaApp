@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: "http://localhost:8000", // or http://localhost:5500 if using Live Server
+        origin: 'http://localhost:5173', // or http://localhost:5500 if using Live Server
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
         allowedHeaders: ["Content-Type", "Authorization"],

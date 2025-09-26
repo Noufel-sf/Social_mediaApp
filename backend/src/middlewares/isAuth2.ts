@@ -13,6 +13,8 @@ export const isAuth2 = async (req: AuthenticatedRequest, res: Response, next: Ne
 
         const token = req.cookies?.accessToken;
 
+        console.log('this is the token ' + token);
+
 
         if(!token) return res.status(401).json({ message: 'No token provided' });
 
