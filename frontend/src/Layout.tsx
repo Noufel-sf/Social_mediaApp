@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Home from "./Pages/Homepage";
@@ -8,10 +8,18 @@ import SignupForm from "./Pages/SignupForm";
 import UserProfilePage from "./Pages/UserProfilepage";
 import MessagingPage from "./Pages/MessagingPage";
 import { useTheme } from './Contexts/DarkModeContext';
+import { useAuthStates } from "./ZustandStates/AuthStates";
 
 
 export default function Layout() {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
+  const { FetchCurrentUserData } = useAuthStates();
+
+  useEffect(() => {
+    FetchCurrentUserData();
+  }, [FetchCurrentUserData]);
+
+
 
   return (
     <main className={`flex min-h-screen ${theme === "dark" ? "bg-[var(--dark-bg)]" : "bg-[#fafafa]"}`}>
@@ -25,7 +33,7 @@ export default function Layout() {
 
 
         <Route path="/" element={<Home />} />
-        <Route path="/userprofile" element={<UserProfilePage />} />
+        <Route path="/userprofile/:id" element={<UserProfilePage />} />
         <Route path="/messages" element={<MessagingPage />} />
       </Routes>
       <Toaster position="top-center" />

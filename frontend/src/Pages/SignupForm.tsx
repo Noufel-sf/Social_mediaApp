@@ -6,6 +6,7 @@ import { signupSchema } from "../Utils/ZodSchemas";
 import { api } from "../Utils/api";
 import type { AxiosError } from "axios";
 import toast from "react-hot-toast";
+import { useAuthStates } from "../ZustandStates/AuthStates";
 
 export default function SignupForm() {
   type SignupInput = z.infer<typeof signupSchema>;
@@ -23,7 +24,7 @@ export default function SignupForm() {
     try {
       console.log("Sending signup data:", data);
       const res = await api.post("/auth/register", data);
-      console.log("Signup success:", res.data);
+      useAuthStates.getState().setUser(res.data); // Set user state after successful signup
       toast.success("Signup successful! Please login.");
       navigate("/login");
     } catch (error) {

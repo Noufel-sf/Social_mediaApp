@@ -1,4 +1,3 @@
-import axios from "axios";
 import type { User } from "../Utils/Types";
 import api from "../Utils/api";
 

@@ -3,12 +3,15 @@ import React, { useState } from "react";
 import { chats, currentUser } from "../Utils/data";
 import Topbar from "../Components/TopBar";
 import { useTheme } from "../Contexts/DarkModeContext";
+import { useDirection } from "../hooks/useDirection";
 
 const MessengerPage = () => {
   const [selectedChat, setSelectedChat] = useState(chats[0]);
   const { theme } = useTheme();
+  const { forceLTR } = useDirection();
   return (
     <div
+      {...forceLTR()}
       className={`w-full h-screen flex flex-col gap-4 px-12 py-3 ${
         theme === "dark" ? "bg-[#18181b] text-white" : "bg-white text-black"
       }`}

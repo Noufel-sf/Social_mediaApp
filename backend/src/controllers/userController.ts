@@ -100,8 +100,7 @@ export const Logout = (req: Request, res: Response) => {
     res.status(200).json({ message: "user logged out succesfully" });
 };
 
-export const me = (req: AuthenticatedRequest, res: Response) => {
-    
+export const FetchCurrentUser = (req: AuthenticatedRequest, res: Response) => {
     res.json(req.user);
 };
 

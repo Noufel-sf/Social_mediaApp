@@ -19,7 +19,9 @@ export default function FriendsRequestsList() {
     queryFn: getFriendRequests,
   });
 
-  const requests = friendRequests ||  FriendRequests;
+  const requests =  FriendRequests;
+  console.log("friend requests from ", requests);
+  
 
   return (
     <div

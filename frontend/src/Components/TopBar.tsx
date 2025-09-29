@@ -4,12 +4,17 @@ import { useTranslation } from "react-i18next";
 import InputSearchItem from "../ui/InputSearchItem";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTheme } from "../Contexts/DarkModeContext";
+import { useAuthStates } from "../ZustandStates/AuthStates";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdLogout } from "react-icons/md";
 
 // import { Button } from "../ui/button";
 
 const Topbar = () => {
   const { theme, setTheme } = useTheme();
+  const { user, logout } = useAuthStates();
+  console.log("user in topbar", user);
+  
   const { t } = useTranslation();
   
   const toggleTheme = () => {
@@ -31,35 +36,54 @@ const Topbar = () => {
           <InputSearchItem />
         </div>
 
-        <ul className="flex gap-5 flex-shrink-0">
+        <ul className="flex gap-5 items-center flex-shrink-0">
           <li>
             <LanguageSwitcher />
           </li>
           <li>
             <button
               onClick={toggleTheme}
-              className="text-2xl  cursor-pointer hover:text-gray-500 transition"
+              className="text-xl cursor-pointer bg-[var(--primary-color)] text-white py-2 px-2 rounded-full hover:text-gray-500 transition"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <MdLightMode /> : <MdDarkMode />}
             </button>
           </li>
-          <li>
-            <Link
-              to="/login"
-              className="bg-[var(--primary-color)] px-4 py-2 hover:bg-[var(--secondary-color)] text-white font-medium rounded-full"
-            >
-              {t('login')}
+      
+          {user ? (
+          <div className="flex items-center gap-3">
+            <Link to={`/userprofile/${user._id}`}>
+              <img
+                className=" cursor-pointer rounded-full w-10"
+                src={user.ProfileImg || "/profile-1.jpg"}
+                alt={user.username}
+              />
             </Link>
-          </li>
-          <li>
-            <Link
-              to="/signup"
-              className="bg-[var(--primary-color)] px-4 py-2 hover:bg-[var(--secondary-color)] text-white font-medium rounded-full"
+            <button
+              onClick={logout}
+              className="capitalize text-xl fonts font-bold cursor-pointer py-1 px-2 rounded-full text-white bg-[var(--primary-color)]"
             >
-              {t('signup')}
-            </Link>
-          </li>
+              <MdLogout className="inline text-xl" />
+            </button>
+          </div>
+        ) : (
+          <>
+            <li>
+              <Link to="/login">
+                <button className="capitalize text-xl fonts font-bold cursor-pointer py-2 px-4 rounded-full text-white bg-[var(--primary-color)]">
+                  Log In
+                </button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/signup">
+                <button className="capitalize text-xl fonts font-bold cursor-pointer py-2 px-4 rounded-full text-white bg-[var(--primary-color)]">
+                  Sign Up
+                </button>
+              </Link>
+            </li>
+          </>
+        )}
         </ul>
       </div>
     </section>

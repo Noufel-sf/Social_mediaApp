@@ -1,17 +1,39 @@
 import { useTranslation } from "react-i18next";
 import { MdLanguage } from 'react-icons/md';
 import { useTheme } from '../Contexts/DarkModeContext';
+import { useEffect } from 'react';
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
   const { theme } = useTheme();
 
+  // Set initial font based on current language
+  useEffect(() => {
+    const currentLang = i18n.language;
+    if (currentLang === "ar") {
+      document.documentElement.classList.add("ArabicFont");
+      document.documentElement.classList.remove("EnglishFont");
+    } else {
+      document.documentElement.classList.add("EnglishFont");
+      document.documentElement.classList.remove("ArabicFont");
+    }
+  }, [i18n.language]);
+
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    // Disable RTL - keep everything LTR
-    // document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
-    document.documentElement.dir = "ltr"; // Force LTR always
+    
+    // Set document direction
+    document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = lng;
+    
+    // Apply font based on language
+    if (lng === "ar") {
+      document.documentElement.classList.add("ArabicFont");
+      document.documentElement.classList.remove("EnglishFont");
+    } else {
+      document.documentElement.classList.add("EnglishFont");
+      document.documentElement.classList.remove("ArabicFont");
+    }
   };
 
   const currentLanguage = i18n.language;

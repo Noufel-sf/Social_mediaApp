@@ -43,6 +43,4 @@ export const isAuth = async (req: AuthenticatedRequest, res: Response, next: Nex
     }
 
 
-
-
 };

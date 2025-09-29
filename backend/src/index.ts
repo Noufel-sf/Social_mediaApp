@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+// Load environment variables first
+dotenv.config();
+
 import express from "express";
 import userRouter from "./routes/userRoutes";
 import friendRouter from "./routes/friendRoutes";
@@ -5,6 +9,7 @@ import messagesRouter from './routes/messagesRoutes';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from 'path';
+import postsRouter from "./routes/PostsRoutes";
 
 
 
@@ -14,6 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
 
 app.use(
     cors({
@@ -26,6 +32,7 @@ app.use(
 
 app.use("/api/auth", userRouter);
 app.use("/api/friends", friendRouter);
+app.use("/api/posts", postsRouter);
 app.use("/api/messages", messagesRouter);
 
 

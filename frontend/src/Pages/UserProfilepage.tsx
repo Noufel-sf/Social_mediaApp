@@ -1,29 +1,22 @@
 import React from "react";
 import { Camera } from "lucide-react";
-import { useParams } from "react-router-dom";
 import { useTheme } from "../Contexts/DarkModeContext";
-import { useQuery } from "@tanstack/react-query";
-import { GetUserProfileDetailsById } from "../ServisesApi/UserApi";
 import type { User } from "../Utils/Types";
 import { sampleUser } from "../Utils/data";
+import { useAuthStates } from "../ZustandStates/AuthStates";
+import { useDirection } from "../hooks/useDirection";
 
 const UserProfilePage = () => {
   const { theme } = useTheme();
-  const { id } = useParams();
-
-  const { data: user, isLoading, isError } = useQuery<User>({
-    queryKey: ["user", id],
-    queryFn: () => GetUserProfileDetailsById(id!),
-    enabled: !!id, // only fetch if id exists
-  });
+  const { user } = useAuthStates();
+  const { forceLTR } = useDirection();
 
   const currentUser = user || sampleUser;
-
-  if (isLoading) return <p className="text-center">Loading...</p>;
-  if (isError) return <p className="text-center">Error loading user</p>;
-
+  console.log(currentUser);
+  
   return (
     <div
+      {...forceLTR()}
       className={`w-full min-h-screen ${
         theme === "dark" ? "bg-[#18181b] text-white" : "bg-gray-100"
       }`}
@@ -31,7 +24,7 @@ const UserProfilePage = () => {
       {/* Cover Photo */}
       <div className="relative h-60">
         <img
-          src={currentUser.coverPhoto}
+          src={"/coverimg.jpg"}
           alt="cover"
           className="w-full h-full object-cover"
         />
@@ -43,19 +36,23 @@ const UserProfilePage = () => {
 
       {/* Profile Section */}
       <div className="relative max-w-5xl mx-auto px-4">
-        <div className="absolute -top-16 left-6">
+        <div className="absolute -top-46 left-6 flex items-center gap-5">
           <img
-            src={currentUser.avatar}
-            alt={currentUser.name}
+            src={"/profile-1.jpg"}
+            alt={currentUser.username}
             className="w-40 h-40 rounded-full border-4 border-white object-cover"
           />
+          <div className="flex flex-col">
+            <h1 className="text-4xl capitalize gap-3">{currentUser.username}</h1>
+            <h1 className="text-xl ">{currentUser.nickname}</h1>
+          </div>
         </div>
 
-        <div className="mt-24 flex flex-col md:flex-row md:items-center md:justify-between">
-          <div>
+        <div className="mt-50 flex flex-col md:flex-row md:items-center md:justify-between">
+          {/* <div>
             <h1 className="text-2xl font-bold">{currentUser.name}</h1>
             <p>{currentUser.friends} friends</p>
-          </div>
+          </div> */}
           <div className="flex gap-2 mt-3 md:mt-0">
             <button className="bg-[var(--primary-color)] text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 cursor-pointer">
               Add to Story
@@ -71,8 +68,6 @@ const UserProfilePage = () => {
           <button className="py-3 border-b-2 border-blue-600 text-blue-600">
             Posts
           </button>
-          <button className="py-3 hover:text-blue-600">Photos</button>
-          <button className="py-3 hover:text-blue-600">Videos</button>
           <button className="py-3 hover:text-blue-600">More</button>
         </div>
       </div>
@@ -87,22 +82,8 @@ const UserProfilePage = () => {
             <p className="text-sm">{currentUser.bio}</p>
           </div>
 
-          {/* Photos */}
-          <div className="p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-3">Photos</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-              {currentUser.photos.slice(0, 6).map((photo, i) => (
-                <img
-                  key={i}
-                  src={photo}
-                  alt="user-photo"
-                  className="w-full h-24 object-cover rounded"
-                />
-              ))}
-            </div>
-          </div>
 
-          {/* Friends */}
+          {/* Friends
           <div className="p-4 rounded-lg shadow">
             <h3 className="font-semibold mb-3">Friends</h3>
             <div className="grid grid-cols-3 gap-2">
@@ -117,11 +98,11 @@ const UserProfilePage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Right Column (Posts) */}
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           {currentUser.posts.map((post) => (
             <div key={post.id} className="p-4 rounded-lg shadow">
               <div className="flex items-center gap-2 mb-2">
@@ -147,7 +128,7 @@ const UserProfilePage = () => {
               )}
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -10,10 +10,39 @@
 }
 
 
-*{
+/* Default font for all elements */
+* {
   font-family: "Josefin Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   box-sizing: border-box;
+}
+
+/* English font applied to entire document */
+.EnglishFont,
+.EnglishFont * {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Arabic font applied to entire document */
+.ArabicFont,
+.ArabicFont * {
+  font-family: "Readex Pro", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "HEXP" 0;
+}
+
+/* Ensure Arabic font is applied with higher specificity */
+html.ArabicFont * {
+  font-family: "Readex Pro", sans-serif !important;
+}
+
+html.EnglishFont * {
+  font-family: "Josefin Sans", sans-serif !important;
 }

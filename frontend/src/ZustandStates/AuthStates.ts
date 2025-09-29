@@ -33,8 +33,8 @@ export const useAuthStates = create<AuthState>((set) => ({
   FetchCurrentUserData: async () => {
     try {
       set({ loading: true });
-      const res = await api.get("/auth/me", { withCredentials: true });
-      set({ user: res.data.user, loading: false });
+      const res = await api.get("/auth/currentuser", { withCredentials: true });
+      set({ user: res.data, loading: false });
     } catch (err) {
       console.error("Failed to fetch user:", err);
       set({ user: null, loading: false });

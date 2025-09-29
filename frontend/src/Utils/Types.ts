@@ -1,3 +1,4 @@
+import { Post } from './Types';
 
 
 export type User = {
@@ -5,7 +6,10 @@ export type User = {
   username: string;
   nickname: string;
   email: string;
-  imageUrl: string;
+  ProfileImg: string;
+  CoverImg: string;
+  friends: FriendRequest[];
+  Posts: Post[];
   bio: string;
   createdAt: string;
   updatedAt: string;
@@ -21,11 +25,11 @@ export type Post = {
   _id: string;
   content: string;
   Author_id: User;
-  imgUrl?: string[];
-  likes_count?: number;
-  comments_count?: number;
+  PostCovers?: string[];
+  // likes_count?: number;
+  // comments_count?: number;
   comments?: Comment[];
-  likes?: User[];
+  // likes?: User[];
   createdAt: string;
 }
 

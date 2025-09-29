@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../Utils/ZodSchemas";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
+import { useAuthStates } from "../ZustandStates/AuthStates";
 
 type LoginInput = z.infer<typeof loginSchema>;
 
@@ -30,7 +31,7 @@ export default function LoginForm() {
 
       console.log("Login success:", res.data);
       toast.success("Login successful!");
-      // useAuthStore.getState().setUser(res.data.user);  // later we ll add the state management zustand and we will save the user data in it to use it in the user profile page .
+      useAuthStates.getState().setUser(res.data);  
       navigate("/");
     } catch (error) {
         const err = error as AxiosError<{ message?: string }>;

@@ -2,7 +2,6 @@ import type { Post } from "../Utils/Types";
 import PostCard from "./PostCard";
 import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "../ServisesApi/PostsApi";
-import { Posts } from "../Utils/data";
 
 function PostsList() {
   const {
@@ -14,7 +13,9 @@ function PostsList() {
     queryFn: getPosts,
   });
 
-  const postsToRender = posts || Posts;
+  const postsToRender = posts ;
+  console.log("Posts to render:", postsToRender);
+  
 
   return (
     <div className="flex flex-col gap-2 items-center">
