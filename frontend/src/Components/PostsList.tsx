@@ -13,17 +13,21 @@ function PostsList() {
     queryFn: getPosts,
   });
 
-  const postsToRender = posts ;
+  const postsToRender = posts || []; // Provide fallback empty array
   console.log("Posts to render:", postsToRender);
+  console.log("Query state - Loading:", isLoading, "Error:", isError);
   
 
   return (
     <div className="flex flex-col gap-2 items-center">
       {isLoading && <p>Loading posts...</p>}
       {isError && <p>Error loading posts, showing default.</p>}
+      {!isLoading && !isError && postsToRender.length === 0 && (
+        <p>No posts available.</p>
+      )}
 
       {postsToRender.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <PostCard key={post._id} post={post} />
       ))}
     </div>
   );

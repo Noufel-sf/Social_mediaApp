@@ -12,8 +12,8 @@ import { MdLogout } from "react-icons/md";
 
 const Topbar = () => {
   const { theme, setTheme } = useTheme();
-  const { user, logout } = useAuthStates();
-  console.log("user in topbar", user);
+  const { CurrentUser, logout } = useAuthStates();
+  console.log("CurrentUser in topbar", CurrentUser);
   
   const { t } = useTranslation();
   
@@ -50,13 +50,13 @@ const Topbar = () => {
             </button>
           </li>
       
-          {user ? (
+          {CurrentUser ? (
           <div className="flex items-center gap-3">
-            <Link to={`/userprofile/${user._id}`}>
+            <Link to={`/userprofile/${CurrentUser._id}`}>
               <img
-                className=" cursor-pointer rounded-full w-10"
-                src={user.ProfileImg || "/profile-1.jpg"}
-                alt={user.username}
+                className=" cursor-pointer rounded-full w-10 h-10 object-cover"
+                src={CurrentUser.ProfileImg || "/user.png"}
+                alt={CurrentUser.username}
               />
             </Link>
             <button

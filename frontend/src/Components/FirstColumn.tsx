@@ -6,18 +6,20 @@ import { useTheme } from "../Contexts/DarkModeContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import AddPostModel from "./AddPostModel";
+import { useAuthStates } from "../ZustandStates/AuthStates";
 
 function FirstColumn() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const [showAddpost, setShowAddpost] = useState(false);
+  const { CurrentUser } = useAuthStates();
 
   return (
     <div className="hidden lg:flex flex-col gap-8 md:w-1/4 lg:w-1/5 xl:w-1/5">
       <UserProfileCard
-        imageUrl="/profile.jpg"
-        Username="noufel nasri"
-        Usernickname="@noufel"
+        imageUrl={CurrentUser?.ProfileImg || "/user.png"}
+        Username={CurrentUser?.username || "default user"}
+        Usernickname={CurrentUser?.nickname || "@default"}
       />
 
       <div

@@ -297,10 +297,9 @@ export const Storys = [
 
 
 export const SidebarrItems = [
-    {id:1, textKey:"home", icon:<HiChatAlt />, link:"/home"},
+    {id:1, textKey:"home", icon:<HiChatAlt />, link:"/"},
     {id:2, textKey:"messages", icon:<HiChatAlt />, link:"/messages"},
     {id:3, textKey:"friends", icon:<HiChatAlt />, link:"/friends"},
-    {id:4, textKey:"profile", icon:<HiChatAlt />, link:"/profile"},
     {id:5, textKey:"settings", icon:<HiChatAlt />, link:"/settings"},
 ];
 

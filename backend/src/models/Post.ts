@@ -7,9 +7,9 @@ const postSchema = new Schema(
       required: true,
       trim: true,
     },
-    Author_id: {
+    Author: {
       type: Types.ObjectId,
-      ref: "User",
+      ref: "user", 
       required: true,
     },
     PostCovers: [
@@ -19,14 +19,7 @@ const postSchema = new Schema(
         default: [],
       },
     ],
-    // likes: [
-    //   {
-    //     type: Types.ObjectId,
-    //     ref: "User",
-    //     require: false,
-    //     default: [],
-    //   },
-    // ],
+
     comments: [
       {
         type: Types.ObjectId,

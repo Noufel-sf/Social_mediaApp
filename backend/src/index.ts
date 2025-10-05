@@ -6,6 +6,7 @@ import express from "express";
 import userRouter from "./routes/userRoutes";
 import friendRouter from "./routes/friendRoutes";
 import messagesRouter from './routes/messagesRoutes';
+import storyRouter from './routes/StoriesRoutes';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from 'path';
@@ -30,9 +31,10 @@ app.use(
     })
 );
 
+app.use("/api/posts", postsRouter);
 app.use("/api/auth", userRouter);
 app.use("/api/friends", friendRouter);
-app.use("/api/posts", postsRouter);
+app.use("/api/stories", storyRouter);
 app.use("/api/messages", messagesRouter);
 
 

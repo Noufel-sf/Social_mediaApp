@@ -6,12 +6,11 @@ import upload from "../middlewares/multer";
 const router = Router();
 
 
-import { CreatePost ,GetUserPosts , GetAllPosts , DeletePost } from '../controllers/PostsController';
+import { CreatePost  , GetAllUserPosts , DeletePost } from '../controllers/PostsController';
 
+router.get('/all', GetAllUserPosts);
 router.post('/create', isAuth2, upload.array("PostCovers", 4), CreatePost);
-router.get('/all', GetAllPosts);
-router.get("/:id", GetUserPosts);
-router.delete("/:id", isAuth2, DeletePost);
+router.delete("/delete/:id", isAuth2, DeletePost);
 
 export default router;
 

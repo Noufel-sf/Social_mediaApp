@@ -1,4 +1,3 @@
-import { Post } from './Types';
 
 
 export type User = {
@@ -24,7 +23,7 @@ export type Story = {
 export type Post = {
   _id: string;
   content: string;
-  Author_id: User;
+  Author: User;
   PostCovers?: string[];
   // likes_count?: number;
   // comments_count?: number;
