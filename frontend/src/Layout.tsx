@@ -9,17 +9,26 @@ import UserProfilePage from "./Pages/UserProfilepage";
 import MessagingPage from "./Pages/MessagingPage";
 import { useTheme } from './Contexts/DarkModeContext';
 import { useAuthStates } from "./ZustandStates/AuthStates";
-
+import { useQuery } from "@tanstack/react-query";
+import type { User } from "./Utils/Types";
 
 export default function Layout() {
   const { theme } = useTheme();
   const { FetchCurrentUserData } = useAuthStates();
+  
 
+const {
+  data: Currentuser,
+  isLoading,
+  isError,
+} = useQuery<User | null>({
+  queryKey: ["currentUser"],
+  queryFn: FetchCurrentUserData,
+  staleTime: 1000 * 60 * 5,
+});
   useEffect(() => {
-    FetchCurrentUserData();
-  }, [FetchCurrentUserData]);
-
-
+    console.log("Currentuser data in Layout:", Currentuser);
+  }, [Currentuser]);
 
   return (
     <main className={`flex min-h-screen ${theme === "dark" ? "bg-[var(--dark-bg)]" : "bg-[#fafafa]"}`}>

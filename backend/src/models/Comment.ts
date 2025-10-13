@@ -9,7 +9,7 @@ const commentSchema = new Schema(
     },
     author: {
       type: Types.ObjectId,
-      ref: "User", // should match your User model name
+      ref: "user", // Changed from "User" to "user" to match User model registration
       required: true,
     },
     post: {

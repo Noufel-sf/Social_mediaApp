@@ -20,11 +20,12 @@ export default function SignupForm() {
     resolver: zodResolver(signupSchema),
   });
 
+
   const onSubmit = async (data: SignupInput) => {
     try {
       console.log("Sending signup data:", data);
       const res = await api.post("/auth/register", data);
-      useAuthStates.getState().setUser(res.data); // Set user state after successful signup
+      useAuthStates.getState().setCurrentUser(res.data); // Set user state after successful signup
       toast.success("Signup successful! Please login.");
       navigate("/login");
     } catch (error) {
@@ -33,6 +34,7 @@ export default function SignupForm() {
       toast.error(err.response?.data?.message || "Signup failed. Try again.");      
     }
   };
+
 
   return (
     <div className="flex flex-col w-[90%] md:w-1/2 items-center justify-center min-h-screen">
@@ -46,7 +48,6 @@ export default function SignupForm() {
           onSubmit={handleSubmit(onSubmit)}
         >
           
-
           {/* Username */}
           <div>
             <label htmlFor="username" className="block capitalize text-sm font-medium text-white">

@@ -31,7 +31,7 @@ export default function LoginForm() {
 
       console.log("Login success:", res.data);
       toast.success("Login successful!");
-      useAuthStates.getState().setUser(res.data);  
+      useAuthStates.getState().setCurrentUser(res.data);  
       navigate("/");
     } catch (error) {
         const err = error as AxiosError<{ message?: string }>;

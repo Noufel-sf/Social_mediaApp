@@ -18,8 +18,7 @@ type AddPostModelProps = {
 
 export default function AddPostModel({ onClose }: AddPostModelProps) {
   const { theme } = useTheme();
-  const { user } = useAuthStates();
-  const Author_id = user ? user._id : "";
+  const { CurrentUser } = useAuthStates();
 
   const [content, setContent] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -29,16 +28,17 @@ export default function AddPostModel({ onClose }: AddPostModelProps) {
       setFiles([...files, ...Array.from(e.target.files)]);
     }
   };
+  const Author = CurrentUser ? CurrentUser._id : "";
 
   
   const CreatePost = async (
     content: string,
     files: File[],
-    Author_id: string
+    Author: string
   ) => {
     const formData = new FormData();
     formData.append("content", content);
-    formData.append("Author_id", Author_id);
+    formData.append("Author", Author);
     console.log("formData before files ", formData);
 
     files.forEach((file) => {
@@ -67,24 +67,22 @@ export default function AddPostModel({ onClose }: AddPostModelProps) {
     e.preventDefault();
     if (!content.trim() && files.length === 0) return;
 
-    CreatePost(content, files, Author_id);
+    CreatePost(content, files, Author);
     setContent("");
     setFiles([]);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Overlay */}
+  <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === "dark" ? "bg-black" : "bg-white"}`}>
+       {/* overlay */}
       <div className="absolute inset-0 bg-black/60" onClick={onClose}></div>
 
-      {/* Modal */}
       <div
         className={`relative ${
           theme === "dark" ? "bg-[var(--dark-bg)] text-white" : "bg-white"
         } w-full max-w-xl rounded-lg shadow-lg z-10`}
       >
-        {/* Header */}
         <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 px-4 py-3">
           <h2 className="font-semibold text-lg">Create a post</h2>
           <button
@@ -95,15 +93,14 @@ export default function AddPostModel({ onClose }: AddPostModelProps) {
           </button>
         </div>
 
-        {/* User info */}
         <div className="flex items-center gap-3 px-4 py-3">
           <img
-            src={user ? user.ProfileImg || "/profile-1.jpg" : "/profile-1.jpg"}
-            alt={user?.username}
+            src={CurrentUser ? CurrentUser.ProfileImg || "/profile-1.jpg" : "/profile-1.jpg"}
+            alt={CurrentUser?.username}
             className="w-12 h-12 rounded-full object-cover"
           />
           <div className="flex flex-col">
-            <span className="font-medium">{user?.username}</span>
+            <span className="font-medium">{CurrentUser?.username}</span>
             <span className="text-sm text-gray-500">Post to Anyone</span>
           </div>
         </div>
@@ -118,7 +115,6 @@ export default function AddPostModel({ onClose }: AddPostModelProps) {
             className="w-full min-h-[120px] border-none outline-none resize-none text-lg bg-transparent"
           />
 
-          {/* File previews */}
           {files.length > 0 && (
             <div className="px-0 py-3">
               {files.length === 1 ? (

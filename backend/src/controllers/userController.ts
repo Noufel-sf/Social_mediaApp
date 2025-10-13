@@ -116,6 +116,73 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
+export const UpdateUserProfile = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    console.log("=== UpdateUserProfile Hit ===");
+    console.log("BODY RAW:", req.body);
+    console.log("FILE RAW:", req.file);
+
+    const loggedInUser = req.user;
+    if (!loggedInUser) {
+      return res.status(400).json({ message: "No user logged in" });
+    }
+
+    const user = await User.findById(loggedInUser._id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { username, bio } = req.body;
+
+   
+    user.username = username || user.username;
+    user.bio = bio || user.bio;
+
+    
+    if (req.file) {
+      user.ProfileImg = req.file.path; 
+      console.log("✅ Profile image updated:", req.file.path);
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: "User updated successfully", user });
+  } catch (error) {
+    console.error("❌ Error updating profile:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+export const UpdateUserCoverImg = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+        console.log("=== UpdateUserCoverImg Hit ===");
+        console.log("BODY RAW:", req.body);
+        console.log("FILE RAW:", req.file);
+
+        const loggedInUser = req.user;
+        if (!loggedInUser) {
+            return res.status(400).json({ message: "No user logged in" });
+        }
+
+        const user = await User.findById(loggedInUser._id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        if (req.file) {
+            user.CoverImg = req.file.path; 
+            console.log("✅ Cover image updated:", req.file.path);
+        }
+
+        await user.save();
+
+        res.status(200).json({ message: "User cover image updated successfully", user });
+    } catch (error) {
+        console.error("❌ Error updating cover image:", error);
+        res.status(500).json({ message: "Server error", error });
+    }
+};
+
 export const getRecommendedUsers  = async (req: AuthenticatedRequest, res: Response) => {
     try {
         

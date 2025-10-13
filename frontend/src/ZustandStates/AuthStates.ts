@@ -5,19 +5,19 @@ import toast from "react-hot-toast";
 
 
 interface AuthState {
-  user: User | null;
+  CurrentUser: User | null;
   loading: boolean;
-  setUser: (user: User | null) => void;
+  setCurrentUser: (user: User | null) => void;
   logout: () => Promise<void>;
-  FetchCurrentUserData: () => Promise<void>;
+  FetchCurrentUserData: () => Promise<User | null>;
 }
 
 export const useAuthStates = create<AuthState>((set) => ({
-  user: null,
+  CurrentUser: null,
   loading: false,
 
-  setUser: (user) => {
-    set({ user });
+  setCurrentUser: (user) => {
+    set({ CurrentUser: user });
   },
 
   logout: async () => {
@@ -27,17 +27,18 @@ export const useAuthStates = create<AuthState>((set) => ({
     } catch (err) {
       console.error("Logout failed:", err);
     }
-    set({ user: null });
+    set({ CurrentUser: null });
   },
 
   FetchCurrentUserData: async () => {
     try {
       set({ loading: true });
       const res = await api.get("/auth/currentuser", { withCredentials: true });
-      set({ user: res.data, loading: false });
+      set({ CurrentUser: res.data, loading: false });
+      return res.data;
     } catch (err) {
       console.error("Failed to fetch user:", err);
-      set({ user: null, loading: false });
+      set({ CurrentUser: null, loading: false });
     }
   },
 }));
