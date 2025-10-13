@@ -2,6 +2,7 @@ import type { Post } from "../Utils/Types";
 import PostCard from "./PostCard";
 import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "../ServisesApi/PostsApi";
+import { Posts } from "../Utils/data";
 
 function PostsList() {
   const {
@@ -13,7 +14,7 @@ function PostsList() {
     queryFn: getPosts,
   });
 
-  const postsToRender = posts ;
+  const postsToRender = posts || Posts;
   console.log("Posts to render:", postsToRender);
   
 
