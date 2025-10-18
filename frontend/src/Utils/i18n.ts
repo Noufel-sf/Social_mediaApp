@@ -27,6 +27,7 @@ const resources = {
       
       // Friend requests
       requestsTitle: "Requests",
+      suggestionsTitle: "Suggestions",
       loadingRequests: "Loading requests...",
       errorLoadingRequests: "Error loading requests, showing default.",
       
@@ -74,6 +75,7 @@ const resources = {
       messagesTitle: "الرسائل",
       searchMessages: "البحث في الرسائل",
       requests: "الطلبات",
+      suggestions: "اقتراحات",
       
       // Friend requests
       requestsTitle: "الطلبات",

@@ -3,5 +3,5 @@ import api from "../Utils/api";
 
 export async function getFriendRequests(): Promise<FriendRequest[]> {
   const res = await api.get("friends/request/all");
-  return res.data;
+  return res.data.friendRequests;
 }

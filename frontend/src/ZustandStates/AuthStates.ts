@@ -2,6 +2,7 @@ import { create } from "zustand";
 import api from "../Utils/api";
 import type { User } from "../Utils/Types";
 import toast from "react-hot-toast";
+import { currentUser } from "../Utils/data";
 
 
 interface AuthState {
@@ -35,6 +36,8 @@ export const useAuthStates = create<AuthState>((set) => ({
       set({ loading: true });
       const res = await api.get("/auth/currentuser", { withCredentials: true });
       set({ CurrentUser: res.data, loading: false });
+      // console.log("the current user is ", currentUser);
+      
       return res.data;
     } catch (err) {
       console.error("Failed to fetch user:", err);

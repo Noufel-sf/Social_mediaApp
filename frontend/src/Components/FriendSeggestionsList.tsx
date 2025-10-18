@@ -1,27 +1,27 @@
 import type { FriendRequest } from "../Utils/Types";
 import { useTranslation } from "react-i18next";
-import FriendRequestsItem from "../ui/FriendRequestsItem";
-import { FriendRequests } from "../Utils/data";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { useQuery } from "@tanstack/react-query";
-import { getFriendRequests } from "../ServisesApi/FriendRequestApi";
+import { FriendRequests } from "../Utils/data";
+import { getFriendSuggestions} from "../ServisesApi/FriendSeggestionsApi";
+import FriendSuggestionItem from "../ui/FriendSeggestionItem";
 
-export default function FriendsRequestsList() {
+export default function FriendSuggestionsList() {
   const { theme } = useTheme();
   const { t } = useTranslation();
 
   const {
-    data: friendRequests,
+    data: friendSuggestions,
     isLoading,
     isError,
   } = useQuery<FriendRequest[]>({
-    queryKey: ["friendRequests"],
-    queryFn: getFriendRequests,
+    queryKey: ["friendSuggestions"],
+    queryFn: getFriendSuggestions,
   });
 
-  const requests =  friendRequests || [];
-  console.log("friend requests from ", requests);
-  
+  const Suggestions =  friendSuggestions || FriendRequests;
+  console.log("friend suggestions from ", Suggestions);
+
 
   return (
     <div
@@ -31,16 +31,16 @@ export default function FriendsRequestsList() {
           : "bg-white text-black"
       }`}
     >
-      <h1 className="text-2xl capitalize">{t('requestsTitle')}</h1>
+      <h1 className="text-2xl capitalize">{t('suggestionsTitle')}</h1>
 
       {isLoading && <p>{t('loadingRequests')}</p>}
       {isError && <p>{t('errorLoadingRequests')}</p>}
 
       <div className="flex flex-col gap-4">
-        {requests.map((request) => (
-          <FriendRequestsItem
+        {Suggestions.map((request) => (
+          <FriendSuggestionItem
             key={request._id}
-            friendRequest={request}
+            friendSuggestion={request}
           />
         ))}
       </div>

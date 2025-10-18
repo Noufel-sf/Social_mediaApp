@@ -12,20 +12,23 @@
 
 /* Default font for all elements */
 * {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
-  box-sizing: border-box;
+  font-variation-settings:
+    "wdth" 100;
 }
 
 /* English font applied to entire document */
 .EnglishFont,
 .EnglishFont * {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 400;
+  font-weight: 500;
   font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
 }
 
 /* Arabic font applied to entire document */
@@ -44,5 +47,5 @@ html.ArabicFont * {
 }
 
 html.EnglishFont * {
-  font-family: "Josefin Sans", sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }

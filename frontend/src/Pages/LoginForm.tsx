@@ -8,6 +8,9 @@ import { loginSchema } from "../Utils/ZodSchemas";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
 import { useAuthStates } from "../ZustandStates/AuthStates";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 type LoginInput = z.infer<typeof loginSchema>;
 
@@ -23,22 +26,25 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginInput) => {
-    try {
-      setGeneralError(null); // clear previous error
-      console.log("Sending login data:", data);
-      const res = await api.post("/auth/login", data);
+const onSubmit = async (data: LoginInput) => {
+  try {
+    setGeneralError(null);
+    const res = await api.post("/auth/login", data, { withCredentials: true });
 
-      console.log("Login success:", res.data);
-      toast.success("Login successful!");
-      useAuthStates.getState().setCurrentUser(res.data);  
-      navigate("/");
-    } catch (error) {
-        const err = error as AxiosError<{ message?: string }>;
-      console.error("Login failed:", err.response?.data || err.message);
-      toast.error(err.response?.data?.message || "Login failed. Try again.");
-    }
-  };
+    const user = res.data.user; // ✅ The backend must send this
+    toast.success("Login successful!");
+
+    useAuthStates.getState().setCurrentUser(user);
+
+    queryClient.setQueryData(["currentUser"], user);
+
+    setTimeout(() => navigate("/"), 1100);
+  } catch (error) {
+    const err = error as AxiosError<{ message?: string }>;
+    toast.error(err.response?.data?.message || "Login failed. Try again.");
+  }
+};
+
 
   return (
     <div className="flex flex-col w-[90%] lg:w-1/2 items-center justify-center min-h-screen">

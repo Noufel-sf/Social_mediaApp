@@ -150,7 +150,7 @@ export const ShowFriendRequests = async (req: AuthenticatedRequest, res: Respons
            receiverId:receiver._id,
             status: "pending",
         })
-            .populate("senderId", "username")
+            .populate("senderId", "username ProfileImg")
             .select("_id senderId");
 
         if (!friendRequests || friendRequests.length == 0)

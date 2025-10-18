@@ -130,7 +130,7 @@ export const Friends = [
             id: "3",
             name: "Daniella Jackson",
             Username: "daniella_jackson",
-            Usernickname: "daniella",
+            nickname: "daniella",
             email: "daniella@example.com",
             imageUrl: "/profile-1.jpg",
             bio: "Software Developer"
@@ -160,6 +160,7 @@ export const FriendRequests = [
     senderId: {
       _id: 3,
       username: "Daniella Jackson",
+      nickname: "daniella",
       imageUrl: "/profile.jpg",
     },
     receiverId: {
