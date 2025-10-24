@@ -23,7 +23,7 @@ export const SendRequest = async (req: AuthenticatedRequest, res: Response) => {
 
         const existingRequest = await FriendRequest.findOne({
             senderId: senderId,
-           receiverId:receiverId,
+            receiverId:receiverId,
             status: "pending",
         });
 
@@ -140,6 +140,23 @@ export const RejectRequest = async (req: AuthenticatedRequest, res: Response) =>
     }
 };
 
+
+export const getUserFriends = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const user = req.user;
+    if (!user) return res.status(400).json({ message: "Not logged in" });
+
+    const populatedUser = await User.findById(user._id)
+      .populate("friends", "username ProfileImg")
+      .select("friends");
+
+    res.status(200).json({ friends: populatedUser?.friends || [] });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+
 export const ShowFriendRequests = async (req: AuthenticatedRequest, res: Response) => {
     try {
 
@@ -162,7 +179,17 @@ export const ShowFriendRequests = async (req: AuthenticatedRequest, res: Respons
         //     $in: sendersId
         // }}).select('firstName lastName email');
 
-        res.status(200).json(friendRequests);
+        res.status(200).json({ friendRequests });
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+};
+
+
+export const getFriendSuggestions = async(req :Request , res :Response ) => { 
+    try {
+        const Seggestions = await User.find().limit(4);
+        res.status(200).json({ friendSuggestions: Seggestions });
     } catch (error) {
         res.status(500).json({ message: error });
     }

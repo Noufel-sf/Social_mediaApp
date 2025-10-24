@@ -226,10 +226,11 @@ export const Storys = [
         }, 
         img: "/story.jpg"
     },
+
     {
-        id: 3, 
+        id: 4, 
         user: {
-            id: "3",
+            id: "4",
             name: "Daniella Jackson",
             Username: "daniella_jackson",
             Usernickname: "daniella",
@@ -239,58 +240,8 @@ export const Storys = [
         }, 
         img: "/story.jpg"
     },
-    {
-        id: 3, 
-        user: {
-            id: "3",
-            name: "Daniella Jackson",
-            Username: "daniella_jackson",
-            Usernickname: "daniella",
-            email: "daniella@example.com",
-            imageUrl: "/profile-3.jpg",
-            bio: "Marketing Specialist"
-        }, 
-        img: "/story.jpg"
-    },
-    {
-        id: 3, 
-        user: {
-            id: "3",
-            name: "Daniella Jackson",
-            Username: "daniella_jackson",
-            Usernickname: "daniella",
-            email: "daniella@example.com",
-            imageUrl: "/profile-3.jpg",
-            bio: "Marketing Specialist"
-        }, 
-        img: "/story.jpg"
-    },
-    {
-        id: 3, 
-        user: {
-            id: "3",
-            name: "Daniella Jackson",
-            Username: "daniella_jackson",
-            Usernickname: "daniella",
-            email: "daniella@example.com",
-            imageUrl: "/profile-3.jpg",
-            bio: "Marketing Specialist"
-        }, 
-        img: "/story.jpg"
-    },
-    {
-        id: 3, 
-        user: {
-            id: "3",
-            name: "Daniella Jackson",
-            Username: "daniella_jackson",
-            Usernickname: "daniella",
-            email: "daniella@example.com",
-            imageUrl: "/profile-3.jpg",
-            bio: "Marketing Specialist"
-        }, 
-        img: "/story.jpg"
-    },
+  
+ 
 
 
 

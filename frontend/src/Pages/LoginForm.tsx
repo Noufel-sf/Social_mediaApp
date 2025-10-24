@@ -36,7 +36,7 @@ const onSubmit = async (data: LoginInput) => {
 
     useAuthStates.getState().setCurrentUser(user);
 
-    queryClient.setQueryData(["currentUser"], user);
+    queryClient.setQueryData(["CurrentUser"], user);
 
     setTimeout(() => navigate("/"), 1100);
   } catch (error) {

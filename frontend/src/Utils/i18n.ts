@@ -29,7 +29,7 @@ const resources = {
       requestsTitle: "Requests",
       suggestionsTitle: "Suggestions",
       loadingRequests: "Loading requests...",
-      errorLoadingRequests: "Error loading requests, showing default.",
+      errorLoadingRequests: "No requests yet.",
       
       // Posts
       whatOnMind: "What's on your mind?",
@@ -80,7 +80,7 @@ const resources = {
       // Friend requests
       requestsTitle: "الطلبات",
       loadingRequests: "جاري تحميل الطلبات...",
-      errorLoadingRequests: "خطأ في تحميل الطلبات، عرض الافتراضي.",
+      errorLoadingRequests: "لا يوجد طلبات في الوقت الحالي",
       
       // Posts
       whatOnMind: "ما الذي تفكر فيه؟",

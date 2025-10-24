@@ -29,7 +29,7 @@ const Topbar = () => {
     >
       <div className="flex justify-between items-center py-6 px-5 gap-4">
         <Link to="/" className="flex gap-3 items-center flex-shrink-0">
-          <h1 className="text-2xl md:text-3xl capitalize ">{t('social')}</h1>
+          <img src="/logo.svg" alt="Logo" className="w-43" />
         </Link>
 
         <div className="flex-1 flex justify-center max-w-md">

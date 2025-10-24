@@ -1,4 +1,4 @@
-import type { FriendRequest } from "../Utils/Types";
+import type { User } from "../Utils/Types";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { useQuery } from "@tanstack/react-query";
@@ -14,12 +14,12 @@ export default function FriendSuggestionsList() {
     data: friendSuggestions,
     isLoading,
     isError,
-  } = useQuery<FriendRequest[]>({
+  } = useQuery<User[]>({
     queryKey: ["friendSuggestions"],
     queryFn: getFriendSuggestions,
   });
 
-  const Suggestions =  friendSuggestions || FriendRequests;
+  const Suggestions =  friendSuggestions || [];
   console.log("friend suggestions from ", Suggestions);
 
 

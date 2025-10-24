@@ -1,8 +1,12 @@
-const token = localStorage.getItem('accessToken');
-const API_URL1 = "http://localhost:8000/api/auth";
-const API_URL2 = "http://localhost:8000/api/messages";
+import process from 'process';
 
-const socket = io('http://localhost:8000', {
+const PORT = 5500 || 8000; // Ensure this matches the backend port
+ // Ensure this matches the backend port
+const token = localStorage.getItem('accessToken');
+const API_URL1 = `http://localhost:${PORT}/api/auth`;
+const API_URL2 = `http://localhost:${PORT}/api/messages`;
+
+const socket = io(`http://localhost:${PORT2}`, {
     auth: {
         token: token,
     }
@@ -19,7 +23,7 @@ async function checkAuth() {
 
     try {
         // Try to call the "me" endpoint with access token
-        const res = await fetch("http://localhost:8000/api/auth/me", {
+        const res = await fetch(`http://localhost:${PORT}/api/auth/me`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -29,7 +33,7 @@ async function checkAuth() {
 
         if (res.status === 401) {
             // Token expired → try refreshing
-            const refreshRes = await fetch("http://localhost:8000/api/auth/refresh", {
+            const refreshRes = await fetch(`http://localhost:${PORT}/api/auth/refresh`, {
                 method: "POST",
                 credentials: "include", // sends cookies
             });

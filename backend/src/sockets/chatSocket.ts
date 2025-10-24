@@ -39,7 +39,7 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
 
             const messageWithInfo = await Message.findOne({
                 _id: message._id
-            }).populate("senderId", "username");
+            }).populate("senderId", "username ProfileImg");
 
             const receiverSockets = onlineUsers.get(receiverId);
 

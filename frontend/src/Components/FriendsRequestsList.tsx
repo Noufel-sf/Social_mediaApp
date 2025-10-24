@@ -1,7 +1,6 @@
 import type { FriendRequest } from "../Utils/Types";
 import { useTranslation } from "react-i18next";
 import FriendRequestsItem from "../ui/FriendRequestsItem";
-import { FriendRequests } from "../Utils/data";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { useQuery } from "@tanstack/react-query";
 import { getFriendRequests } from "../ServisesApi/FriendRequestApi";
@@ -11,7 +10,7 @@ export default function FriendsRequestsList() {
   const { t } = useTranslation();
 
   const {
-    data: friendRequests,
+    data: friendRequests = [],
     isLoading,
     isError,
   } = useQuery<FriendRequest[]>({
@@ -19,9 +18,20 @@ export default function FriendsRequestsList() {
     queryFn: getFriendRequests,
   });
 
-  const requests =  friendRequests || [];
-  console.log("friend requests from ", requests);
-  
+  if (!isLoading && friendRequests.length === 0) return null;
+
+  // (Optional) Handle loading or error states
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center p-4">
+        <span className="loading loading-spinner loading-md text-primary"></span>
+      </div>
+    );
+
+  if (isError)
+    return (
+      <p className="text-center text-[var(--primary-color)] p-2">{t("errorLoadingRequests")}</p>
+    );
 
   return (
     <div
@@ -31,17 +41,11 @@ export default function FriendsRequestsList() {
           : "bg-white text-black"
       }`}
     >
-      <h1 className="text-2xl capitalize">{t('requestsTitle')}</h1>
-
-      {isLoading && <p>{t('loadingRequests')}</p>}
-      {isError && <p>{t('errorLoadingRequests')}</p>}
+      <h1 className="text-2xl capitalize">{t("requestsTitle")}</h1>
 
       <div className="flex flex-col gap-4">
-        {requests.map((request) => (
-          <FriendRequestsItem
-            key={request._id}
-            friendRequest={request}
-          />
+        {friendRequests.map((request) => (
+          <FriendRequestsItem key={request._id} friendRequest={request} />
         ))}
       </div>
     </div>
