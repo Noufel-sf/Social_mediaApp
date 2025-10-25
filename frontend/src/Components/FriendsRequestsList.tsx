@@ -19,6 +19,7 @@ export default function FriendsRequestsList() {
     queryFn: getFriendRequests,
   });
 
+  console.log(isError);
   const requests =  friendRequests || [];
   console.log("friend requests from ", requests);
   

@@ -162,6 +162,7 @@ export const ShowFriendRequests = async (req: AuthenticatedRequest, res: Respons
         //     $in: sendersId
         // }}).select('firstName lastName email');
 
+
         res.status(200).json(friendRequests);
     } catch (error) {
         res.status(500).json({ message: error });

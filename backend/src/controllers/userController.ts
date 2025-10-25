@@ -154,9 +154,9 @@ export const UpdateUserProfile = async (req: AuthenticatedRequest, res: Response
 
 export const UpdateUserCoverImg = async (req: AuthenticatedRequest, res: Response) => {
     try {
-        console.log("=== UpdateUserCoverImg Hit ===");
-        console.log("BODY RAW:", req.body);
-        console.log("FILE RAW:", req.file);
+        // console.log("=== UpdateUserCoverImg Hit ===");
+        // console.log("BODY RAW:", req.body);
+        // console.log("FILE RAW:", req.file);
 
         const loggedInUser = req.user;
         if (!loggedInUser) {

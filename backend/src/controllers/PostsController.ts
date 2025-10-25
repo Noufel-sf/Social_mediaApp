@@ -5,7 +5,7 @@ import { Comment } from "../models/Comment";
 import User from "../models/User"; 
 
 export const GetAllUserPosts = async (req: Request, res: Response) => {
-  console.log("🔍 GetAllUserPosts endpoint hit");
+  // console.log("🔍 GetAllUserPosts endpoint hit");
 
   try {
     const posts = await Post.find()
@@ -18,8 +18,8 @@ export const GetAllUserPosts = async (req: Request, res: Response) => {
         },
       });
 
-    console.log("📦 Fetched posts count:", posts.length);
-    console.log("📦 First post (if exists):", posts[0] || "No posts found");
+    // console.log("📦 Fetched posts count:", posts.length);
+    // console.log("📦 First post (if exists):", posts[0] || "No posts found");
 
     res.status(200).json({ posts });
   } catch (error: any) {
@@ -32,9 +32,9 @@ export const GetAllUserPosts = async (req: Request, res: Response) => {
 };
 
 export const CreatePost = async (req: Request, res: Response) => {
-    console.log("=== CreatePost Hit ===");
-    console.log("BODY RAW:", req.body);
-    console.log("FILES RAW:", req.files);
+    // console.log("=== CreatePost Hit ===");
+    // console.log("BODY RAW:", req.body);
+    // console.log("FILES RAW:", req.files);
 
   try {
     const { content, Author } = req.body;

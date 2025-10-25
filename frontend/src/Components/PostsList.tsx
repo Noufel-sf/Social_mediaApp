@@ -14,7 +14,7 @@ function PostsList() {
     queryFn: getPosts,
   });
 
-  const postsToRender = posts ;
+  const postsToRender = posts || [];
   console.log("Posts to render:", postsToRender);
   console.log("Query state - Loading:", isLoading, "Error:", isError);
   
