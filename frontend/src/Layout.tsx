@@ -12,26 +12,39 @@ import { useAuthStates } from "./ZustandStates/AuthStates";
 import { useQuery } from "@tanstack/react-query";
 import type { User } from "./Utils/Types";
 
+
+
 export default function Layout() {
   const { theme } = useTheme();
-  const { FetchCurrentUserData } = useAuthStates();
+  // const { FetchCurrentUserData } = useAuthStates();
   
 
-const {
-  data: Currentuser,
-  isLoading,
-  isError,
-} = useQuery<User | null>({
-  queryKey: ["currentUser"],
-  queryFn: FetchCurrentUserData,
-  staleTime: 1000 * 60 * 5,
-});
+// const {
+//   data: Currentuser ,
+//   isLoading,
+//   isError,
+// } = useQuery<User | null>({
+//   queryKey: ["CurrentUser"],
+//   queryFn: FetchCurrentUserData,
+//   staleTime: 1000 * 60 * 5,
+// });
+
+//   useEffect(() => {
+//     console.log("Currentuser data in Layout:", Currentuser);
+//   }, [Currentuser]);
+
+  const { FetchCurrentUserData} = useAuthStates();
+
   useEffect(() => {
-    console.log("Currentuser data in Layout:", Currentuser);
-  }, [Currentuser]);
+    FetchCurrentUserData();
+  }, [FetchCurrentUserData]);
+
+
 
   return (
     <main className={`flex min-h-screen ${theme === "dark" ? "bg-[var(--dark-bg)]" : "bg-[#fafafa]"}`}>
+
+      
       <Routes>
       {/* authentication routes */}
         <Route element={<AuthLayout />}>

@@ -14,6 +14,8 @@ export default function AddStoryContent({
   const [storyFile, setStoryFile] = useState<File | null>(null);
   const [caption, setCaption] = useState("");
 
+
+  
   // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

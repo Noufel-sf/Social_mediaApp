@@ -26,13 +26,13 @@ export const isAuth2 = async (
 
     const user = await User.findById(decoded.id)
       .select("-password")
-      .populate({
-        path: "Posts",
-        populate: {
-          path: "Author", // nested populate
-          select: "username email ProfileImg CoverImg bio",
-        },
-      });
+      // .populate({
+      //   path: "Posts",
+      //   populate: {
+      //     path: "Author", // nested populate
+      //     select: "username email ProfileImg CoverImg bio",
+      //   },
+      // });
 
     if (!user) return res.status(404).json({ message: "User not found" });
 

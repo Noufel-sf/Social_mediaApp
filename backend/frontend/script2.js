@@ -1,3 +1,8 @@
+import process from 'process';
+
+const PORT = 5500 || 8000; // Ensure this matches the backend port
+ // Ensure this matches the backend port
+
 async function checkAuth() {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -9,7 +14,7 @@ async function checkAuth() {
 
     try {
         // Try to call the "me" endpoint with access token
-        const res = await fetch("http://localhost:8000/api/auth/me", {
+        const res = await fetch(`http://localhost:${PORT}/api/auth/me`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -20,7 +25,7 @@ async function checkAuth() {
 
         if (res.status === 401) {
             // Token expired → try refreshing
-            const refreshRes = await fetch("http://localhost:8000/api/auth/refresh", {
+            const refreshRes = await fetch(`http://localhost:${PORT}/api/auth/refresh`, {
                 method: "POST",
                 credentials: "include", // sends cookies
             });
@@ -49,7 +54,7 @@ checkAuth();
 
 document.getElementById("logoutButton").addEventListener("click", async () => {
     try {
-        await fetch("http://localhost:8000/api/auth/logout", {
+        await fetch(`http://localhost:${PORT}/api/auth/logout`, {
             method: "POST",
             credentials: "include",
         });
@@ -64,7 +69,7 @@ document.getElementById("logoutButton").addEventListener("click", async () => {
 async function showRequests() {
     try {
         const token = localStorage.getItem("accessToken");
-        const API_URL1 = "http://localhost:8000/api/friends";
+        const API_URL1 = `http://localhost:${PORT}/api/friends`;
 
         const res = await fetch(`${API_URL1}/request/all/`, {
             method: "GET",
@@ -107,7 +112,7 @@ async function showRequests() {
             acceptBtn.addEventListener("click", async () => {
                 console.log(request._id);
                 const res = await fetch(
-                    `http://localhost:8000/api/friends/request/${request._id}/accept`,
+                    `http://localhost:${PORT}/api/friends/request/${request._id}/accept`,
                     {
                         method: "PUT",
                         headers: {
@@ -128,7 +133,7 @@ async function showRequests() {
             rejectBtn.addEventListener("click", async () => {
                 console.log(request._id);
                 const res = await fetch(
-                    `http://localhost:8000/api/friends/request/${request._id}/reject`,
+                    `http://localhost:${PORT}/api/friends/request/${request._id}/reject`,
                     {
                         method: "PUT",
                         headers: {
@@ -154,7 +159,7 @@ async function showRequests() {
 async function getUsers() {
     try {
         const token = localStorage.getItem("accessToken");
-        const API_URL = "http://localhost:8000/api/auth";
+        const API_URL = `http://localhost:${PORT}/api/auth`;
 
         const res = await fetch(`${API_URL}/recommended`, {
             method: "GET",
@@ -194,7 +199,7 @@ async function getUsers() {
 
             sendBtn.addEventListener("click", async () => {
                 const res = await fetch(
-                    `http://localhost:8000/api/friends/request/${user._id}`,
+                    `http://localhost:${PORT}/api/friends/request/${user._id}`,
                     {
                         method: "POST",
                         headers: {

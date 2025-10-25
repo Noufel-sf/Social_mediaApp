@@ -26,7 +26,7 @@ export const getMessages = async (req: AuthenticatedRequest, res: Response) => {
                    receiverId: user._id
                 }
             ]
-        }).populate("senderId receiverId", "username");
+        }).populate("senderId receiverId", "username ProfileImg");
 
         messages.forEach((message) => {
             if(!message.delivered) {

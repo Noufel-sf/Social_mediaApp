@@ -86,7 +86,7 @@ userSchema.pre<UserI1>("save", async function (next) {
 userSchema.post("findOneAndDelete", async function (doc) {
   if (doc) {
     await mongoose
-      .model("User")
+      .model("user")
       .updateMany({ friends: doc._id }, { $pull: { friends: doc._id } });
   }
 });

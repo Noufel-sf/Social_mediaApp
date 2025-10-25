@@ -14,14 +14,34 @@ function PostsList() {
     queryFn: getPosts,
   });
 
+<<<<<<< HEAD
   const postsToRender = posts || [];
   console.log("Posts to render:", postsToRender);
   console.log("Query state - Loading:", isLoading, "Error:", isError);
   
+=======
+  const postsToRender = posts || []; // Provide fallback empty array
+
+  // console.log("Posts to render:", postsToRender);
+  // console.log("Query state - Loading:", isLoading, "Error:", isError);
+
+  // {isLoading && <Spinner />}
+>>>>>>> ff71fc21ece7890422268e5b8268684c85c0e1a4
 
   return (
     <div className="flex flex-col gap-2 items-center">
-      {isLoading && <p>Loading posts...</p>}
+      {isLoading && (
+        <TailSpin
+          height="80"
+          width="100"
+          color={"var(--primary-color)"}
+          ariaLabel="tail-spin-loading"
+          radius="1"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+        />
+      )}
       {isError && <p>Error loading posts, showing default.</p>}
       {!isLoading && !isError && postsToRender.length === 0 && (
         <p>No posts available.</p>

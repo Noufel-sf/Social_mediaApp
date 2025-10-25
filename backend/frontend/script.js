@@ -1,6 +1,6 @@
-const API_URL = "http://localhost:8000/api/auth";
+const PORT = 5500 || 8000; // Ensure this matches the backend port
 
-
+const API_URL = `http://localhost:${PORT}/api/auth`;
 // Handle Signup
 const signupForm = document.getElementById("signupForm");
 if (signupForm) {

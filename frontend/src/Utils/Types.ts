@@ -42,7 +42,7 @@ export type Comment = {
 export type Message = {
   _id: string;
   senderId: User;
-  receiverId: User;
+  receiverId: User; 
   text: string;
   delivered: boolean;
   createdAt: string;
@@ -51,7 +51,8 @@ export type Message = {
 
 export type Chat = {
   _id: string;
-  participants: User[];
+  senderId: User;
+  receiverId: User;
   messages: Message[];
   createdAt: string;
 }
