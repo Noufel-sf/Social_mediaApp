@@ -51,8 +51,8 @@ export type Message = {
 
 export type Chat = {
   _id: string;
-  participantone: User;
-  participanttwo: User;
+  senderId: User;
+  receiverId: User;
   messages: Message[];
   createdAt: string;
 }
