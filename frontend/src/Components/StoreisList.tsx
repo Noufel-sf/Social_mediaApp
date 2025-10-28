@@ -15,6 +15,8 @@ function StoriesList() {
 
   const storiesToRender = stories || Storys;
 
+  // console.log(stories);
+
   const SeeStory = (id: string) => {
     console.log("Story clicked:", id);
   };
@@ -30,11 +32,11 @@ function StoriesList() {
       {isLoading && console.log("Loading stories...")}
       
 
-      {storiesToRender.map((story: Story) => (
+      {storiesToRender.map((story) => (
         <StoryCard
-          key={story.id}
+          key={story._id}
           story={story}
-          SeeStory={() => SeeStory(story.id)}
+          SeeStory={() => SeeStory(story._id)}
         />
       ))}
     </div>

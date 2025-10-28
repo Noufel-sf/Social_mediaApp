@@ -15,9 +15,10 @@ export type User = {
 };
 
 export type Story = {
-  _id: number;
-  user: User;
-  img: string;
+  _id: string;
+  caption: string;
+  author_id: User;
+  storyFile: string;
 };
 
 export type Post = {

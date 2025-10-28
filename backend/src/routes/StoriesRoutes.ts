@@ -7,7 +7,7 @@ const router = Router();
 
 import { CreateStory  , GetAllUserStories , DeleteStory } from '../controllers/StoriesController';
 
-router.get('/all', GetAllUserStories);
+router.get('/all', isAuth2, GetAllUserStories);
 router.post('/create', isAuth2, upload.single("storyFile"), CreateStory);
 router.delete("/delete/:id", isAuth2, DeleteStory);
 

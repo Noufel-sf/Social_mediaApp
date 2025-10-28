@@ -21,7 +21,7 @@ export default function FriendSuggestionsList() {
   });
 
   const Suggestions = friendSuggestions || [];
-  console.log("friend suggestions from ", Suggestions);
+  // console.log("friend suggestions from ", Suggestions);
 
   return (
     <div

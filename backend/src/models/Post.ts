@@ -7,11 +7,13 @@ const postSchema = new Schema(
       required: true,
       trim: true,
     },
+
     Author: {
       type: Types.ObjectId,
       ref: "user", 
       required: true,
     },
+    
     PostCovers: [
       {
         type: String, 
@@ -25,9 +27,18 @@ const postSchema = new Schema(
         type: Types.ObjectId,
         ref: "Comment",
         default: [],
-        require: false,
+        required: false,
       },
     ],
+
+    likes: [
+      {
+        type: Types.ObjectId,
+        ref: "User",
+        default: [],
+        required: false
+      }
+    ]
   },
   { timestamps: true }
 );

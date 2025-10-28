@@ -11,6 +11,8 @@ import { useTheme } from './Contexts/DarkModeContext';
 import { useAuthStates } from "./ZustandStates/AuthStates";
 import { useQuery } from "@tanstack/react-query";
 import type { User } from "./Utils/Types";
+import { ErrorBoundary } from "react-error-boundary";
+
 
 
 
@@ -55,7 +57,11 @@ export default function Layout() {
 
 
         <Route path="/" element={<Home />} />
-        <Route path="/userprofile/:id" element={<UserProfilePage />} />
+        <Route path="/userprofile/:id" element={
+          <ErrorBoundary fallback={<div>error</div>} >
+          <UserProfilePage />
+          </ErrorBoundary>
+          } />
         <Route path="/messages" element={<MessagingPage />} />
       </Routes>
       <Toaster position="top-center" />

@@ -159,6 +159,7 @@ export const getUserProfilepageData = async (req: Request, res: Response) => {
       .populate("friends", "username ProfileImg")
       .populate({
         path: "Posts",
+        options: { sort: { createdAt: -1 } },
         populate: {
           path: "Author",
           select: "username ProfileImg",
@@ -171,7 +172,6 @@ export const getUserProfilepageData = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
-
 
 export const UpdateUserCoverImg = async (req: AuthenticatedRequest, res: Response) => {
     try {
@@ -243,9 +243,6 @@ export const getRecommendedUsers  = async (req: AuthenticatedRequest, res: Respo
         res.status(500).json(error);
     }   
 };
-
-
-
 
 export const getFriends = async (req: AuthenticatedRequest, res: Response) => {
   try {
