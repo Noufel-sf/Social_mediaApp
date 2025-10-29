@@ -28,6 +28,7 @@ export const Register = async (req: Request<{}, {}, UserI>, res: Response) => {
             email,
             nickname,
             password,
+           
         });
 
         return res.status(201).json({

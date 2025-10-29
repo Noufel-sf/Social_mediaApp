@@ -28,42 +28,64 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
 
   console.log(`User ${user.username} has connected with socket ${socket.id}`);
 
-  socket.on("private_message", async ({ receiverId, text }) => {
+  // socket.on("private_message", async ({ receiverId, text }) => {
+  //   try {
+  //     const message = await Message.create({
+  //       senderId: userId,
+  //       receiverId: receiverId,
+  //       text: text,
+  //     });
+
+  //     const messageWithInfo = await Message.findOne({
+  //       _id: message._id,
+  //     }).populate("senderId", "username ProfileImg");
+
+  //     const receiverSockets = onlineUsers.get(receiverId);
+
+  //     if (receiverSockets) {
+  //       receiverSockets.forEach((sockId) => {
+  //         io.to(sockId).emit("private_message", messageWithInfo);
+  //       });
+
+  //       message.delivered = true;
+  //     }
+
+  //     await message.save();
+
+  //     io.to(receiverId.toString()).emit("private_message", message);
+  //     if (!socket.user) {
+  //       console.warn("⚠️ socket.user is undefined");
+  //       return;
+  //     }
+
+  //     io.to(socket.user._id.toString()).emit("message_sent", message);
+
+  //     socket.emit("message_sent", message);
+  //   } catch (error) {
+  //     console.log("Message error", error);
+  //     socket.emit("error", { message: "failed to send the message" });
+  //   }
+  // });
+
+   socket.on("private_message", async ({ receiverId, text }) => {
     try {
-      const message = await Message.create({
-        senderId: userId,
-        receiverId: receiverId,
-        text: text,
+      if (!socket.user) return;
+
+      const newMsg = await Message.create({
+        senderId: socket.user._id,
+        receiverId,
+        text,
       });
 
-      const messageWithInfo = await Message.findOne({
-        _id: message._id,
-      }).populate("senderId", "username ProfileImg");
+      const populatedMsg = await newMsg.populate("senderId receiverId", "username ProfileImg");
 
-      const receiverSockets = onlineUsers.get(receiverId);
+      // Emit to the receiver
+      io.to(receiverId.toString()).emit("private_message", populatedMsg);
 
-      if (receiverSockets) {
-        receiverSockets.forEach((sockId) => {
-          io.to(sockId).emit("private_message", messageWithInfo);
-        });
-
-        message.delivered = true;
-      }
-
-      await message.save();
-
-      io.to(receiverId.toString()).emit("private_message", message);
-      if (!socket.user) {
-        console.warn("⚠️ socket.user is undefined");
-        return;
-      }
-
-      io.to(socket.user._id.toString()).emit("message_sent", message);
-
-      socket.emit("message_sent", message);
-    } catch (error) {
-      console.log("Message error", error);
-      socket.emit("error", { message: "failed to send the message" });
+      // Emit to the sender (so sender sees it instantly)
+      io.to(socket.user._id.toString()).emit("message_sent", populatedMsg);
+    } catch (err) {
+      console.error("Error handling private_message:", err);
     }
   });
 
@@ -86,6 +108,8 @@ const chatSocket = (io: Server, socket: AuthenticatedSocket) => {
       }
     }
   });
+
+
 };
 
 export default chatSocket;

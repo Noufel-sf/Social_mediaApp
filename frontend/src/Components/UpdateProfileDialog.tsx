@@ -20,7 +20,7 @@ export default function UpdateProfileDialog({ isOpen, onClose, children }: Modal
         >
           ✖
         </button>
-        <h2 className="text-xl font-bold mb-4">Update user profile</h2>
+        <h2 className="text-xl font-bold mb-4 text-black">Update user profile</h2>
         {children}
       </div>
     </div>

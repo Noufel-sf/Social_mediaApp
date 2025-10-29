@@ -9,10 +9,11 @@ import { CreatePost  , GetAllUserPosts , DeletePost, ToggleLike } from '../contr
 const router = Router();
 
 
-router.get('/all', isAuth2, GetAllUserPosts);
+router.get('/all', GetAllUserPosts);
 
 
 router.post('/create', isAuth2, upload.array("PostCovers", 4), CreatePost);
+
 router.put('/like/:id', isAuth2, ToggleLike);
 
 

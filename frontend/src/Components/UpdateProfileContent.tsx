@@ -53,6 +53,7 @@ export default function UpdateProfileDialogContent({
       setIsModalOpen(false);
       toast.success("Profile updated successfully");
       setCurrentUser(res.data.user);
+      window.location.reload() ; 
     } catch (err) {
       console.error("❌ Update failed:", err);
       toast.error("Failed to update profile");
@@ -91,8 +92,8 @@ export default function UpdateProfileDialogContent({
         name="username"
         placeholder="Full name"
         value={formData.username}
-        onChange={handleInputChange}
-        className="w-full border p-2 rounded"
+        onChange={handleInputChange} 
+        className="w-full border p-2 rounded border-gray-300 text-black"
       />
 
       {/* Bio */}
@@ -101,7 +102,7 @@ export default function UpdateProfileDialogContent({
         placeholder="Bio"
         value={formData.bio}
         onChange={handleInputChange}
-        className="w-full border p-2 rounded"
+        className="w-full border p-2 rounded border-gray-300 text-black"
       />
 
       {/* Save Button */}

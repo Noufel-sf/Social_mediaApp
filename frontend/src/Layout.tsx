@@ -7,61 +7,36 @@ import LoginForm from "./Pages/LoginForm";
 import SignupForm from "./Pages/SignupForm";
 import UserProfilePage from "./Pages/UserProfilepage";
 import MessagingPage from "./Pages/MessagingPage";
-import { useTheme } from './Contexts/DarkModeContext';
+import { useTheme } from "./Contexts/DarkModeContext";
 import { useAuthStates } from "./ZustandStates/AuthStates";
 import { useQuery } from "@tanstack/react-query";
 import type { User } from "./Utils/Types";
-import { ErrorBoundary } from "react-error-boundary";
-
-
-
 
 export default function Layout() {
   const { theme } = useTheme();
   // const { FetchCurrentUserData } = useAuthStates();
-  
 
-// const {
-//   data: Currentuser ,
-//   isLoading,
-//   isError,
-// } = useQuery<User | null>({
-//   queryKey: ["CurrentUser"],
-//   queryFn: FetchCurrentUserData,
-//   staleTime: 1000 * 60 * 5,
-// });
-
-//   useEffect(() => {
-//     console.log("Currentuser data in Layout:", Currentuser);
-//   }, [Currentuser]);
-
-  const { FetchCurrentUserData} = useAuthStates();
+  const { FetchCurrentUserData } = useAuthStates();
 
   useEffect(() => {
     FetchCurrentUserData();
   }, [FetchCurrentUserData]);
 
-
-
   return (
-    <main className={`flex min-h-screen ${theme === "dark" ? "bg-[var(--dark-bg)]" : "bg-[#fafafa]"}`}>
-
-      
+    <main
+      className={`flex min-h-screen ${
+        theme === "dark" ? "bg-[var(--dark-bg)]" : "bg-[#fafafa]"
+      }`}
+    >
       <Routes>
-      {/* authentication routes */}
+        {/* authentication routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignupForm />} />
         </Route>
 
-
-
         <Route path="/" element={<Home />} />
-        <Route path="/userprofile/:id" element={
-          <ErrorBoundary fallback={<div>error</div>} >
-          <UserProfilePage />
-          </ErrorBoundary>
-          } />
+        <Route path="/userprofile/:id" element={<UserProfilePage />} />
         <Route path="/messages" element={<MessagingPage />} />
       </Routes>
       <Toaster position="top-center" />

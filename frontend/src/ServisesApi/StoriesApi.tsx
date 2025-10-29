@@ -8,7 +8,7 @@ export async function getStories(): Promise<Story[]> {
       const res = await api.get("/stories/all");
       return res.data;
   } catch (error) {
-      toast.error("Failed to fetch stories");
+      // toast.error("Failed to fetch stories");
       throw new Error("Failed to fetch stories");
   }
   

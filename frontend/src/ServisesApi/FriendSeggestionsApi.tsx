@@ -9,7 +9,7 @@ export async function getFriendSuggestions(): Promise<User[]> {
     
     return res.data.friendSuggestions || [];
   } catch (error) {
-    toast.error("Failed to fetch friend suggestions");
+    // toast.error("Failed to fetch friend suggestions");
     return [];
   }
 }

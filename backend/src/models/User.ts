@@ -46,13 +46,13 @@ const userSchema = new Schema<UserI1>(
     CoverImg: {
       type: String,
       required: false,  // means optional nino 
-      default: "",
+      default: "/user.png",
     },
 
     ProfileImg: {
       type: String,
       required: false,
-      default: "",
+      default: "/user.png",
     },
 
     Posts: [

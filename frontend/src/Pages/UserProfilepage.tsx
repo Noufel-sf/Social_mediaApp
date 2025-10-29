@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Camera } from "lucide-react";
@@ -34,12 +34,28 @@ export default function UserProfilePage() {
   const navigate = useNavigate();
   const [isAddStoryModalOpen, setIsAddStoryModalOpen] = useState(false);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+
+
   const [UserCoverimg, setUserCoverimg] = useState<string | File>(
     userDetails?.CoverImg || ""
   );
   const [CoverImgpreview, setCoverImgpreview] = useState<string>(
     userDetails?.CoverImg || ""
   );
+
+  // 🔧 Update cover img when userDetails changes
+useEffect(() => {
+  if (userDetails?.CoverImg) {
+    setCoverImgpreview(userDetails.CoverImg);
+    setUserCoverimg(userDetails.CoverImg);
+  }
+}, [userDetails?.CoverImg]);
+
+
+
+
+  // console.log("user cover img " ,userDetails?.CoverImg);
+  
   const [showConfirmCoverimg, setshowConfirmCoverimg] = useState(false);
 
   if (isLoading)
@@ -88,7 +104,7 @@ export default function UserProfilePage() {
         />
 
         {isCurrentUser && (
-          <label className="absolute bottom-3 right-3 bg-white px-3 py-1 rounded-md shadow text-sm font-medium flex items-center gap-1 cursor-pointer">
+          <label className={`absolute bottom-3 right-3 bg-white px-3 py-1 rounded-md shadow text-sm font-medium flex items-center gap-1 cursor-pointer text-black`}>
             <Camera className="w-4 h-4" />
             Edit Cover Photo
             <input
@@ -126,7 +142,7 @@ export default function UserProfilePage() {
           <div className="mt-10 flex flex-col md:flex-row md:items-center md:justify-between">
             <div className="flex gap-2 mt-3 md:mt-0">
               <button
-                className="bg-[var(--primary-color)] text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700"
+                className="bg-[var(--primary-color)] text-white px-4 py-2 cursor-pointer rounded-md font-medium hover:bg-blue-700"
                 onClick={() => setIsAddStoryModalOpen(true)}
               >
                 Add to Story
@@ -140,7 +156,7 @@ export default function UserProfilePage() {
               </AddStoryDialog>
 
               <button
-                className="bg-gray-200 px-4 py-2 rounded-md font-medium hover:bg-gray-300"
+                className="bg-gray-200 px-4 py-2 rounded-md font-medium cursor-pointer text-black hover:bg-gray-300"
                 onClick={() => setIsUpdateDialogOpen(true)}
               >
                 Edit Profile

@@ -13,7 +13,7 @@ function StoriesList() {
     queryFn: getStories,
   });
 
-  const storiesToRender = stories || Storys;
+  const storiesToRender = Storys;
 
   // console.log(stories);
 

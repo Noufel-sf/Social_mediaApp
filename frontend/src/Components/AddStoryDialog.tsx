@@ -20,7 +20,7 @@ export default function AddStoryDialog({ isOpen, onClose, children }: ModalProps
         >
           ✖
         </button>
-        <h2 className="text-xl font-bold mb-4">Add a new story</h2>
+        <h2 className="text-xl font-bold mb-4 text-black" >Add a new story</h2>
         {children}
       </div>
     </div>

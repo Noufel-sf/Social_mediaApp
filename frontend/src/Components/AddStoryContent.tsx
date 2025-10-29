@@ -71,7 +71,7 @@ export default function AddStoryContent({
               )}
             </>
           ) : (
-            <div className="w-full h-[300px] flex items-center justify-center border text-gray-500">
+            <div className="w-full h-[300px] flex items-center justify-center border-2 rounded-xl border-gray-300 text-gray-500">
               No Story
             </div>
           )}
@@ -85,7 +85,7 @@ export default function AddStoryContent({
             id="story-upload"
             type="file"
             accept="image/*,video/*"
-            className="hidden"
+            className="hidden border-2 border-gray-300"
             onChange={handleFileChange}
           />
         </div>
@@ -96,7 +96,7 @@ export default function AddStoryContent({
         placeholder="Write a caption (optional)"
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
-        className="w-full border p-2 rounded"
+        className="w-full  p-2 rounded border-2 border-gray-300"
       />
 
       {/* Add Story Button */}
