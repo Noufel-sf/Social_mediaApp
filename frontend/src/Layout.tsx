@@ -18,7 +18,7 @@ export default function Layout() {
   const { theme } = useTheme();
 
   const { FetchCurrentUserData } = useAuthStates();
-cd
+
   useEffect(() => {
     FetchCurrentUserData();
   }, [FetchCurrentUserData]);
