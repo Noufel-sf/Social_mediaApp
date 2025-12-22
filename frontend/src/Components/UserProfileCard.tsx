@@ -1,39 +1,113 @@
+// UserProfileCard.tsx
 import React from "react";
-import { Link } from "react-router-dom";
 import { useTheme } from "../Contexts/DarkModeContext";
+import { Link } from "react-router-dom";
 import { useAuthStates } from "../ZustandStates/AuthStates";
 
-function UserProfileCard({
-  imageUrl,
-  Username,
-  Usernickname,
-}: {
+type UserProfileCardProps = {
   imageUrl: string;
   Username: string;
   Usernickname: string;
-}) {
+  bannerUrl?: string;
+  posts?: number;
+  followers?: number;
+  following?: number;
+};
+
+const UserProfileCard: React.FC<UserProfileCardProps> = ({
+  imageUrl,
+  Username,
+  Usernickname,
+  bannerUrl = "/default-banner.jpg",
+  posts = 250,
+  followers = 2022,
+  following = 590,
+}) => {
   const { theme } = useTheme();
   const { CurrentUser } = useAuthStates();
 
   return (
-    <Link to={`/userprofile/${CurrentUser?._id}`}>
-      <div
-        className={`flex items-center gap-2 p-5 rounded-2xl cursor-pointer hover:bg-gray-300 transition duration-500 bg-[var(--primary-color)] ${
-          theme === "dark" ? " text-white" : "bg-[#ffff] text-black"
-        }`}
-      >
+    <div
+      className={`rounded-2xl overflow-hidden ${
+        theme === "dark" ? "bg-[#18181b]" : "bg-white"
+      } shadow-sm border ${
+        theme === "dark" ? "border-gray-800" : "border-gray-100"
+      }`}
+    >
+      {/* Banner */}
+      <div className="relative h-24 w-full overflow-hidden">
         <img
-          src={imageUrl}
-          alt="profile"
-          className="w-12 h-12 rounded-full object-cover"
+          src={bannerUrl}
+          alt="Banner"
+          className="w-full h-full object-cover"
         />
-        <div className="flex flex-col gap-2">
-          <h1 className="text-white">{Username}</h1>
-          <h3 className="text-white">{Usernickname}</h3>
-        </div>
       </div>
-    </Link>
+
+      {/* Avatar overlapping banner */}
+      <div className="relative flex flex-col items-center -mt-12 pb-4">
+        <div className="w-20 h-20 rounded-full border-4 border-white bg-white overflow-hidden shadow-md">
+          <img
+            src={imageUrl}
+            alt={Username}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Name + handle */}
+        <h3
+          className={`mt-2 text-base font-bold ${
+            theme === "dark" ? "text-white" : "text-gray-900"
+          }`}
+        >
+          {Username}
+        </h3>
+        <p className="text-xs text-gray-400">{Usernickname}</p>
+
+        {/* Stats row */}
+        <div className="flex items-center justify-center gap-8 mt-4 w-full px-4">
+          <div className="flex flex-col items-center">
+            <p
+              className={`text-lg font-bold ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
+              {posts}
+            </p>
+            <p className="text-[11px] text-gray-400">Post</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <p
+              className={`text-lg font-bold ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
+              {followers}
+            </p>
+            <p className="text-[11px] text-gray-400">Followers</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <p
+              className={`text-lg font-bold ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
+              {following}
+            </p>
+            <p className="text-[11px] text-gray-400">Following</p>
+          </div>
+        </div>
+
+        {/* My Profile button */}
+        <Link
+        to={`/userprofile/${CurrentUser?._id}`}
+        className="w-full px-4 mt-4">
+          <button className="w-full bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] cursor-pointer text-white text-sm font-semibold py-2.5 rounded-full transition">
+            My Profile
+          </button>
+        </Link>
+      </div>
+    </div>
   );
-}
+};
 
 export default UserProfileCard;

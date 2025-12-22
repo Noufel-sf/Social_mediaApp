@@ -9,6 +9,7 @@ import UserProfilePage from "./Pages/UserProfilepage";
 import MessagingPage from "./Pages/MessagingPage";
 import { useTheme } from "./Contexts/DarkModeContext";
 import { useAuthStates } from "./ZustandStates/AuthStates";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,10 +18,20 @@ export default function Layout() {
   const { theme } = useTheme();
 
   const { FetchCurrentUserData } = useAuthStates();
-
+cd
   useEffect(() => {
     FetchCurrentUserData();
   }, [FetchCurrentUserData]);
+
+
+  const { CurrentUser } = useAuthStates();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!CurrentUser) {
+      navigate("/login");
+    }
+  }, [CurrentUser, navigate]);
 
   return (
     <main

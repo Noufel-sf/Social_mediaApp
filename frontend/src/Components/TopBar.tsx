@@ -5,7 +5,17 @@ import InputSearchItem from "../ui/InputSearchItem";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { useAuthStates } from "../ZustandStates/AuthStates";
-import { MdDarkMode, MdLightMode, MdLogout, MdMenu, MdClose } from "react-icons/md";
+import {
+  MdDarkMode,
+  MdLightMode,
+  MdLogout,
+  MdMenu,
+  MdClose,
+  MdHome,
+  MdNotifications,
+  MdChat,
+  MdPeople,
+} from "react-icons/md";
 
 const Topbar = () => {
   const { theme, setTheme } = useTheme();
@@ -19,92 +29,138 @@ const Topbar = () => {
 
   return (
     <section
-      className={`border-b border-gray-200 ${theme == "light" ? "text-black" : "text-white"}`}
+      className={` border-b-2  py-4 ${
+        theme === "light"
+          ? " text-black border-gray-200"
+          : " text-white border-gray-600"
+      }`}
     >
-      <div className="flex items-center justify-between py-4  px-5 gap-4">
-        {/* === LEFT: Logo === */}
-        <div className="flex items-center w-full justify-between">
-          {/* Mobile menu toggle */}
-          <Link to="/" className="flex gap-3 items-center">
-            <img src="/logo.svg" alt="Logo" className=" w-38" />
+      <div className="flex items-center justify-between py-3 px-4 md:px-6 lg:px-8  mx-auto">
+        {/* LEFT: Logo + Search */}
+        <div className="flex items-center gap-4 flex-1">
+          <Link to="/" className="flex gap-2 items-center">
+            <img src="/favicon.ico" alt="Logo" className="w-6 h-6" />
+            <h1 className="capitalize font-bold text-lg hidden sm:block">
+              CozMeet
+            </h1>
           </Link>
+
+          {/* Search bar - hidden on mobile */}
+          <div className="hidden md:block flex-1 max-w-xs">
+            <InputSearchItem />
+          </div>
+        </div>
+
+        {/* CENTER: Navigation Icons (Desktop only) */}
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <Link
+            to="/"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-blue-50 text-[var(--primary-color)] transition"
+          >
+            <MdHome className="text-xl" />
+            <span className="hidden lg:inline text-sm font-semibold">Home</span>
+          </Link>
+          <Link
+            to="/messages"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+          >
+            <MdChat className="text-xl" />
+          </Link>
+          <Link
+            to="/notifications"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+          >
+            <MdNotifications className="text-xl" />
+          </Link>
+          <Link
+            to="/community"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg mr-2 hover:bg-gray-500 transition"
+          >
+            <MdPeople className="text-xl " />
+          </Link>
+        </nav>
+
+        {/* RIGHT: Actions + User */}
+        <div className="flex items-center gap-3">
+          {/* Language switcher - desktop only */}
+          <div className="hidden md:block">
+            <LanguageSwitcher />
+          </div>
+
+          {/* Theme toggle - desktop only */}
+          <button
+            onClick={toggleTheme}
+            className="hidden md:flex items-center justify-center w-9 h-9 cursor-pointer rounded-full hover:bg-gray-100 transition"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? (
+              <MdLightMode className="text-xl" />
+            ) : (
+              <MdDarkMode className="text-xl" />
+            )}
+          </button>
+
+          {/* User section */}
+          {CurrentUser ? (
+            <div className="hidden md:flex items-center gap-2">
+              <Link
+                to={`/userprofile/${CurrentUser._id}`}
+                className="flex items-center gap-2 hover:opacity-80 transition"
+              >
+                <img
+                  className="rounded-full w-9 h-9 object-cover border-2 border-gray-200"
+                  src={CurrentUser.ProfileImg || "/user.png"}
+                  alt={CurrentUser.username}
+                />
+                <span className="hidden lg:block text-sm font-semibold">
+                  {CurrentUser.username}
+                </span>
+              </Link>
+              <button
+                onClick={logout}
+                className="flex items-center cursor-pointer justify-center w-9 h-9 rounded-full hover:bg-gray-100 transition"
+                aria-label="Logout"
+              >
+                <MdLogout className="text-xl text-[var(--primary-color)]" />
+              </button>
+            </div>
+          ) : (
+            <div className="hidden md:flex items-center gap-2">
+              <Link to="/login">
+                <button className="text-sm font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition">
+                  Log In
+                </button>
+              </Link>
+              <Link to="/signup">
+                <button className="text-sm font-semibold px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
+                  Sign Up
+                </button>
+              </Link>
+            </div>
+          )}
+
+          {/* Mobile menu toggle */}
           <button
             onClick={() => setSidebarOpen(true)}
-            className="md:hidden text-3xl"
+            className="md:hidden text-2xl"
             aria-label="Open sidebar"
           >
             <MdMenu />
           </button>
-
         </div>
-
-        {/* === CENTER: Search === */}
-        {/* <div className="flex-1 hidden md:flex justify-center max-w-md">
-          <InputSearchItem />
-        </div> */}
-
-        {/* === RIGHT (Desktop Only) === */}
-        <ul className="hidden md:flex gap-5  items-center">
-          <li>
-            <LanguageSwitcher />
-          </li>
-
-          <li>
-            <button
-              onClick={toggleTheme}
-              className="text-xl cursor-pointer bg-white text-[var(--primary-color)] py-2 px-2 rounded-full hover:opacity-80 transition"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <MdLightMode /> : <MdDarkMode />}
-            </button>
-          </li>
-
-          {CurrentUser ? (
-            <li className="flex items-center gap-3">
-              <Link to={`/userprofile/${CurrentUser._id}`}>
-                <img
-                  className="cursor-pointer rounded-full w-22 h-11 object-cover border-2 border-[var(--primary-color)]"
-                  src={CurrentUser.ProfileImg || "/user.png"}
-                  alt={CurrentUser.username}
-                />
-              </Link>
-              <button
-                onClick={logout}
-                className="capitalize text-xl font-bold cursor-pointer py-2 px-3 rounded-full text-[var(--primary-color)] bg-white hover:bg-gray-100 transition"
-              >
-                <MdLogout className="inline text-xl" />
-              </button>
-            </li>
-          ) : (
-            <>
-              <li>
-                <Link to="/login">
-                  <button className="capitalize text-base font-bold cursor-pointer py-2 px-5 rounded-full text-white bg-[var(--primary-color)] hover:opacity-90 transition whitespace-nowrap">
-                    Log In
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/signup">
-                  <button className="capitalize text-base font-bold cursor-pointer py-2 px-5 rounded-full text-white bg-[var(--primary-color)] hover:opacity-90 transition whitespace-nowrap">
-                    Sign Up
-                  </button>
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
       </div>
 
-      {/* === MOBILE SIDEBAR === */}
+      {/* MOBILE SIDEBAR */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[var(--primary-color)] text-white transform ${
+        className={`fixed top-0 left-0 h-full w-64 ${
+          theme === "light" ? "bg-white" : "bg-[#18181b]"
+        } transform ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 z-50 flex flex-col p-6`}
+        } transition-transform duration-300 z-50 flex flex-col p-6 shadow-2xl`}
       >
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Menu</h2>
-          <button onClick={() => setSidebarOpen(false)} className="text-3xl">
+          <h2 className="text-xl font-bold">Menu</h2>
+          <button onClick={() => setSidebarOpen(false)} className="text-2xl">
             <MdClose />
           </button>
         </div>
@@ -118,31 +174,33 @@ const Topbar = () => {
                 className="flex items-center gap-3"
               >
                 <img
-                  className="rounded-full w-11 h-11 object-cover border-2 border-white"
+                  className="rounded-full w-11 h-11 object-cover border-2 border-gray-300"
                   src={CurrentUser.ProfileImg || "/user.png"}
                   alt={CurrentUser.username}
                 />
-                <span className="capitalize font-semibold">{CurrentUser.username}</span>
+                <span className="capitalize font-semibold">
+                  {CurrentUser.username}
+                </span>
               </Link>
               <button
                 onClick={() => {
                   logout();
                   setSidebarOpen(false);
                 }}
-                className="flex items-center gap-2 w-full text-lg font-medium py-2 px-3 rounded-lg bg-white text-[var(--primary-color)]"
+                className="flex items-center cursor-pointer hover:text-[var(--primary-color)] gap-2 w-full text-sm font-medium py-2 px-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition"
               >
-                <MdLogout className="text-2xl" /> Logout
+                <MdLogout className="text-xl" /> Logout
               </button>
             </div>
           ) : (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               <Link to="/login" onClick={() => setSidebarOpen(false)}>
-                <button className="w-full text-lg font-bold bg-white text-[var(--primary-color)] py-2 rounded-lg">
+                <button className="w-full text-sm font-semibold py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition">
                   Log In
                 </button>
               </Link>
               <Link to="/signup" onClick={() => setSidebarOpen(false)}>
-                <button className="w-full text-lg font-bold bg-white text-[var(--primary-color)] py-2 rounded-lg">
+                <button className="w-full text-sm font-semibold bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
                   Sign Up
                 </button>
               </Link>
@@ -151,9 +209,13 @@ const Topbar = () => {
 
           <button
             onClick={toggleTheme}
-            className="w-full flex items-center gap-2 text-lg bg-white text-[var(--primary-color)] py-2 px-3 rounded-lg"
+            className="w-full flex items-center gap-2 text-sm py-2 px-3 rounded-lg hover:bg-gray-100 transition"
           >
-            {theme === "dark" ? <MdLightMode /> : <MdDarkMode />}
+            {theme === "dark" ? (
+              <MdLightMode className="text-xl text-[var(--primary-color)]" />
+            ) : (
+              <MdDarkMode className="text-xl text-purple-500" />
+            )}
             <span>Toggle Theme</span>
           </button>
 
@@ -161,12 +223,12 @@ const Topbar = () => {
         </div>
       </div>
 
-      {/* === OVERLAY === */}
+      {/* OVERLAY */}
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-        ></div>
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+        />
       )}
     </section>
   );

@@ -25,7 +25,7 @@ export default function FriendSuggestionsList() {
 
   return (
     <div
-      className={`flex flex-col gap-4 p-4 rounded-2xl ${
+      className={`flex flex-col gap-4 ${
         theme === "dark"
           ? "bg-[var(--dark-bg)] text-white"
           : "bg-white text-black"

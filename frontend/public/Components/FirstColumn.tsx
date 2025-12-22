@@ -18,12 +18,8 @@ function FirstColumn() {
     <div className="hidden lg:flex flex-col gap-8 md:w-1/4 lg:w-1/5 xl:w-1/5">
       <UserProfileCard
         imageUrl={CurrentUser?.ProfileImg || "/user.png"}
-        Username={CurrentUser?.username || "Default User"}
+        Username={CurrentUser?.username || "default user"}
         Usernickname={CurrentUser?.nickname || "@default"}
-        bannerUrl={CurrentUser?.CoverImg || "/default-banner.jpg"}
-        posts={250}
-        followers={2022}
-        following={590}
       />
 
       <div
@@ -36,19 +32,17 @@ function FirstColumn() {
             key={item.id}
             className="flex items-center gap-4 cursor-pointer hover:bg-gray-300 p-2 rounded-lg w-full"
           >
-            <SidebarrItem
-              icon={item.icon}
-              text={t(item.textKey)}
-              link={item.link}
-            />
+            <SidebarrItem icon={item.icon} text={t(item.textKey)} link={item.link} />
           </div>
         ))}
       </div>
 
       {/* IMPORTANT: pass onClick (capital C) */}
-      <Button text={t("createPost")} onClick={() => setShowAddpost(true)} />
+      <Button text={t('createPost')} onClick={() => setShowAddpost(true)} />
 
-      {showAddpost && <AddPostModel onClose={() => setShowAddpost(false)} />}
+      {showAddpost && (
+        <AddPostModel onClose={() => setShowAddpost(false)} />
+      )}
     </div>
   );
 }

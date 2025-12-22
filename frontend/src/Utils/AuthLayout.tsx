@@ -1,16 +1,10 @@
-import { Outlet, Navigate } from "react-router-dom";
-
-// import { useUserContext } from "@/context/AuthContext";
+import { Outlet} from "react-router-dom";
 
 export default function AuthLayout() {
-//   const { isAuthenticated } = useUserContext();
+  
 
   return (
-    <>
-      
-      {/* isAuthenticated ? (
-        <Navigate to="/" /> */}
-      {/* ) : ( */}
+ 
         <>
           <section className="flex flex-1 bg-black justify-center items-center flex-col ">
             <Outlet />
@@ -22,7 +16,5 @@ export default function AuthLayout() {
             className="hidden xl:block h-screen   bg-no-repeat"
           />
         </>
-      {/* )} */}
-    </>
   );
 }

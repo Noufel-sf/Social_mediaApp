@@ -14,6 +14,7 @@ import ConfirmUserCoverImg from "../Components/ConfirmUserCoverimg";
 import { getUserProfilePageData } from "../ServisesApi/UserProfileApi";
 import type { User, Post } from "../Utils/Types";
 import { TailSpin } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 export default function UserProfilePage() {
   const { forceLTR } = useDirection();
@@ -198,6 +199,7 @@ useEffect(() => {
               <h3 className="font-semibold mb-3">Friends</h3>
               <div className="grid grid-cols-3 gap-2">
                 {userDetails.friends.map((friend: User) => (
+                  <Link to={`/userprofile/${friend._id}`} key={friend._id}> 
                   <div key={friend._id} className="text-center">
                     <img
                       src={friend.ProfileImg || "/user.png"}
@@ -206,8 +208,10 @@ useEffect(() => {
                     />
                     <p className="text-xs mt-1 truncate">{friend.username}</p>
                   </div>
-                ))}
+                </Link>
+                ))} 
               </div>
+
             </div>
           )}
         </div>

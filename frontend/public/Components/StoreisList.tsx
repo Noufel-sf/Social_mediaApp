@@ -23,7 +23,7 @@ function StoriesList() {
 
   return (
     <div
-      className={`flex gap-2 overflow-x-auto p-4 border-2 border-gray-500 rounded-xl ${
+      className={`flex gap-2 overflow-x-auto p-4 border border-gray-300 rounded-xl ${
         theme === "dark"
           ? "bg-[var(--dark-bg)] text-white"
           : "bg-white text-black"

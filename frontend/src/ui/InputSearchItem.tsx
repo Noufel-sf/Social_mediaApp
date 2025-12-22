@@ -9,11 +9,11 @@ function InputSearchItem() {
 
   return (
     <div className="relative w-full hidden md:block">
-      <IoIosSearch className="absolute left-2 top-3" />
+      <IoIosSearch className="absolute left-3 top-3" />
       <input 
         type="text" 
         placeholder={t('search')} 
-        className={`border border-gray-200 outline-none rounded-full w-full p-2 pl-8 ${theme === "dark" ? "bg-[var(--dark-bg)] text-white" : "bg-white text-black"}`} 
+        className={`border-2  border-gray-500  outline-none rounded-full w-full p-2 pl-8 ${theme === "dark" ? "bg-[var(--dark-bg)] text-white" : "bg-white text-black"}`} 
       />
     </div>
   )

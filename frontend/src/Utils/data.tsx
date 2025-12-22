@@ -208,10 +208,10 @@ export const Storys = [
             Username: "franca_delia",
             Usernickname: "franca",
             email: "franca@example.com",
-            imageUrl: "/profile-2.jpg",
+            imageUrl: "/story-5.jpg",
             bio: "Designer"
         }, 
-        img: "/story.jpg"
+        img: "/story-5.jpg"
     },
     {
         id: 3, 
@@ -221,10 +221,10 @@ export const Storys = [
             Username: "daniella_jackson",
             Usernickname: "daniella",
             email: "daniella@example.com",
-            imageUrl: "/profile-3.jpg",
+            imageUrl: "/Post.jpg",
             bio: "Marketing Specialist"
         }, 
-        img: "/story.jpg"
+        img: "/Post.jpg"
     },
 
     {
@@ -238,7 +238,72 @@ export const Storys = [
             imageUrl: "/profile-3.jpg",
             bio: "Marketing Specialist"
         }, 
-        img: "/story.jpg"
+        img: "/coverimg.jpg"
+    },
+    {
+        id: 5, 
+        user: {
+            id: "5",
+            name: "Daniella Jackson",
+            Username: "daniella_jackson",
+            Usernickname: "daniella",
+            email: "daniella@example.com",
+            imageUrl: "/profile-3.jpg",
+            bio: "Marketing Specialist"
+        }, 
+        img: "/profile-1.jpg"
+    },
+    {
+        id: 6, 
+        user: {
+            id: "6",
+            name: "Daniella Jackson",
+            Username: "daniella_jackson",
+            Usernickname: "daniella",
+            email: "daniella@example.com",
+            imageUrl: "/profile-3.jpg",
+            bio: "Marketing Specialist"
+        }, 
+        img: "/friendRequest.jpg"
+    },
+    {
+        id: 7 , 
+        user: {
+            id: "7",
+            name: "Daniella Jackson",
+            Username: "daniella_jackson",
+            Usernickname: "daniella",
+            email: "daniella@example.com",
+            imageUrl: "/profile-3.jpg",
+            bio: "Marketing Specialist"
+        }, 
+        img: "/profile.jpg"
+    },
+    {
+        id: 4, 
+        user: {
+            id: "4",
+            name: "Daniella Jackson",
+            Username: "daniella_jackson",
+            Usernickname: "daniella",
+            email: "daniella@example.com",
+            imageUrl: "/profile-3.jpg",
+            bio: "Marketing Specialist"
+        }, 
+        img: "/profile-1.jpg"
+    },
+    {
+        id: 4, 
+        user: {
+            id: "4",
+            name: "Daniella Jackson",
+            Username: "daniella_jackson",
+            Usernickname: "daniella",
+            email: "daniella@example.com",
+            imageUrl: "/profile-3.jpg",
+            bio: "Marketing Specialist"
+        }, 
+        img: "/coverimg.jpg"
     },
   
  
@@ -251,8 +316,8 @@ export const Storys = [
 export const SidebarrItems = [
     {id:1, textKey:"home", icon:<HiChatAlt />, link:"/"},
     {id:2, textKey:"messages", icon:<HiChatAlt />, link:"/messages"},
-    {id:3, textKey:"friends", icon:<HiChatAlt />, link:"/friends"},
-    {id:5, textKey:"settings", icon:<HiChatAlt />, link:"/settings"},
+    {id:3, textKey:"friends", icon:<HiChatAlt />, link:"/"},
+    {id:5, textKey:"settings", icon:<HiChatAlt />, link:"/"},
 ];
 
 
