@@ -40,7 +40,7 @@ const Topbar = () => {
         <div className="flex items-center gap-4 flex-1">
           <Link to="/" className="flex gap-2 items-center">
             <img src="/favicon.ico" alt="Logo" className="w-6 h-6" />
-            <h1 className="capitalize font-bold text-lg hidden sm:block">
+            <h1 className="capitalize font-bold text-lg  sm:block">
               CozMeet
             </h1>
           </Link>
@@ -66,18 +66,7 @@ const Topbar = () => {
           >
             <MdChat className="text-xl" />
           </Link>
-          <Link
-            to="/notifications"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-500 transition"
-          >
-            <MdNotifications className="text-xl" />
-          </Link>
-          <Link
-            to="/community"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg mr-2 hover:bg-gray-500 transition"
-          >
-            <MdPeople className="text-xl " />
-          </Link>
+         
         </nav>
 
         {/* RIGHT: Actions + User */}
@@ -187,7 +176,7 @@ const Topbar = () => {
                   logout();
                   setSidebarOpen(false);
                 }}
-                className="flex items-center cursor-pointer hover:text-[var(--primary-color)] gap-2 w-full text-sm font-medium py-2 px-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition"
+                className="flex items-center cursor-pointer gap-2 w-full text-sm font-medium py-2 px-3 rounded-lg bg-[var(--primary-color)] hover:bg-gray-200 transition"
               >
                 <MdLogout className="text-xl" /> Logout
               </button>
@@ -220,6 +209,12 @@ const Topbar = () => {
           </button>
 
           <LanguageSwitcher />
+          <Link to="messages" onClick={() => setSidebarOpen(false)}>
+            <button className="w-full flex items-center gap-2 text-sm py-2 px-3 rounded-lg hover:bg-gray-100 transition">
+              <MdChat className="text-xl" />
+              <span>Messages</span>
+            </button>
+          </Link>
         </div>
       </div>
 

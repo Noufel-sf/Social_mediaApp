@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Home from "./Pages/Homepage";
@@ -9,29 +9,34 @@ import UserProfilePage from "./Pages/UserProfilepage";
 import MessagingPage from "./Pages/MessagingPage";
 import { useTheme } from "./Contexts/DarkModeContext";
 import { useAuthStates } from "./ZustandStates/AuthStates";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 
 
 export default function Layout() {
   const { theme } = useTheme();
-
-  const { FetchCurrentUserData } = useAuthStates();
+  const { CurrentUser, loading, FetchCurrentUserData } = useAuthStates();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     FetchCurrentUserData();
   }, [FetchCurrentUserData]);
 
-
-  const { CurrentUser } = useAuthStates();
-  const navigate = useNavigate();
-
   useEffect(() => {
-    if (!CurrentUser) {
+    if (loading) return;
+
+    const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
+
+    if (!CurrentUser && !isAuthPage) {
       navigate("/login");
     }
-  }, [CurrentUser, navigate]);
+
+    if (CurrentUser && isAuthPage) {
+      navigate("/");
+    }
+  }, [CurrentUser, loading, location.pathname, navigate]);
 
   return (
     <main
