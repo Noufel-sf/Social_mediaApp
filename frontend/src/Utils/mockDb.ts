@@ -1,6 +1,6 @@
 import type { User, Post, Story, FriendRequest, Message } from "./Types";
 
-const STORAGE_KEY = "cozmeet_mock_database_v4";
+const STORAGE_KEY = "cozmeet_mock_database_v6";
 
 export interface MockDatabase {
   users: User[];
@@ -321,7 +321,7 @@ class MockDbService {
       stories: JSON.parse(JSON.stringify(INITIAL_STORIES)),
       friendRequests: JSON.parse(JSON.stringify(INITIAL_FRIEND_REQUESTS)),
       messages: JSON.parse(JSON.stringify(INITIAL_MESSAGES)),
-      currentUserId: currentUser._id,
+      currentUserId: null,
     };
 
     try {

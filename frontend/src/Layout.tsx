@@ -30,13 +30,34 @@ export default function Layout() {
     const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
 
     if (!CurrentUser && !isAuthPage) {
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
 
     if (CurrentUser && isAuthPage) {
-      navigate("/");
+      navigate("/", { replace: true });
     }
   }, [CurrentUser, loading, location.pathname, navigate]);
+
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
+
+  if (loading && !isAuthPage) {
+    return (
+      <div
+        className={`flex flex-col items-center justify-center min-h-screen ${
+          theme === "dark" ? "bg-[var(--dark-bg)] text-zinc-100" : "bg-[#f8fafc] text-slate-900"
+        }`}
+      >
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white font-black text-2xl shadow-lg animate-pulse">
+            C
+          </div>
+          <p className="text-xs font-semibold tracking-wide text-slate-400 dark:text-zinc-500">
+            Entering CozMeet...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main

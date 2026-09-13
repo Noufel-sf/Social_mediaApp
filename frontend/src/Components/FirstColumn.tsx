@@ -18,8 +18,8 @@ function FirstColumn() {
     <div className="hidden lg:flex flex-col gap-6 md:w-1/4 lg:w-1/5 xl:w-1/5">
       <UserProfileCard
         imageUrl={CurrentUser?.ProfileImg || "/user.png"}
-        Username={CurrentUser?.username || "Default User"}
-        Usernickname={CurrentUser?.nickname || "@default"}
+        Username={CurrentUser?.username || "Guest"}
+        Usernickname={CurrentUser?.nickname || "@guest"}
         bannerUrl={CurrentUser?.CoverImg || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1400&q=80"}
         posts={250}
         followers={2022}

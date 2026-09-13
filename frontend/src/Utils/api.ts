@@ -47,13 +47,13 @@ api.defaults.adapter = async (config: InternalAxiosRequestConfig): Promise<Axios
   // Simulate network latency for natural UI transitions
   await new Promise((resolve) => setTimeout(resolve, 150));
 
-  let url = config.url || "";
-  // Strip baseUrl prefix if present
-  if (url.startsWith("http://localhost:8000/api/")) {
-    url = url.replace("http://localhost:8000/api/", "/");
-  } else if (url.startsWith("/api/")) {
-    url = url.replace("/api/", "/");
-  }
+  let rawUrl = config.url || "";
+  // Strip protocol and host if present
+  let url = rawUrl.replace(/^https?:\/\/[^\/]+/, "");
+  // Strip /api prefix if present
+  url = url.replace(/^\/api(\/|$)/, "/");
+  // Normalize consecutive slashes
+  url = url.replace(/\/+/g, "/");
   if (!url.startsWith("/")) {
     url = "/" + url;
   }
@@ -74,7 +74,11 @@ api.defaults.adapter = async (config: InternalAxiosRequestConfig): Promise<Axios
     if (url === "/auth/currentuser" && method === "get") {
       const user = mockDb.getCurrentUser();
       if (!user) {
-        return createResponse({ message: "No active user session" }, 401);
+        return Promise.reject({
+          response: createResponse({ message: "No active user session" }, 401),
+          status: 401,
+          message: "No active user session",
+        });
       }
       return createResponse(user);
     }

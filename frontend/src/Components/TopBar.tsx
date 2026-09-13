@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputSearchItem from "../ui/InputSearchItem";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useAuthStates } from "../ZustandStates/AuthStates";
@@ -10,6 +10,12 @@ import {
 
 const Topbar = () => {
   const { CurrentUser, logout } = useAuthStates();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login", { replace: true });
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md border-b border-slate-200/80 dark:border-zinc-800/80 transition-colors duration-200">
@@ -85,7 +91,7 @@ const Topbar = () => {
                 </span>
               </Link>
               <button
-                onClick={logout}
+                onClick={handleLogout}
                 className="flex items-center cursor-pointer justify-center w-9 h-9 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-slate-500 hover:text-rose-500 transition"
                 aria-label="Logout"
                 title="Logout"

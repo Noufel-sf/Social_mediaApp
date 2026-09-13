@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import api from "../Utils/api";
+import { mockDb } from "../Utils/mockDb";
 import type { User } from "../Utils/Types";
 import toast from "react-hot-toast";
 import { connectSocket, disconnectSocket } from "../Utils/socket";
@@ -26,19 +27,26 @@ export const useAuthStates = create<AuthState>((set) => ({
   logout: async () => {
     try {
       await api.post("/auth/logout", {}, { withCredentials: true });
-      toast.success("Logged out successfully");
-      disconnectSocket(); // disconnect socket
-      window.location.reload() ;
     } catch (err) {
       console.error("Logout failed:", err);
+    } finally {
+      mockDb.logout();
+      disconnectSocket();
+      set({ CurrentUser: null, loading: false });
+      toast.success("Logged out successfully");
     }
-    set({ CurrentUser: null });
   },
 
   FetchCurrentUserData: async () => {
     try {
       set({ loading: true });
       const res = await api.get("/auth/currentuser", { withCredentials: true });
+      if (!res.data || !res.data._id) {
+        set({ CurrentUser: null, loading: false });
+        disconnectSocket();
+        return null;
+      }
+
       set({ CurrentUser: res.data, loading: false });
 
       if (res.data?._id) {
@@ -46,8 +54,7 @@ export const useAuthStates = create<AuthState>((set) => ({
       }
 
       return res.data;
-    } catch (err) {
-      console.error("❌ Failed to fetch user:", err);
+    } catch {
       set({ CurrentUser: null, loading: false });
       disconnectSocket();
       return null;
