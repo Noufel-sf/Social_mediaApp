@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { Camera, ArrowLeft, Calendar, UserCheck } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Camera, ArrowLeft, Calendar, UserCheck, Check, X } from "lucide-react";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { useAuthStates } from "../ZustandStates/AuthStates";
 import { useDirection } from "../hooks/useDirection";
@@ -15,12 +15,16 @@ import ConfirmUserCoverImg from "../Components/ConfirmUserCoverimg";
 import { getUserProfilePageData } from "../ServisesApi/UserProfileApi";
 import type { Post } from "../Utils/Types";
 import { TailSpin } from "react-loader-spinner";
+import toast from "react-hot-toast";
+import api from "../Utils/api";
 
 export default function UserProfilePage() {
   const { forceLTR } = useDirection();
   const { theme } = useTheme();
   const { CurrentUser } = useAuthStates();
   const { id } = useParams<{ id: string }>();
+  const queryClient = useQueryClient();
+  const coverInputRef = useRef<HTMLInputElement>(null);
 
   const {
     data: userDetails,
@@ -34,6 +38,7 @@ export default function UserProfilePage() {
 
   const [isAddStoryModalOpen, setIsAddStoryModalOpen] = useState(false);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  const [isSavingCover, setIsSavingCover] = useState(false);
 
   const [UserCoverimg, setUserCoverimg] = useState<string | File>(
     userDetails?.CoverImg || ""
@@ -87,11 +92,13 @@ export default function UserProfilePage() {
     );
   }
 
-  const isCurrentUser = userDetails?._id === CurrentUser?._id;
+  const isCurrentUser = Boolean(
+    CurrentUser?._id && (CurrentUser._id === id || CurrentUser._id === userDetails?._id)
+  );
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+    const file = e.target.files?.[0];
+    if (file) {
       setCoverImgpreview(URL.createObjectURL(file));
       setUserCoverimg(file);
       setshowConfirmCoverimg(true);
@@ -105,10 +112,33 @@ export default function UserProfilePage() {
     setshowConfirmCoverimg(false);
   };
 
-  const handleSuccessCover = (newCoverUrl: string) => {
-    setCoverImgpreview(newCoverUrl);
-    setUserCoverimg(newCoverUrl);
-    setshowConfirmCoverimg(false);
+  const handleSaveCover = async () => {
+    if (!UserCoverimg || !CurrentUser?._id) return;
+    setIsSavingCover(true);
+
+    const form = new FormData();
+    form.append("CoverImg", UserCoverimg);
+
+    try {
+      const targetUserId = userDetails?._id || CurrentUser._id;
+      const res = await api.put(`/auth/update/usercoverimg/${targetUserId}`, form);
+      const updatedUser = res.data.user;
+
+      useAuthStates.getState().setCurrentUser(updatedUser);
+      setCoverImgpreview(updatedUser.CoverImg);
+      setUserCoverimg(updatedUser.CoverImg);
+      setshowConfirmCoverimg(false);
+
+      await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+      await queryClient.invalidateQueries({ queryKey: ["userProfile", targetUserId] });
+
+      toast.success("Cover photo updated successfully!");
+    } catch (err) {
+      toast.error("Failed to update cover photo");
+      console.error(err);
+    } finally {
+      setIsSavingCover(false);
+    }
   };
 
   const onClose = () => setIsUpdateDialogOpen(false);
@@ -148,38 +178,71 @@ export default function UserProfilePage() {
               alt="Profile Cover"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
             {isCurrentUser && (
-              <label className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white backdrop-blur-md px-3.5 py-2 rounded-full shadow-md text-xs sm:text-sm font-medium flex items-center gap-1.5 cursor-pointer transition border border-white/20">
-                <Camera className="w-4 h-4" />
-                <span>Edit Cover</span>
+              <div className="absolute bottom-4 right-4 z-40">
                 <input
+                  ref={coverInputRef}
                   type="file"
                   accept="image/*"
                   className="hidden"
                   onChange={handleImageChange}
                 />
-              </label>
+
+                {showConfirmCoverimg ? (
+                  <div className="flex items-center gap-2 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-xl animate-in fade-in duration-150">
+                    <button
+                      type="button"
+                      onClick={handleCancelCover}
+                      disabled={isSavingCover}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium bg-white/20 hover:bg-white/30 text-white cursor-pointer transition disabled:opacity-50"
+                    >
+                      <X className="w-3.5 h-3.5" /> Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSaveCover}
+                      disabled={isSavingCover}
+                      className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white cursor-pointer shadow-sm transition disabled:opacity-50"
+                    >
+                      <Check className="w-3.5 h-3.5" /> {isSavingCover ? "Saving..." : "Save Cover"}
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => coverInputRef.current?.click()}
+                    className="bg-black/60 hover:bg-black/80 active:scale-95 text-white backdrop-blur-md px-4 py-2 rounded-full shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2 cursor-pointer transition border border-white/20"
+                  >
+                    <Camera className="w-4 h-4" />
+                    <span>Edit Cover</span>
+                  </button>
+                )}
+              </div>
             )}
           </div>
         </div>
 
-        {/* Cover Change Confirmation Bar */}
+        {/* Cover Change Confirmation Bar (Top fallback) */}
         <ConfirmUserCoverImg
           onCancel={handleCancelCover}
-          onSuccess={handleSuccessCover}
+          onSuccess={(newUrl) => {
+            setCoverImgpreview(newUrl);
+            setUserCoverimg(newUrl);
+            setshowConfirmCoverimg(false);
+          }}
           showConfirmCoverimg={showConfirmCoverimg}
           newCover={UserCoverimg}
           userId={userDetails?._id || CurrentUser?._id || ""}
         />
 
         {/* Profile Info Header */}
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
+        <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-20">
           <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20">
             {/* Avatar & Identifiers */}
             <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
-              <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-zinc-900 shadow-xl overflow-hidden bg-white dark:bg-zinc-800 flex-shrink-0">
+              <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-zinc-900 shadow-xl overflow-hidden bg-white dark:bg-zinc-800 flex-shrink-0 z-30">
                 <img
                   src={userDetails?.ProfileImg || "/user.png"}
                   alt={userDetails?.username}

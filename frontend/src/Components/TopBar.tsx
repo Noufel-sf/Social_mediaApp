@@ -1,23 +1,15 @@
 import { Link } from "react-router-dom";
 import InputSearchItem from "../ui/InputSearchItem";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useTheme } from "../Contexts/DarkModeContext";
 import { useAuthStates } from "../ZustandStates/AuthStates";
 import {
-  MdDarkMode,
-  MdLightMode,
   MdLogout,
   MdHome,
   MdChat,
 } from "react-icons/md";
 
 const Topbar = () => {
-  const { theme, setTheme } = useTheme();
   const { CurrentUser, logout } = useAuthStates();
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md border-b border-slate-200/80 dark:border-zinc-800/80 transition-colors duration-200">
