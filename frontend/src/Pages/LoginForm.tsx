@@ -86,24 +86,22 @@ export default function LoginForm() {
 
   return (
     <div className="flex flex-col w-full max-w-md mx-auto items-center justify-center min-h-screen px-4 py-8">
-      <div className="w-full bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-xl transition-all">
+      <div className="w-full bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl transition-all">
         {/* Logo & Header */}
         <div className="text-center mb-6">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white font-black text-2xl shadow-md mb-3">
             C
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-zinc-100">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-100">
             Welcome to CozMeet
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 mt-1">
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">
             Sign in to explore the community & mock database
           </p>
-
-       
         </div>
 
         {generalError && (
-          <div className="p-3 mb-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 text-xs font-medium text-center">
+          <div className="p-3 mb-4 rounded-xl bg-rose-950/40 border border-rose-800 text-rose-400 text-xs font-medium text-center">
             {generalError}
           </div>
         )}
@@ -114,18 +112,18 @@ export default function LoginForm() {
           <div className="space-y-1.5">
             <label
               htmlFor="username"
-              className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400"
+              className="block text-xs font-bold uppercase tracking-wider text-zinc-400"
             >
               Username / Email
             </label>
             <div className="relative">
-              <UserIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-zinc-500 pointer-events-none" />
+              <UserIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
               <input
                 id="username"
                 type="text"
                 autoComplete="username"
                 {...register("username")}
-                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/80 text-slate-900 dark:text-zinc-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
+                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-zinc-700 bg-zinc-800/80 text-zinc-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
                 placeholder="Noufel"
               />
             </div>
@@ -138,18 +136,18 @@ export default function LoginForm() {
           <div className="space-y-1.5">
             <label
               htmlFor="password"
-              className="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-zinc-400"
+              className="block text-xs font-bold uppercase tracking-wider text-zinc-400"
             >
               Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-zinc-500 pointer-events-none" />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
               <input
                 id="password"
                 type="password"
                 autoComplete="current-password"
                 {...register("password")}
-                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800/80 text-slate-900 dark:text-zinc-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
+                className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-zinc-700 bg-zinc-800/80 text-zinc-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition"
                 placeholder="password123"
               />
             </div>
@@ -176,8 +174,8 @@ export default function LoginForm() {
         </form>
 
         {/* Quick 1-Click Demo Accounts */}
-        <div className="mt-6 pt-5 border-t border-slate-200/80 dark:border-zinc-800">
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 text-center mb-3">
+        <div className="mt-6 pt-5 border-t border-zinc-800">
+          <p className="text-xs font-bold uppercase tracking-wider text-zinc-400 text-center mb-3">
             Or Click to Enter as:
           </p>
           <div className="grid grid-cols-2 gap-2">
@@ -186,18 +184,18 @@ export default function LoginForm() {
                 key={user.name}
                 type="button"
                 onClick={() => handleQuickLogin(user.name)}
-                className="flex items-center gap-2.5 p-2 rounded-xl border border-slate-200 dark:border-zinc-800 hover:border-indigo-500 dark:hover:border-indigo-500 bg-slate-50/70 dark:bg-zinc-800/40 hover:bg-indigo-50/50 dark:hover:bg-zinc-800 transition text-left cursor-pointer group"
+                className="flex items-center gap-2.5 p-2 rounded-xl border border-zinc-800 hover:border-indigo-500 bg-zinc-800/50 hover:bg-zinc-800 transition text-left cursor-pointer group"
               >
                 <img
                   src={user.avatar}
                   alt={user.name}
-                  className="w-8 h-8 rounded-full object-cover border border-slate-300 dark:border-zinc-700 flex-shrink-0 group-hover:scale-105 transition-transform"
+                  className="w-8 h-8 rounded-full object-cover border border-zinc-700 flex-shrink-0 group-hover:scale-105 transition-transform"
                 />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold truncate text-slate-800 dark:text-zinc-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                  <p className="text-xs font-semibold truncate text-zinc-200 group-hover:text-indigo-400">
                     {user.name}
                   </p>
-                  <p className="text-[10px] text-slate-400 dark:text-zinc-500 truncate">
+                  <p className="text-[10px] text-zinc-500 truncate">
                     {user.role}
                   </p>
                 </div>

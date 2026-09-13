@@ -18,18 +18,23 @@
   --dark-muted: #a1a1aa;
 }
 
-/* Base Body Styles */
+/* Base Body Styles - Black / Dark Default */
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 html.dark body {
   background-color: var(--dark-bg);
   color: var(--dark-text);
+}
+
+html.light body {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 /* Default font for all elements */

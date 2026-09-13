@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 export default function AuthLayout() {
   return (
-    <div className="flex w-full min-h-screen bg-slate-50 dark:bg-zinc-950 transition-colors">
+    <div className="flex w-full min-h-screen bg-[#09090b] text-zinc-100 transition-colors">
       <section className="flex flex-1 justify-center items-center flex-col p-4">
         <Outlet />
       </section>

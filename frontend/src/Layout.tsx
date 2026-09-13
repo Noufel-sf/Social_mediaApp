@@ -62,7 +62,7 @@ export default function Layout() {
   return (
     <main
       className={`flex flex-col w-full min-h-screen transition-colors duration-200 ${
-        theme === "dark" ? "bg-[var(--dark-bg)] text-zinc-100" : "bg-[#f8fafc] text-slate-900"
+        theme === "light" ? "bg-[#f8fafc] text-slate-900" : "bg-[#09090b] text-zinc-100"
       }`}
     >
       <Routes>
