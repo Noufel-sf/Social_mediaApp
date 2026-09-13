@@ -1,7 +1,7 @@
-import React from "react";
+import type React from "react";
 
 type ButtonProps = {
-  text: string;
+  text: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
 };

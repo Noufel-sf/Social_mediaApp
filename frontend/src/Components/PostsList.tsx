@@ -1,8 +1,7 @@
 import type { Post } from "../Utils/Types";
 import PostCard from "./PostCard";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "../ServisesApi/PostsApi";
-import { Posts } from "../Utils/data";
 
 function PostsList() {
   const {

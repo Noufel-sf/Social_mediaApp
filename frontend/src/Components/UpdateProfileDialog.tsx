@@ -1,6 +1,4 @@
-// src/components/Modal.tsx
-import React, { Children } from "react";
-import { Outlet } from "react-router-dom";
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;

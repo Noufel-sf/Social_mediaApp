@@ -1,6 +1,5 @@
 import type { User } from "../Utils/Types";
 import api from "../Utils/api";
-import toast from "react-hot-toast";
 
 export async function getFriendSuggestions(): Promise<User[]> {
   try {

@@ -1,4 +1,3 @@
-import React from 'react'
 import { IoIosSearch } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import { useTheme } from '../Contexts/DarkModeContext';

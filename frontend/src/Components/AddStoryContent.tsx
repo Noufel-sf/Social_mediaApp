@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import api from "../Utils/api";
 import { useAuthStates } from "../ZustandStates/AuthStates";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AddStoryContent({
   setIsModalOpen,
 }: {
   setIsModalOpen: (isOpen: boolean) => void;
 }) {
+  const queryClient = useQueryClient();
   const { CurrentUser } = useAuthStates();
 
   const [preview, setPreview] = useState<string | null>(null);
@@ -40,6 +42,7 @@ export default function AddStoryContent({
 
       await api.post("/stories/create", form);
       toast.success("✅ Story added successfully!");
+      queryClient.invalidateQueries({ queryKey: ["stories"] });
       setIsModalOpen(false);
       setPreview(null);
 

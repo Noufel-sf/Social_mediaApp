@@ -1,4 +1,3 @@
-import React from 'react'
 import { TailSpin } from 'react-loader-spinner'
 import type { User } from '../Utils/Types'
 

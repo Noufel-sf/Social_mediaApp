@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import Button from "./Button";
 import { useTheme } from "../Contexts/DarkModeContext";
@@ -13,8 +12,6 @@ export default function FriendRequestsItem({ friendRequest }: { friendRequest: F
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
-  
-
   const acceptRequestMutation = useMutation({
     mutationFn: async () => {
       await api.put(
@@ -25,7 +22,8 @@ export default function FriendRequestsItem({ friendRequest }: { friendRequest: F
     },
     onSuccess: () => {
       toast.success("Friend request accepted");
-      queryClient.invalidateQueries(["friendRequests"]);
+      queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
+      queryClient.invalidateQueries({ queryKey: ["friendsList"] });
     },
     onError: (error) => {
       console.error("Error accepting friend request:", error);
@@ -43,7 +41,7 @@ export default function FriendRequestsItem({ friendRequest }: { friendRequest: F
     },
     onSuccess: () => {
       toast.success("Friend request rejected");
-      queryClient.invalidateQueries(["friendRequests"]);
+      queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
     },
     onError: (error) => {
       console.error("Error rejecting friend request:", error);

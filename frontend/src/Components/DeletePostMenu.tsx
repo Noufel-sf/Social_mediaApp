@@ -3,6 +3,7 @@ import { useTheme } from "../Contexts/DarkModeContext";
 import toast from "react-hot-toast";
 import api from "../Utils/api";
 import { useClickOutside } from "../hooks/useClickOutside";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface DeletePostMenuProps {
   setShowDeleteMenu: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +14,7 @@ export default function DeletePostMenu({
   setShowDeleteMenu,
   PostId,
 }: DeletePostMenuProps) {
+  const queryClient = useQueryClient();
   const { theme } = useTheme();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +25,7 @@ export default function DeletePostMenu({
       await api.delete(`/posts/delete/${PostId}`);
       toast.success("Post deleted successfully");
       setShowDeleteMenu(false);
-      window.location.reload(); 
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     } catch (error) {
       console.error("Error deleting post:", error);
       toast.error("Failed to delete post");

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router'
+import type React from 'react'
+import { Link } from 'react-router-dom'
 import { useTheme } from '../Contexts/DarkModeContext'
 
 function SidebarrItem({icon, text, link} :{icon:React.ReactNode, text:string, link:string}) {

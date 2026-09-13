@@ -1,5 +1,3 @@
-
-
 export type User = {
   _id: string;
   username: string;
@@ -7,7 +5,7 @@ export type User = {
   email: string;
   ProfileImg: string;
   CoverImg: string;
-  friends: FriendRequest[];
+  friends: (User | FriendRequest | any)[];
   Posts: Post[];
   bio: string;
   createdAt: string;
@@ -16,9 +14,19 @@ export type User = {
 
 export type Story = {
   _id: string;
-  caption: string;
-  author_id: User;
-  storyFile: string;
+  caption?: string;
+  author_id?: User;
+  storyFile?: string;
+  user?: {
+    id?: string;
+    name?: string;
+    Username: string;
+    Usernickname?: string;
+    email?: string;
+    imageUrl?: string;
+    bio?: string;
+  };
+  img?: string;
 };
 
 export type Post = {
@@ -26,19 +34,17 @@ export type Post = {
   content: string;
   Author: User;
   PostCovers?: string[];
-  // likes_count?: number;
-  // comments_count?: number;
+  likes?: number | any[];
   comments?: Comment[];
-  // likes?: User[];
   createdAt: string;
-}
+};
 
 export type Comment = {
   _id: string;
   content: string;
   author: User;
   createdAt: string;
-}
+};
 
 export type Message = {
   _id: string;
@@ -48,7 +54,7 @@ export type Message = {
   delivered: boolean;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type Chat = {
   _id: string;
@@ -56,7 +62,7 @@ export type Chat = {
   receiverId: User;
   messages: Message[];
   createdAt: string;
-}
+};
 
 export type FriendRequest = {
   _id: string;
@@ -64,4 +70,4 @@ export type FriendRequest = {
   recieverId: User;
   createdAt: string;
   updatedAt: string;
-}
+};

@@ -20,7 +20,7 @@ const PostComposer: React.FC<PostComposerProps> = ({
 }) => {
   const { theme } = useTheme();
   const [content, setContent] = useState("");
-  const [privacy, setPrivacy] = useState("Public");
+  const [privacy] = useState("Public");
 
   const { CurrentUser } = useAuthStates();
 

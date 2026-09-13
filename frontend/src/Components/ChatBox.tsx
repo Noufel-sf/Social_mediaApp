@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Send, ArrowLeft } from "lucide-react";
 
-const ChatBox = ({ user, onBack }) => {
+interface ChatBoxProps {
+  user: any;
+  onBack: () => void;
+}
+
+const ChatBox = ({ user, onBack }: ChatBoxProps) => {
   const [messages, setMessages] = useState([
     { id: 1, from: "me", text: "Hey 👋", timestamp: "10:00 AM" },
     { id: 2, from: "them", text: "Hello! How are you?", timestamp: "10:02 AM" },

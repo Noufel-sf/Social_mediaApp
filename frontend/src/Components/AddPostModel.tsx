@@ -11,12 +11,14 @@ import toast from "react-hot-toast";
 import api from "../Utils/api";
 import { useAuthStates } from "../ZustandStates/AuthStates";
 import { useTheme } from "../Contexts/DarkModeContext";
+import { useQueryClient } from "@tanstack/react-query";
 
 type AddPostModelProps = {
   onClose: () => void;
 };
 
 export default function AddPostModel({ onClose }: AddPostModelProps) {
+  const queryClient = useQueryClient();
   const { theme } = useTheme();
   const { CurrentUser } = useAuthStates();
 
@@ -56,6 +58,7 @@ export default function AddPostModel({ onClose }: AddPostModelProps) {
         headers: {},
       });
       toast.success("Your post is on the main page!");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
       console.log("Post added successfully", response.data);
     } catch (err) {
       console.error("Error adding post:", err);

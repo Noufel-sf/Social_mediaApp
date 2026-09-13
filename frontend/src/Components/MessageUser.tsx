@@ -1,13 +1,15 @@
-import type { User } from "../Utils/Types";
 
-const MessageUser = ({ user, lastMessage, isOnline }: { user: User; lastMessage: string; isOnline: boolean }) => {
+const MessageUser = ({ user, lastMessage, isOnline }: { user: any; lastMessage: string; isOnline: boolean }) => {
+  const avatar = user.imageUrl || user.ProfileImg || "/user.png";
+  const displayName = user.Username || user.username || "User";
+
   return (
-    <div className="flex items-center gap-3 px-3 py-2 hover:bg-gray-50 cursor-pointer transition">
+    <div className="flex items-center gap-3 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition">
       {/* Avatar */}
       <div className="relative">
         <img
-          src={user.imageUrl}
-          alt={user.Username}
+          src={avatar}
+          alt={displayName}
           className="w-12 h-12 rounded-full object-cover"
         />
         {isOnline && (
@@ -16,7 +18,7 @@ const MessageUser = ({ user, lastMessage, isOnline }: { user: User; lastMessage:
       </div>
 
       <div className="flex-1 min-w-0">
-        <h4 className="text-sm font-semibold truncate">{user.Username}</h4>
+        <h4 className="text-sm font-semibold truncate">{displayName}</h4>
         <p className="text-xs text-gray-500 truncate">{lastMessage}</p>
       </div>
     </div>

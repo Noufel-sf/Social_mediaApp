@@ -3,19 +3,16 @@ import StoryCard from "./StoryCard";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { useQuery } from "@tanstack/react-query";
 import { getStories } from "../ServisesApi/StoriesApi";
-import { Storys } from "../Utils/data";
 
 function StoriesList() {
   const { theme } = useTheme();
 
-  const { data: stories, isLoading, isError } = useQuery<Story[]>({
+  const { data: stories } = useQuery<Story[]>({
     queryKey: ["stories"],
     queryFn: getStories,
   });
 
-  const storiesToRender = Storys;
-
-  // console.log(stories);
+  const storiesToRender = stories || [];
 
   const SeeStory = (id: string) => {
     console.log("Story clicked:", id);
@@ -23,15 +20,12 @@ function StoriesList() {
 
   return (
     <div
-      className={`flex gap-2 overflow-x-auto p-4 border-2 border-gray-500 rounded-xl ${
+      className={`flex gap-3 overflow-x-auto p-4 border rounded-xl no-scrollbar ${
         theme === "dark"
-          ? "bg-[var(--dark-bg)] text-white"
-          : "bg-white text-black"
+          ? "bg-[var(--dark-bg)] border-gray-700 text-white"
+          : "bg-white border-gray-200 text-black"
       }`}
     >
-      {isLoading && console.log("Loading stories...")}
-      
-
       {storiesToRender.map((story) => (
         <StoryCard
           key={story._id}

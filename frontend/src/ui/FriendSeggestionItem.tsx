@@ -1,6 +1,4 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
-import Button from "./Button";
 import { useTheme } from "../Contexts/DarkModeContext";
 import api from "../Utils/api";
 import type { User } from "../Utils/Types";

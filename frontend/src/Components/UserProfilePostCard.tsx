@@ -1,4 +1,3 @@
-import React from 'react'
 
 function UserProfilePostCard({profileimg, username, location}: {profileimg: string, username: string, location: string}) {
   return (

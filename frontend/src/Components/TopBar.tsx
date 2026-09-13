@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import InputSearchItem from "../ui/InputSearchItem";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTheme } from "../Contexts/DarkModeContext";
@@ -12,15 +11,12 @@ import {
   MdMenu,
   MdClose,
   MdHome,
-  MdNotifications,
   MdChat,
-  MdPeople,
 } from "react-icons/md";
 
 const Topbar = () => {
   const { theme, setTheme } = useTheme();
   const { CurrentUser, logout } = useAuthStates();
-  const { t } = useTranslation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleTheme = () => {

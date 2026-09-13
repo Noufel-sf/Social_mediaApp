@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import StoriesList from './StoreisList'
 import PostsList from './PostsList'
 import PostComposer from './PostComposer'

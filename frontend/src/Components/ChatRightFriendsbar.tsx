@@ -1,4 +1,3 @@
-import React from "react";
 import { Edit2, Search } from "lucide-react";
 import ChatFriends from "./ChatFriends";
 import type { User } from "../Utils/Types";

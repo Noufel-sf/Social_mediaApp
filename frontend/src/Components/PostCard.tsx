@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Heart,
@@ -145,9 +145,14 @@ const PostCard = ({ post }: { post: Post }) => {
         <Bookmark className="w-6 h-6 cursor-pointer hover:scale-110 transition" />
       </div>
 
-      {/* Likes */}
-
-      <div className="px-4 text-sm font-semibold">{post.likes} likes</div>
+      <div className="px-4 text-sm font-semibold">
+        {typeof post.likes === "number"
+          ? post.likes
+          : Array.isArray(post.likes)
+          ? post.likes.length
+          : 0}{" "}
+        likes
+      </div>
 
       {/* Content */}
       <div className="px-4 py-2 text-sm">

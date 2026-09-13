@@ -1,5 +1,5 @@
-import { Search, Edit2, Info, Phone, Video, ThumbsUp } from "lucide-react";
-import React, { useState, useEffect, FormEvent } from "react";
+import { Info, Phone, Video } from "lucide-react";
+import { useState, useEffect, type FormEvent } from "react";
 import Topbar from "../Components/TopBar";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { useDirection } from "../hooks/useDirection";
@@ -19,7 +19,7 @@ const MessengerPage = () => {
   const { theme } = useTheme();
   const { forceLTR } = useDirection();
   const { CurrentUser } = useAuthStates();
-  const [showMessages, setShowMessages] = useState(false);
+  const [showMessages] = useState(false);
   const [newMessage, setNewMessage] = useState("");
 
   // === Fetch Friends ===

@@ -12,7 +12,7 @@ import AddStoryDialog from "../Components/AddStoryDialog";
 import AddStoryContent from "../Components/AddStoryContent";
 import ConfirmUserCoverImg from "../Components/ConfirmUserCoverimg";
 import { getUserProfilePageData } from "../ServisesApi/UserProfileApi";
-import type { User, Post } from "../Utils/Types";
+import type { Post } from "../Utils/Types";
 import { TailSpin } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 
@@ -59,7 +59,7 @@ useEffect(() => {
   
   const [showConfirmCoverimg, setshowConfirmCoverimg] = useState(false);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex justify-center text-center w-full items-center h-screen">
         <TailSpin
@@ -74,7 +74,20 @@ useEffect(() => {
         />
       </div>
     );
-  if (isError) navigate("/login");
+  }
+  if (isError || !userDetails) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen gap-4">
+        <p className="text-lg">User profile not found.</p>
+        <button
+          onClick={() => navigate("/")}
+          className="px-4 py-2 bg-[var(--primary-color)] text-white rounded-lg"
+        >
+          Back to Home
+        </button>
+      </div>
+    );
+  }
 
   const isCurrentUser = userDetails?._id === CurrentUser?._id;
 
@@ -198,7 +211,7 @@ useEffect(() => {
             <div className="p-4 rounded-lg shadow">
               <h3 className="font-semibold mb-3">Friends</h3>
               <div className="grid grid-cols-3 gap-2">
-                {userDetails.friends.map((friend: User) => (
+                {userDetails.friends.map((friend: any) => (
                   <Link to={`/userprofile/${friend._id}`} key={friend._id}> 
                   <div key={friend._id} className="text-center">
                     <img

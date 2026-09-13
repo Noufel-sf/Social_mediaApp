@@ -2,15 +2,12 @@ import React from "react";
 import api from "../Utils/api";
 import toast from "react-hot-toast";
 import { useAuthStates } from "../ZustandStates/AuthStates";
-import { data } from "react-router-dom";
-
-
 
 interface ConfirmUserCoverImgProps {
   onCancel: () => void;
   showConfirmCoverimg: boolean;
-  newCover: File | null;
-  userId :string ;
+  newCover: string | File | null;
+  userId: string;
 }
 
 const ConfirmUserCoverImg: React.FC<ConfirmUserCoverImgProps> = ({

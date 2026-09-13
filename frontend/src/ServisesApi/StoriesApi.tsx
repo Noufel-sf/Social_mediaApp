@@ -1,6 +1,5 @@
 import type { Story } from "../Utils/Types";
 import api from "../Utils/api";
-import toast from "react-hot-toast";
 
 export async function getStories(): Promise<Story[]> {
   

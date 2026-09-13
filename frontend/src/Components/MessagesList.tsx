@@ -35,7 +35,7 @@ const MessagesList = () => {
 
       {/* Messages */}
       <div className="divide-y divide-gray-200 max-h-[500px] overflow-y-auto">
-        {Messages.map((msg: MessageData) => (
+        {Messages.map((msg: any) => (
           <MessageUser key={msg.id} lastMessage={msg.lastMessage} isOnline={msg.isOnline} user={msg.user}/>
         ))}
       </div>
