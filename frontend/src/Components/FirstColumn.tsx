@@ -20,7 +20,7 @@ function FirstColumn() {
         imageUrl={CurrentUser?.ProfileImg || "/user.png"}
         Username={CurrentUser?.username || "Default User"}
         Usernickname={CurrentUser?.nickname || "@default"}
-        bannerUrl={CurrentUser?.CoverImg || "/default-banner.jpg"}
+        bannerUrl={CurrentUser?.CoverImg || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1400&q=80"}
         posts={250}
         followers={2022}
         following={590}

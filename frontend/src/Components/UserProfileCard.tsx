@@ -1,5 +1,4 @@
-// UserProfileCard.tsx
-import React from "react";
+import type React from "react";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { Link } from "react-router-dom";
 import { useAuthStates } from "../ZustandStates/AuthStates";
@@ -18,7 +17,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   imageUrl,
   Username,
   Usernickname,
-  bannerUrl = "/default-banner.jpg",
+  bannerUrl = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1400&q=80",
   posts = 250,
   followers = 2022,
   following = 590,

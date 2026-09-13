@@ -1,6 +1,6 @@
 import type { User, Post, Story, FriendRequest, Message } from "./Types";
 
-const STORAGE_KEY = "cozmeet_mock_database_v2";
+const STORAGE_KEY = "cozmeet_mock_database_v4";
 
 export interface MockDatabase {
   users: User[];
@@ -17,64 +17,77 @@ const INITIAL_USERS: User[] = [
     username: "Noufel",
     nickname: "@noufel_dev",
     email: "noufel@example.com",
-    bio: "Passionate Full-Stack Developer & UI/UX enthusiast. Building modern reactive web experiences 🚀",
-    ProfileImg: "/profile-1.jpg",
-    CoverImg: "/coverimg.jpg",
+    bio: "Full-Stack Dev & Anime enthusiast 🚀 Building reactive web apps with React, TypeScript & Tailwind. Always down for anime & tech debates! ☕",
+    ProfileImg: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&q=80",
+    CoverImg: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1400&q=80",
     friends: [],
     Posts: [],
     createdAt: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
   {
-    _id: "user_edem",
-    username: "Edem Quist",
-    nickname: "@edem",
-    email: "edem@example.com",
-    bio: "Software Engineer & Open Source contributor. Coffee & Code ☕",
-    ProfileImg: "/profile.jpg",
-    CoverImg: "/coverimg.jpg",
+    _id: "user_kenji",
+    username: "Kenji Sato",
+    nickname: "@kenji_anime",
+    email: "kenji@example.com",
+    bio: "Digital Illustrator & Manga fanart creator 🎨 Studio Ghibli, MHA & Shonen fanatic. Currently sketching Deku & cyberpunk scenes ✨",
+    ProfileImg: "/midoriya.jpg",
+    CoverImg: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=1400&q=80",
     friends: [],
     Posts: [],
-    createdAt: new Date(Date.now() - 180 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 240 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
   {
-    _id: "user_franca",
-    username: "Franca Delia",
-    nickname: "@franca",
-    email: "franca@example.com",
-    bio: "Product Designer & Digital Artist 🎨 Exploring minimalist aesthetics.",
-    ProfileImg: "/profile-3.jpg",
-    CoverImg: "/coverimg.jpg",
+    _id: "user_aoi",
+    username: "Aoi Tanaka",
+    nickname: "@aoi_codes",
+    email: "aoi@example.com",
+    bio: "Frontend Ninja & UI designer 💻 Loving React 19, TypeScript, and dark neon aesthetics. Solo Leveling reader 🗡️",
+    ProfileImg: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
+    CoverImg: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1400&q=80",
     friends: [],
     Posts: [],
-    createdAt: new Date(Date.now() - 120 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 190 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    _id: "user_alex",
+    username: "Alex Rivera",
+    nickname: "@arivera_dev",
+    email: "alex@example.com",
+    bio: "DevOps & Cloud Architect ☁️ Linux geek, mechanical keyboard collector & Cyberpunk 2077 player 🎮",
+    ProfileImg: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=400&q=80",
+    CoverImg: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1400&q=80",
+    friends: [],
+    Posts: [],
+    createdAt: new Date(Date.now() - 150 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
   {
     _id: "user_daniella",
     username: "Daniella Jackson",
-    nickname: "@daniella",
+    nickname: "@daniella_j",
     email: "daniella@example.com",
-    bio: "Marketing strategist, globe trotter & photography lover 📷✈️",
-    ProfileImg: "/profile-1.jpg",
-    CoverImg: "/coverimg.jpg",
+    bio: "Tech Product Manager & Photography lover 📸 Exploring Tokyo & Kyoto aesthetics 🌸",
+    ProfileImg: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+    CoverImg: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=1400&q=80",
     friends: [],
     Posts: [],
     createdAt: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
   {
-    _id: "user_alex",
-    username: "Alex Rivera",
-    nickname: "@arivera",
-    email: "alex@example.com",
-    bio: "Mobile App Developer | React Native & Flutter geek 📱",
+    _id: "user_edem",
+    username: "Edem Quist",
+    nickname: "@edem_dev",
+    email: "edem@example.com",
+    bio: "Open-source contributor & Web3 builder ☕ Coffee, Vim keybindings, and chill lofi beats 🎧",
     ProfileImg: "/profile.jpg",
-    CoverImg: "/coverimg.jpg",
+    CoverImg: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1400&q=80",
     friends: [],
     Posts: [],
-    createdAt: new Date(Date.now() - 40 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
   {
@@ -82,12 +95,12 @@ const INITIAL_USERS: User[] = [
     username: "Sarah Connor",
     nickname: "@sarah_c",
     email: "sarah@example.com",
-    bio: "Cybersecurity Analyst & tech speaker 🛡️ Always curious.",
-    ProfileImg: "/profile-3.jpg",
-    CoverImg: "/coverimg.jpg",
+    bio: "Cybersecurity Analyst & AI researcher 🛡️ Neon cyber aesthetics & sci-fi manga reader.",
+    ProfileImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80",
+    CoverImg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1400&q=80",
     friends: [],
     Posts: [],
-    createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date().toISOString(),
   },
 ];
@@ -95,117 +108,152 @@ const INITIAL_USERS: User[] = [
 const INITIAL_POSTS: Post[] = [
   {
     _id: "post_1",
-    content: "Excited to share that our new React web application is running flawlessly! Clean UI, dark mode support, and smooth responsiveness throughout. What do you all think? 🚀✨",
+    content: "Late night coding session with lo-fi beats and dark mode! 💻✨ Just migrated our entire state flow to Zustand and client-side mock DB. The responsiveness feels instant! What theme do you all code with? Tokyo Night or Catppuccin?",
     Author: INITIAL_USERS[0],
-    PostCovers: ["/Post.jpg"],
-    likes: 42,
-    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+    PostCovers: [
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80",
+      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80"
+    ],
+    likes: 142,
+    createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
   },
   {
     _id: "post_2",
-    content: "Weekend road trip up to the mountain hills. Nothing clears the mind like fresh morning air and good friends! 🌄",
-    Author: INITIAL_USERS[1],
-    PostCovers: ["/coverimg.jpg"],
-    likes: 87,
-    createdAt: new Date(Date.now() - 14 * 60 * 60 * 1000).toISOString(),
+    content: "Plus Ultra! 💥 Just finished this new digital art of Deku training at U.A. High! What's your favorite My Hero Academia arc or moment so far? 🥦⚡",
+    Author: INITIAL_USERS[1], // Kenji
+    PostCovers: [
+      "/midoriya.jpg"
+    ],
+    likes: 342,
+    createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(),
   },
   {
     _id: "post_3",
-    content: "Just finished redesigning our brand interface guidelines. Focusing on typography, soft glass shadows, and vibrant accent highlights! 🎨✨",
-    Author: INITIAL_USERS[2],
-    PostCovers: ["/story-5.jpg"],
-    likes: 129,
-    createdAt: new Date(Date.now() - 28 * 60 * 60 * 1000).toISOString(),
+    content: "Upgraded my developer battlestation this weekend! 🖥️ Ultra-wide curved monitor, custom 65% mechanical keyboard with tactile switches, and warm ambient neon backlight. Productivity jumped 200%! 🚀",
+    Author: INITIAL_USERS[3], // Alex
+    PostCovers: [
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&q=80"
+    ],
+    likes: 310,
+    createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
   },
   {
     _id: "post_4",
-    content: "Golden hour capture from yesterday's sunset photoshoot. Truly magical light! 📸🌇",
-    Author: INITIAL_USERS[3],
-    PostCovers: ["/Post.jpg"],
-    likes: 64,
-    createdAt: new Date(Date.now() - 50 * 60 * 60 * 1000).toISOString(),
+    content: "Tokyo rainy evening walk through Akihabara 🌧️🌸 The neon lights reflecting off the asphalt look straight out of a Makoto Shinkai anime movie! Truly inspiring atmosphere for creative projects.",
+    Author: INITIAL_USERS[4], // Daniella
+    PostCovers: [
+      "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=1200&q=80"
+    ],
+    likes: 195,
+    createdAt: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString(),
   },
+  {
+    _id: "post_5",
+    content: "Designed this futuristic cyberpunk anime interface concept! 🎨✨ Combining glassmorphism cards, glowing cyan accents, and high-contrast typography. Let me know what you think!",
+    Author: INITIAL_USERS[2], // Aoi
+    PostCovers: [
+      "https://images.unsplash.com/photo-1563089145-599997674d42?w=1200&q=80"
+    ],
+    likes: 218,
+    createdAt: new Date(Date.now() - 36 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    _id: "post_6",
+    content: "Weekend cybersecurity challenge solved! 🛡️ Remember to always sanitize your inputs and never expose secrets in frontend bundles. Happy hacking everyone! 💻",
+    Author: INITIAL_USERS[6], // Sarah
+    PostCovers: [
+      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&q=80"
+    ],
+    likes: 85,
+    createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString(),
+  }
 ];
 
 const INITIAL_STORIES: Story[] = [
   {
     _id: "story_1",
-    caption: "Morning coffee grind ☕",
+    caption: "Coffee & Code ☕",
     author_id: INITIAL_USERS[0],
-    storyFile: "/story.jpg",
+    storyFile: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80",
   },
   {
     _id: "story_2",
-    caption: "New wireframes coming together 🎨",
-    author_id: INITIAL_USERS[2],
-    storyFile: "/story-5.jpg",
+    caption: "Manga sketching 🎨",
+    author_id: INITIAL_USERS[1],
+    storyFile: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&q=80",
   },
   {
     _id: "story_3",
-    caption: "Nature walk vibes 🌿",
-    author_id: INITIAL_USERS[1],
-    storyFile: "/coverimg.jpg",
+    caption: "Neon Tokyo vibes 🌸",
+    author_id: INITIAL_USERS[4],
+    storyFile: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&q=80",
   },
   {
     _id: "story_4",
-    caption: "Photoshoot sneak peek ✨",
+    caption: "Battlestation glow 💻",
     author_id: INITIAL_USERS[3],
-    storyFile: "/Post.jpg",
+    storyFile: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&q=80",
   },
   {
     _id: "story_5",
-    caption: "Coding late into the night 💻",
-    author_id: INITIAL_USERS[4],
-    storyFile: "/profile-1.jpg",
+    caption: "Anime marathon tonight! 🍿",
+    author_id: INITIAL_USERS[2],
+    storyFile: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&q=80",
+  },
+  {
+    _id: "story_6",
+    caption: "New keyboard build ⌨️",
+    author_id: INITIAL_USERS[5],
+    storyFile: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80",
   },
 ];
 
 const INITIAL_FRIEND_REQUESTS: FriendRequest[] = [
   {
     _id: "freq_1",
-    senderId: INITIAL_USERS[4], // Alex Rivera
+    senderId: INITIAL_USERS[6], // Sarah
     recieverId: INITIAL_USERS[0], // Noufel
-    createdAt: new Date(Date.now() - 3 * 3600 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 3 * 3600 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
   },
 ];
 
 const INITIAL_MESSAGES: Message[] = [
   {
     _id: "msg_1",
-    senderId: INITIAL_USERS[1], // Edem
+    senderId: INITIAL_USERS[1], // Kenji
     receiverId: INITIAL_USERS[0], // Noufel
-    text: "Hey Noufel! How's the project coming along?",
+    text: "Hey Noufel! Have you checked out the new Solo Leveling episode yet? 🔥",
     delivered: true,
-    createdAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 40 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 40 * 60 * 1000).toISOString(),
   },
   {
     _id: "msg_2",
     senderId: INITIAL_USERS[0], // Noufel
-    receiverId: INITIAL_USERS[1], // Edem
-    text: "Hey Edem! It's going great, just finished mocking all frontend services and it runs super fast without any backend!",
+    receiverId: INITIAL_USERS[1], // Kenji
+    text: "Yes!! The animation during the boss fight was absolutely insane! Studio went all out 🗡️",
     delivered: true,
-    createdAt: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
   },
   {
     _id: "msg_3",
-    senderId: INITIAL_USERS[1], // Edem
+    senderId: INITIAL_USERS[1], // Kenji
     receiverId: INITIAL_USERS[0], // Noufel
-    text: "Awesome work! That's so much easier for testing and demoing 🙌",
+    text: "Haha totally! Also loved the new mock DB setup in your web app, runs blazing fast ⚡",
     delivered: true,
     createdAt: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
   },
   {
     _id: "msg_4",
-    senderId: INITIAL_USERS[2], // Franca
+    senderId: INITIAL_USERS[2], // Aoi
     receiverId: INITIAL_USERS[0], // Noufel
-    text: "Hi! Check out the new design assets when you get a chance.",
+    text: "Hey! Let me know when you have time to check out the new UI layout I pushed 🎨",
     delivered: true,
-    createdAt: new Date(Date.now() - 120 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - 120 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
   },
 ];
 
@@ -247,23 +295,25 @@ class MockDbService {
   }
 
   private initializeDefaults(): MockDatabase {
-    // Set friends linkage
     const users = JSON.parse(JSON.stringify(INITIAL_USERS)) as User[];
-    const currentUser = users[0];
-    const friend1 = users[1]; // Edem
-    const friend2 = users[2]; // Franca
-    const friend3 = users[3]; // Daniella
+    const currentUser = users[0]; // Noufel
+    const friend1 = users[1];     // Kenji
+    const friend2 = users[2];     // Aoi
+    const friend3 = users[3];     // Alex
+    const friend4 = users[4];     // Daniella
 
-    currentUser.friends = [friend1, friend2, friend3] as any;
+    currentUser.friends = [friend1, friend2, friend3, friend4] as any;
     friend1.friends = [currentUser] as any;
     friend2.friends = [currentUser] as any;
     friend3.friends = [currentUser] as any;
+    friend4.friends = [currentUser] as any;
 
     const posts = JSON.parse(JSON.stringify(INITIAL_POSTS)) as Post[];
     currentUser.Posts = [posts[0]];
     friend1.Posts = [posts[1]];
-    friend2.Posts = [posts[2]];
-    friend3.Posts = [posts[3]];
+    friend3.Posts = [posts[2]];
+    friend4.Posts = [posts[3]];
+    friend2.Posts = [posts[4]];
 
     const db: MockDatabase = {
       users,
@@ -298,7 +348,6 @@ class MockDbService {
     const user = this.db.users.find((u) => u._id === id);
     if (!user) return null;
 
-    // Attach current user's posts
     const userPosts = this.db.posts.filter((p) => p.Author?._id === id);
     return {
       ...user,
@@ -316,7 +365,6 @@ class MockDbService {
     );
 
     if (!user) {
-      // Auto-create or pick first user if not matching
       user = this.db.users[0];
     }
 
@@ -337,8 +385,8 @@ class MockDbService {
       nickname: data.nickname || `@${data.username.toLowerCase()}`,
       email: data.email,
       bio: "New CozMeet community member 👋",
-      ProfileImg: "/profile-placeholder.svg",
-      CoverImg: "/coverimg.jpg",
+      ProfileImg: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&q=80",
+      CoverImg: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1400&q=80",
       friends: [],
       Posts: [],
       createdAt: new Date().toISOString(),
@@ -370,7 +418,6 @@ class MockDbService {
     };
     this.db.users[index] = updated;
 
-    // Update author across posts
     this.db.posts = this.db.posts.map((p) =>
       p.Author?._id === id ? { ...p, Author: updated } : p
     );
@@ -395,7 +442,6 @@ class MockDbService {
 
   // --- Posts ---
   public getPosts(): Post[] {
-    // Return latest first
     return [...this.db.posts].sort(
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
@@ -418,7 +464,6 @@ class MockDbService {
 
     this.db.posts.unshift(newPost);
 
-    // Also update user's posts
     const user = this.db.users.find((u) => u._id === author._id);
     if (user) {
       user.Posts = user.Posts ? [newPost, ...user.Posts] : [newPost];
@@ -466,11 +511,9 @@ class MockDbService {
     const targetId = userId || this.db.currentUserId;
     const user = this.db.users.find((u) => u._id === targetId);
     if (!user || !user.friends) {
-      // Default to other users
       return this.db.users.filter((u) => u._id !== targetId);
     }
 
-    // friends might be User objects or IDs
     return user.friends
       .map((f: any) => (typeof f === "string" ? this.getUserById(f) : f))
       .filter(Boolean) as User[];
