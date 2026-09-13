@@ -1,5 +1,4 @@
 import type { Story } from "../Utils/Types";
-import { useTheme } from "../Contexts/DarkModeContext";
 
 interface StoryCardProps {
   story: Story;
@@ -7,25 +6,22 @@ interface StoryCardProps {
 }
 
 const StoryCard = ({ story, SeeStory }: StoryCardProps) => {
-  const { theme } = useTheme();
   const image = story.storyFile || story.img || "/story.jpg";
   const username = story.author_id?.username || story.user?.Username || "User";
 
   return (
     <div
-      className={`flex flex-col items-center cursor-pointer group flex-shrink-0 ${
-        theme === "dark" ? "text-white" : "text-black"
-      }`}
+      className="flex flex-col items-center cursor-pointer group flex-shrink-0"
       onClick={SeeStory}
     >
-      <div className="relative w-16 h-16 rounded-full p-1 bg-gradient-to-tr from-pink-500 to-blue-400 group-hover:scale-105 transition-transform">
+      <div className="relative w-16 h-16 rounded-full p-[2.5px] bg-gradient-to-tr from-amber-400 via-rose-500 to-indigo-500 group-hover:scale-105 transition-all shadow-xs">
         <img
           src={image}
           alt={username}
-          className="w-full h-full object-cover rounded-full border-2 border-white"
+          className="w-full h-full object-cover rounded-full border-2 border-white dark:border-zinc-900"
         />
       </div>
-      <p className="text-xs mt-1 truncate w-16 text-center">
+      <p className="text-xs mt-1.5 font-medium truncate w-18 text-center text-slate-700 dark:text-zinc-300 group-hover:text-indigo-500 transition-colors">
         {username}
       </p>
     </div>

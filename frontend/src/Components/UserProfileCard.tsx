@@ -27,14 +27,14 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
   return (
     <div
-      className={`rounded-2xl overflow-hidden ${
-        theme === "dark" ? "bg-[#18181b]" : "bg-white"
-      } shadow-sm border ${
-        theme === "dark" ? "border-gray-800" : "border-gray-100"
+      className={`rounded-2xl overflow-hidden shadow-xs border transition-colors ${
+        theme === "dark"
+          ? "bg-zinc-900 border-zinc-800"
+          : "bg-white border-slate-200/80"
       }`}
     >
       {/* Banner */}
-      <div className="relative h-24 w-full overflow-hidden">
+      <div className="relative h-24 w-full overflow-hidden bg-slate-200 dark:bg-zinc-800">
         <img
           src={bannerUrl}
           alt="Banner"
@@ -44,7 +44,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
 
       {/* Avatar overlapping banner */}
       <div className="relative flex flex-col items-center -mt-12 pb-4">
-        <div className="w-20 h-20 rounded-full border-4 border-white bg-white overflow-hidden shadow-md">
+        <div className="w-20 h-20 rounded-full border-4 border-white dark:border-zinc-900 bg-white dark:bg-zinc-800 overflow-hidden shadow-md">
           <img
             src={imageUrl}
             alt={Username}
@@ -55,12 +55,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         {/* Name + handle */}
         <h3
           className={`mt-2 text-base font-bold ${
-            theme === "dark" ? "text-white" : "text-gray-900"
+            theme === "dark" ? "text-zinc-100" : "text-slate-900"
           }`}
         >
           {Username}
         </h3>
-        <p className="text-xs text-gray-400">{Usernickname}</p>
+        <p className="text-xs text-slate-400 dark:text-zinc-400">{Usernickname}</p>
 
         {/* Stats row */}
         <div className="flex items-center justify-center gap-8 mt-4 w-full px-4">

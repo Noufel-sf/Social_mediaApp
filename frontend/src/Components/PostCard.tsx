@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
 import {
   Heart,
   MessageCircle,
@@ -8,7 +8,6 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { FaHeart } from "react-icons/fa6";
-
 import type { Post } from "../Utils/Types";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -24,43 +23,61 @@ const PostCard = ({ post }: { post: Post }) => {
   const { CurrentUser } = useAuthStates();
   const [isLiked, setIsLiked] = useState(false);
   const [showDeletePost, setShowDeletePost] = useState(false);
-  const isPostOwner = CurrentUser?._id === post.Author._id; // Check if the current user is the author of the post
+  const isPostOwner = CurrentUser?._id === post.Author._id;
+
+  const baseLikes =
+    typeof post.likes === "number"
+      ? post.likes
+      : Array.isArray(post.likes)
+      ? post.likes.length
+      : 0;
+  const currentLikes = isLiked ? baseLikes + 1 : baseLikes;
 
   return (
     <div
       dir="ltr"
-      className={`rounded-xl shadow-sm w-full post-content ${
+      className={`rounded-2xl shadow-xs w-full overflow-hidden transition-all duration-200 border ${
         theme === "dark"
-          ? "bg-[var(--dark-bg)] text-white"
-          : "bg-white text-black"
+          ? "bg-zinc-900 border-zinc-800 text-zinc-100"
+          : "bg-white border-slate-200/80 text-slate-900"
       }`}
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 relative">
-        <div className="flex items-center gap-3">
+        <Link
+          to={`/userprofile/${post.Author._id}`}
+          className="flex items-center gap-3 group"
+        >
           <img
             src={post.Author.ProfileImg ? post.Author.ProfileImg : "/user.png"}
-            alt={"post img"}
-            className="w-10 h-10 rounded-full object-cover"
+            alt={post.Author.username}
+            className="w-10 h-10 rounded-full object-cover border border-slate-200 dark:border-zinc-700 group-hover:scale-105 transition-transform"
           />
           <div className="flex flex-col">
-            <span className="font-semibold text-sm">
+            <span className="font-semibold text-sm group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
               {post.Author.username}
             </span>
-            <span className="text-xs text-gray-500">
-              {new Date(post.createdAt).toDateString()}
+            <span className="text-xs text-slate-400 dark:text-zinc-500">
+              {new Date(post.createdAt).toLocaleDateString(undefined, {
+                month: "short",
+                day: "numeric",
+              })}
             </span>
           </div>
-        </div>
+        </Link>
 
-        <button
-          onClick={(e) => {
-            e.stopPropagation(); // ✅ Prevent menu from closing immediately because we have the custom hook that change the state immediately
-            setShowDeletePost((prev) => !prev);
-          }}
-        >
-          <MoreHorizontal className="w-5 h-5 text-gray-600 cursor-pointer" />
-        </button>
+        {isPostOwner && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDeletePost((prev) => !prev);
+            }}
+            className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 transition"
+            aria-label="Post options"
+          >
+            <MoreHorizontal className="w-5 h-5 cursor-pointer" />
+          </button>
+        )}
 
         {showDeletePost && isPostOwner && (
           <DeletePostMenu
@@ -70,21 +87,22 @@ const PostCard = ({ post }: { post: Post }) => {
         )}
       </div>
 
+      {/* Media / Post Covers */}
       {post.PostCovers && post.PostCovers.length > 0 && (
-        <div className="w-full max-h-[600px] overflow-hidden relative">
+        <div className="w-full max-h-[600px] overflow-hidden relative bg-slate-950/5 dark:bg-black/40">
           {post.PostCovers.length === 1 ? (
             <>
               {post.PostCovers[0].endsWith(".mp4") ? (
                 <video
                   src={post.PostCovers[0]}
                   controls
-                  className="w-full max-h-[600px] object-contain "
+                  className="w-full max-h-[600px] object-contain mx-auto"
                 />
               ) : (
                 <img
                   src={post.PostCovers[0]}
-                  alt="post"
-                  className="w-full max-h-[600px] object-contain "
+                  alt="post cover"
+                  className="w-full max-h-[600px] object-cover mx-auto"
                 />
               )}
             </>
@@ -98,7 +116,7 @@ const PostCard = ({ post }: { post: Post }) => {
                 spaceBetween={10}
                 slidesPerView={1}
                 modules={[Navigation]}
-                className="rounded-lg overflow-hidden"
+                className="overflow-hidden"
               >
                 {post.PostCovers.map((cover: string, idx: number) => (
                   <SwiperSlide key={idx} className="flex justify-center">
@@ -112,7 +130,7 @@ const PostCard = ({ post }: { post: Post }) => {
                       <img
                         src={cover}
                         alt={`post-${idx}`}
-                        className="w-full max-h-[600px] object-contain"
+                        className="w-full max-h-[600px] object-cover"
                       />
                     )}
                   </SwiperSlide>
@@ -120,56 +138,75 @@ const PostCard = ({ post }: { post: Post }) => {
               </Swiper>
 
               {/* Navigation Buttons */}
-              <button className="swiper-button-prev-custom cursor-pointer absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[var(--primary-color)] z-10 text-white flex items-center justify-center">
+              <button className="swiper-button-prev-custom cursor-pointer absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-xs z-10 text-white flex items-center justify-center transition">
                 <BsChevronLeft />
               </button>
-              <button className="swiper-button-next-custom cursor-pointer absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[var(--primary-color)] z-10 text-white flex items-center justify-center">
+              <button className="swiper-button-next-custom cursor-pointer absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-xs z-10 text-white flex items-center justify-center transition">
                 <BsChevronRight />
               </button>
             </div>
           )}
         </div>
       )}
-      {/* Actions */}
+
+      {/* Action Bar */}
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center gap-4">
-          {isLiked ? (
-            <FaHeart className="text-red-600 w-6 h-6" onClick={() => setIsLiked(!isLiked)} />
-          ) : (
-            <Heart className="w-6 h-6 cursor-pointer hover:scale-110 transition" onClick={() => setIsLiked(!isLiked)} />
-          )}
+          <button
+            onClick={() => setIsLiked(!isLiked)}
+            className="flex items-center gap-1.5 focus:outline-none transition group"
+            aria-label="Like post"
+          >
+            {isLiked ? (
+              <FaHeart className="text-rose-500 w-5 h-5 animate-pulse" />
+            ) : (
+              <Heart className="w-5 h-5 text-slate-500 dark:text-zinc-400 group-hover:text-rose-500 transition-colors" />
+            )}
+          </button>
 
-          <MessageCircle className="w-6 h-6 cursor-pointer hover:scale-110 transition" />
-          <Send className="w-6 h-6 cursor-pointer hover:scale-110 transition" />
+          <button
+            className="text-slate-500 dark:text-zinc-400 hover:text-indigo-500 transition-colors"
+            aria-label="Comments"
+          >
+            <MessageCircle className="w-5 h-5" />
+          </button>
+
+          <button
+            className="text-slate-500 dark:text-zinc-400 hover:text-indigo-500 transition-colors"
+            aria-label="Share"
+          >
+            <Send className="w-5 h-5" />
+          </button>
         </div>
-        <Bookmark className="w-6 h-6 cursor-pointer hover:scale-110 transition" />
+
+        <button
+          className="text-slate-500 dark:text-zinc-400 hover:text-indigo-500 transition-colors"
+          aria-label="Bookmark"
+        >
+          <Bookmark className="w-5 h-5" />
+        </button>
       </div>
 
-      <div className="px-4 text-sm font-semibold">
-        {typeof post.likes === "number"
-          ? post.likes
-          : Array.isArray(post.likes)
-          ? post.likes.length
-          : 0}{" "}
-        likes
+      {/* Likes Count */}
+      <div className="px-4 text-xs font-semibold text-slate-700 dark:text-zinc-300">
+        {currentLikes.toLocaleString()} likes
       </div>
 
-      {/* Content */}
-      <div className="px-4 py-2 text-sm">
-        <span className="font-semibold mr-2">{post.Author.username}</span>
-        {post.content}
+      {/* Post Text Content */}
+      <div className="px-4 py-2 text-sm leading-relaxed">
+        <Link
+          to={`/userprofile/${post.Author._id}`}
+          className="font-bold mr-2 text-slate-900 dark:text-zinc-100 hover:text-indigo-500 transition-colors"
+        >
+          {post.Author.username}
+        </Link>
+        <span className="text-slate-800 dark:text-zinc-200 whitespace-pre-wrap">
+          {post.content}
+        </span>
       </div>
-
-      {/* Comments */}
-      
-      {/* {post.comments?.length > 0 && (
-        <div className="px-4 text-sm text-gray-500 cursor-pointer">
-          View all {post.comments?.length} comments
-        </div>
-      )} */}
 
       {/* Timestamp */}
-      <div className="px-4 py-2 text-xs text-gray-400">
+      <div className="px-4 pb-3 pt-1 text-[11px] text-slate-400 dark:text-zinc-500">
         {new Date(post.createdAt).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",

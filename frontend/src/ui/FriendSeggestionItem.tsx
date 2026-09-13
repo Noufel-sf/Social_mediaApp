@@ -36,36 +36,38 @@ export default function FriendSuggestionItem({
 
   return (
     <div
-      className={`flex flex-col gap-4 p-6 rounded-md shadow-md  ${
-        theme === "dark" ? "bg-[#18181b] text-white" : "bg-white text-black"
+      className={`flex items-center justify-between gap-3 p-3 rounded-xl border transition-all ${
+        theme === "dark"
+          ? "bg-zinc-900/60 border-zinc-800/80 text-zinc-100 hover:border-zinc-700"
+          : "bg-slate-50/70 border-slate-200/80 text-slate-900 hover:border-slate-300"
       }`}
     >
-      <div className="flex items-center gap-4">
-        <Link to={`/userprofile/${friendSuggestion._id}`}>
-          <div className="flex items-center gap-2">
-            <img
-              src={friendSuggestion.ProfileImg}
-              alt="request userimg"
-              className="rounded-full w-10 h-10 object-cover"
-            />
-            <div className="flex flex-col gap-1">
-              <h1 className="text-sm capitalize font-bold">
-                {friendSuggestion.username}
-              </h1>
-              <h1 className="text-sm capitalize font-bold">
-                {friendSuggestion.nickname}
-              </h1>
-            </div>
-          </div>
-        </Link>
-        <div className="flex items-center gap-2 bg-[var(--primary-color)] p-2 rounded-full ml-auto">
-          <IoPersonAdd
-            size={18}
-            className="cursor-pointer"
-            onClick={handleAddFriend}
-          />
+      <Link
+        to={`/userprofile/${friendSuggestion._id}`}
+        className="flex items-center gap-3 min-w-0 group"
+      >
+        <img
+          src={friendSuggestion.ProfileImg || "/user.png"}
+          alt={friendSuggestion.username}
+          className="rounded-full w-9 h-9 object-cover flex-shrink-0 border border-slate-200 dark:border-zinc-700 group-hover:scale-105 transition-transform"
+        />
+        <div className="flex flex-col min-w-0">
+          <span className="text-xs font-semibold truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+            {friendSuggestion.username}
+          </span>
+          <span className="text-[11px] text-slate-400 dark:text-zinc-500 truncate">
+            {friendSuggestion.nickname?.startsWith('@') ? friendSuggestion.nickname : `@${friendSuggestion.nickname || friendSuggestion.username}`}
+          </span>
         </div>
-      </div>
+      </Link>
+
+      <button
+        onClick={handleAddFriend}
+        title="Add Friend"
+        className="flex-shrink-0 p-2 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white transition-all cursor-pointer shadow-2xs"
+      >
+        <IoPersonAdd size={15} />
+      </button>
     </div>
   );
 }

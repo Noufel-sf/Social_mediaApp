@@ -35,15 +35,22 @@ export default function FriendsRequestsList() {
 
   return (
     <div
-      className={`flex flex-col gap-2 ${
+      className={`flex flex-col gap-3 p-4 rounded-2xl shadow-xs border ${
         theme === "dark"
-          ? "bg-[var(--dark-bg)] text-white"
-          : "bg-white text-black"
+          ? "bg-zinc-900 border-zinc-800 text-zinc-100"
+          : "bg-white border-slate-200/80 text-slate-900"
       }`}
     >
-      <h1 className="text-2xl capitalize">{t("requestsTitle")}</h1>
+      <div className="flex items-center justify-between pb-1">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+          {t("requestsTitle")}
+        </h3>
+        <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-500 font-medium">
+          {friendRequests.length}
+        </span>
+      </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2.5">
         {friendRequests.map((request) => (
           <FriendRequestsItem key={request._id} friendRequest={request} />
         ))}

@@ -1,35 +1,56 @@
 @import "tailwindcss";
+
 :root {
-  --primary-color: #4f46e5;
-  --secondary-color: #3b82f6;
-  --background-color: #f3f4f6;
-  --text-color: #111827;
-  --dark-bg: #000f;
-  
-  /* heading sizes */
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary-color: #8b5cf6;
+  --background-color: #f8fafc;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --text-color: #0f172a;
+  --text-muted: #64748b;
+
+  --dark-bg: #09090b;
+  --dark-card: #18181b;
+  --dark-card-hover: #27272a;
+  --dark-border: #27272a;
+  --dark-text: #f4f4f5;
+  --dark-muted: #a1a1aa;
 }
 
+/* Base Body Styles */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.dark body {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+}
 
 /* Default font for all elements */
 * {
- font-family: "Parkinsans", sans-serif;
+  font-family: "Parkinsans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
-/* English font applied to entire document */
+/* English font */
 .EnglishFont,
 .EnglishFont * {
-  font-family: "Parkinsans", sans-serif;
+  font-family: "Parkinsans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: "wdth" 100;
 }
 
-/* Arabic font applied to entire document */
+/* Arabic font */
 .ArabicFont,
 .ArabicFont * {
   font-family: "Readex Pro", sans-serif;
@@ -39,11 +60,46 @@
   font-variation-settings: "HEXP" 0;
 }
 
-/* Ensure Arabic font is applied with higher specificity */
 html.ArabicFont * {
   font-family: "Readex Pro", sans-serif !important;
 }
 
 html.EnglishFont * {
   font-family: "Parkinsans", sans-serif !important;
+}
+
+/* Smooth custom scrollbars that don't hurt the eyes */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* Utility to hide scrollbars when needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -127,145 +127,186 @@ const MessengerPage = () => {
   return (
     <div
       {...forceLTR()}
-      className={`w-full h-screen flex flex-col gap-4 lg:px-12 py-3 ${
-        theme === "dark" ? "bg-[#18181b] text-white" : "bg-white text-black"
+      className={`min-h-screen flex flex-col transition-colors duration-200 ${
+        theme === "dark" ? "bg-[var(--dark-bg)] text-zinc-100" : "bg-[#f8fafc] text-slate-900"
       }`}
     >
       <Topbar />
 
-      <div className="flex flex-col md:flex-row md:justify-between gap-8 h-screen w-full">
-        {/* === LEFT SIDEBAR === */}
-        <div className={`lg:flex flex-col border-r p-4 w-1/4 hidden`}>
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-4 flex flex-col">
+        <div className="flex-1 flex flex-col md:flex-row rounded-2xl shadow-xs border border-slate-200/80 dark:border-zinc-800 overflow-hidden bg-white dark:bg-zinc-900 min-h-[550px] max-h-[calc(100vh-120px)]">
+          
+          {/* === LEFT SIDEBAR: ACTIVE USER INFO (DESKTOP) === */}
           {selectedChatUser && (
-            <>
-              <div className="flex flex-col items-center">
-                <img
-                  src={selectedChatUser.ProfileImg}
-                  alt={selectedChatUser.username}
-                  className="w-20 h-20 rounded-full object-cover"
-                />
-                <h2 className="mt-2 font-semibold">{selectedChatUser.username}</h2>
+            <div className="hidden xl:flex flex-col border-r border-slate-200/80 dark:border-zinc-800 p-6 w-72 bg-slate-50/50 dark:bg-zinc-900/50">
+              <div className="flex flex-col items-center text-center">
+                <div className="relative">
+                  <img
+                    src={selectedChatUser.ProfileImg || "/user.png"}
+                    alt={selectedChatUser.username}
+                    className="w-20 h-20 rounded-full object-cover border-2 border-white dark:border-zinc-800 shadow-sm"
+                  />
+                  {onlineUsers.includes(selectedChatUser._id) && (
+                    <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-zinc-900 rounded-full" />
+                  )}
+                </div>
+                <h2 className="mt-3 font-bold text-base text-slate-900 dark:text-zinc-100">
+                  {selectedChatUser.username}
+                </h2>
                 <span
-                  className={`text-xs ${
+                  className={`text-xs font-medium mt-0.5 ${
                     onlineUsers.includes(selectedChatUser._id)
-                      ? "text-green-500"
-                      : "text-gray-500"
+                      ? "text-emerald-500"
+                      : "text-slate-400 dark:text-zinc-500"
                   }`}
                 >
-                  {onlineUsers.includes(selectedChatUser._id)
-                    ? "Active now"
-                    : "Offline"}
+                  {onlineUsers.includes(selectedChatUser._id) ? "Active now" : "Offline"}
                 </span>
               </div>
 
-              <div className="flex justify-center gap-4 mt-4">
-                <button className="p-3 bg-[var(--primary-color)] rounded-full">
-                  🔍
+              <div className="flex justify-center gap-3 mt-6">
+                <button title="Search in conversation" className="p-2.5 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700 transition cursor-pointer">
+                  <Info className="w-4 h-4" />
                 </button>
-                <button className="p-3 bg-[var(--primary-color)] rounded-full">
-                  🔔
+                <button title="Phone call" className="p-2.5 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700 transition cursor-pointer">
+                  <Phone className="w-4 h-4" />
                 </button>
-                <button className="p-3 bg-[var(--primary-color)] rounded-full">
-                  ⚙️
+                <button title="Video call" className="p-2.5 rounded-full bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-700 transition cursor-pointer">
+                  <Video className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="mt-6 space-y-3 text-sm">
-                <details className="cursor-pointer">
-                  <summary className="font-medium">Chat Info</summary>
-                </details>
-                <details className="cursor-pointer">
-                  <summary className="font-medium">Customize Chat</summary>
-                </details>
-                <details className="cursor-pointer">
-                  <summary className="font-medium">Media, Files</summary>
-                </details>
-                <details className="cursor-pointer">
-                  <summary className="font-medium">Privacy & Support</summary>
-                </details>
-              </div>
-            </>
-          )}
-        </div>
-
-        {/* === MIDDLE CHAT === */}
-        <div className={` flex-col w-full ${showMessages ? "hidden" : "flex"}`}>
-          {selectedChatUser && (
-            <div className="flex items-center justify-between p-4 border-b">
-              <h2 className="font-semibold text-3xl">
-                {selectedChatUser.username}
-              </h2>
-              <div className="flex gap-3 text-gray-600">
-                <Info className="w-5 h-5 cursor-pointer" />
-                <Phone className="w-5 h-5 cursor-pointer" />
-                <Video className="w-5 h-5 cursor-pointer" />
+              <div className="mt-8 space-y-3 text-xs font-medium text-slate-600 dark:text-zinc-400 divide-y divide-slate-200/50 dark:divide-zinc-800">
+                <div className="pt-3 flex justify-between items-center cursor-pointer hover:text-indigo-600 transition">
+                  <span>Chat Privacy & Safety</span>
+                  <span>›</span>
+                </div>
+                <div className="pt-3 flex justify-between items-center cursor-pointer hover:text-indigo-600 transition">
+                  <span>Shared Media & Links</span>
+                  <span>›</span>
+                </div>
+                <div className="pt-3 flex justify-between items-center cursor-pointer hover:text-indigo-600 transition">
+                  <span>Notifications & Sound</span>
+                  <span>›</span>
+                </div>
               </div>
             </div>
           )}
 
-          {/* === MESSAGES === */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            {messagesLoading && (
-              <div className="flex justify-center items-center h-full">
-                <TailSpin height="40" width="40" color="var(--primary-color)" />
-              </div>
-            )}
+          {/* === MIDDLE CHAT PANEL === */}
+          <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-zinc-900">
+            {selectedChatUser ? (
+              <>
+                {/* Chat Top Bar */}
+                <div className="flex items-center justify-between px-6 py-3.5 border-b border-slate-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <img
+                        src={selectedChatUser.ProfileImg || "/user.png"}
+                        alt={selectedChatUser.username}
+                        className="w-10 h-10 rounded-full object-cover border border-slate-200 dark:border-zinc-700"
+                      />
+                      {onlineUsers.includes(selectedChatUser._id) && (
+                        <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white dark:border-zinc-900 rounded-full" />
+                      )}
+                    </div>
+                    <div>
+                      <h2 className="font-bold text-sm sm:text-base text-slate-900 dark:text-zinc-100">
+                        {selectedChatUser.username}
+                      </h2>
+                      <p className="text-xs text-slate-400 dark:text-zinc-500">
+                        {onlineUsers.includes(selectedChatUser._id) ? "Online" : "Offline"}
+                      </p>
+                    </div>
+                  </div>
 
-            {messagesError && (
-              <p className="text-center text-red-500">
-                Failed to load messages
-              </p>
-            )}
-
-            {!messagesLoading &&
-              messagesData.map((msg, idx) => (
-                <div
-                  key={idx}
-                  className={`flex ${
-                    msg.senderId._id === CurrentUser?._id
-                      ? "justify-end"
-                      : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`px-3 py-2 rounded-lg text-sm max-w-xs ${
-                      msg.senderId._id === CurrentUser?._id
-                        ? "bg-[var(--primary-color)] text-white"
-                        : "bg-gray-200 text-gray-800"
-                    }`}
-                  >
-                    {msg.text}
+                  <div className="flex items-center gap-2 text-slate-500 dark:text-zinc-400">
+                    <button className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer">
+                      <Phone className="w-4 h-4" />
+                    </button>
+                    <button className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer">
+                      <Video className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
-              ))}
 
-            {!messagesLoading && messagesData.length === 0 && (
-              <p className="text-center text-gray-400 text-sm">
-                No messages yet
-              </p>
+                {/* Messages Container */}
+                <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 bg-slate-50/40 dark:bg-zinc-950/40">
+                  {messagesLoading && (
+                    <div className="flex justify-center items-center h-full">
+                      <TailSpin height="36" width="36" color="var(--primary-color)" />
+                    </div>
+                  )}
+
+                  {messagesError && (
+                    <p className="text-center text-xs text-red-500">
+                      Failed to load messages
+                    </p>
+                  )}
+
+                  {!messagesLoading &&
+                    messagesData.map((msg, idx) => {
+                      const isMe = msg.senderId._id === CurrentUser?._id;
+                      return (
+                        <div
+                          key={idx}
+                          className={`flex ${isMe ? "justify-end" : "justify-start"}`}
+                        >
+                          <div
+                            className={`px-4 py-2.5 text-sm leading-relaxed max-w-sm sm:max-w-md ${
+                              isMe
+                                ? "bg-indigo-600 text-white rounded-2xl rounded-tr-xs shadow-2xs"
+                                : "bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 border border-slate-200/70 dark:border-zinc-700/60 rounded-2xl rounded-tl-xs shadow-2xs"
+                            }`}
+                          >
+                            {msg.text}
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                  {!messagesLoading && messagesData.length === 0 && (
+                    <div className="flex flex-col items-center justify-center h-full text-slate-400 dark:text-zinc-500 py-12">
+                      <p className="text-sm">No messages yet.</p>
+                      <p className="text-xs mt-1">Say hello to start the conversation! 👋</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Messages Input */}
+                <MessagesInput
+                  newMessage={newMessage}
+                  setNewMessage={setNewMessage}
+                  handleSend={handleSend}
+                />
+              </>
+            ) : (
+              /* Empty State */
+              <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-slate-50/30 dark:bg-zinc-950/20">
+                <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 shadow-xs">
+                  <Info className="w-8 h-8" />
+                </div>
+                <h3 className="text-base font-bold text-slate-800 dark:text-zinc-200">
+                  Select a Conversation
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-xs mt-1.5 leading-relaxed">
+                  Choose a friend from the right panel to view messages, share updates, and chat in real time.
+                </p>
+              </div>
             )}
           </div>
 
-          {/* === MESSAGE INPUT === */}
-          {selectedChatUser && (
-            <MessagesInput
-              newMessage={newMessage}
-              setNewMessage={setNewMessage}
-              handleSend={handleSend}
-            />
-          )}
-        </div>
-
-        {/* === RIGHT SIDEBAR === */}
-        <ChatRightFriendsbar
+          {/* === RIGHT SIDEBAR: FRIENDS DIRECTORY === */}
+          <ChatRightFriendsbar
             userFriends={userFriends}
             friendsLoading={friendsLoading}
             friendsError={friendsError}
             selectedChatUser={selectedChatUser}
-            ShowMessages ={showMessages}
+            ShowMessages={showMessages}
             setSelectedChatUser={setSelectedChatUser}
-        />
-      </div>
+          />
+        </div>
+      </main>
     </div>
   );
 };

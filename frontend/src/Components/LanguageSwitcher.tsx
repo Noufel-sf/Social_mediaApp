@@ -51,22 +51,22 @@ function LanguageSwitcher() {
       </button>
       
       {/* Dropdown menu */}
-      <div className={`absolute right-0 top-full mt-2 border rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[130px] ${
+      <div className={`absolute right-0 top-full mt-2 border rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 min-w-[140px] overflow-hidden ${
         theme === 'dark' 
-          ? 'bg-gray-800 border-gray-700' 
-          : 'bg-white border-gray-200'
+          ? 'bg-zinc-900 border-zinc-800 text-zinc-100' 
+          : 'bg-white border-slate-200 text-slate-900'
       }`}>
         <button
           onClick={() => changeLanguage('en')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm w-full text-left rounded-t-lg transition-colors ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium w-full text-left transition-colors cursor-pointer ${
             theme === 'dark' 
-              ? 'hover:bg-gray-700' 
-              : 'hover:bg-gray-100'
+              ? 'hover:bg-zinc-800' 
+              : 'hover:bg-slate-100'
           } ${
             currentLanguage === 'en' 
               ? theme === 'dark' 
-                ? 'bg-blue-900/20 text-blue-400' 
-                : 'bg-blue-50 text-blue-600'
+                ? 'bg-indigo-950/40 text-indigo-400 font-semibold' 
+                : 'bg-indigo-50 text-indigo-600 font-semibold'
               : ''
           }`}
         >
@@ -74,15 +74,15 @@ function LanguageSwitcher() {
         </button>
         <button
           onClick={() => changeLanguage('ar')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm w-full text-left rounded-b-lg transition-colors ${
+          className={`flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium w-full text-left transition-colors cursor-pointer ${
             theme === 'dark' 
-              ? 'hover:bg-gray-700' 
-              : 'hover:bg-gray-100'
+              ? 'hover:bg-zinc-800' 
+              : 'hover:bg-slate-100'
           } ${
             currentLanguage === 'ar' 
               ? theme === 'dark' 
-                ? 'bg-blue-900/20 text-blue-400' 
-                : 'bg-blue-50 text-blue-600'
+                ? 'bg-indigo-950/40 text-indigo-400 font-semibold' 
+                : 'bg-indigo-50 text-indigo-600 font-semibold'
               : ''
           }`}
         >

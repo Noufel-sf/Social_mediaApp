@@ -40,8 +40,8 @@ export default function Layout() {
 
   return (
     <main
-      className={`flex min-h-screen ${
-        theme === "dark" ? "bg-[var(--dark-bg)]" : "bg-[#fafafa]"
+      className={`flex flex-col w-full min-h-screen transition-colors duration-200 ${
+        theme === "dark" ? "bg-[var(--dark-bg)] text-zinc-100" : "bg-[#f8fafc] text-slate-900"
       }`}
     >
       <Routes>

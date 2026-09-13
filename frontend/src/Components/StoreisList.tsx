@@ -1,12 +1,9 @@
 import type { Story } from "../Utils/Types";
 import StoryCard from "./StoryCard";
-import { useTheme } from "../Contexts/DarkModeContext";
 import { useQuery } from "@tanstack/react-query";
 import { getStories } from "../ServisesApi/StoriesApi";
 
 function StoriesList() {
-  const { theme } = useTheme();
-
   const { data: stories } = useQuery<Story[]>({
     queryKey: ["stories"],
     queryFn: getStories,
@@ -20,11 +17,7 @@ function StoriesList() {
 
   return (
     <div
-      className={`flex gap-3 overflow-x-auto p-4 border rounded-xl no-scrollbar ${
-        theme === "dark"
-          ? "bg-[var(--dark-bg)] border-gray-700 text-white"
-          : "bg-white border-gray-200 text-black"
-      }`}
+      className="flex gap-4 overflow-x-auto p-4 bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800/80 rounded-2xl shadow-xs no-scrollbar"
     >
       {storiesToRender.map((story) => (
         <StoryCard

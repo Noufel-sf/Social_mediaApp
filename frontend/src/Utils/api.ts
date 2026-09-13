@@ -6,12 +6,38 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-// Helper to convert File to Base64 Data URL for persistent image previews
-const fileToDataUrl = (file: File): Promise<string> => {
+// Helper to convert File to compressed Data URL (prevents localStorage quota errors)
+const fileToDataUrl = (file: File | Blob, maxWidth = 1400, quality = 0.85): Promise<string> => {
   return new Promise((resolve) => {
     const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = () => resolve(URL.createObjectURL(file));
+    reader.onload = () => {
+      const result = reader.result as string;
+      if (typeof result !== "string" || !result.startsWith("data:image")) {
+        resolve(result);
+        return;
+      }
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL("image/jpeg", quality));
+        } else {
+          resolve(result);
+        }
+      };
+      img.onerror = () => resolve(result);
+      img.src = result;
+    };
+    reader.onerror = () => resolve("/coverimg.jpg");
     reader.readAsDataURL(file);
   });
 };
@@ -97,8 +123,17 @@ api.defaults.adapter = async (config: InternalAxiosRequestConfig): Promise<Axios
 
       if (config.data instanceof FormData) {
         const file = config.data.get("CoverImg");
-        if (file instanceof File) {
-          coverUrl = await fileToDataUrl(file);
+        if (file instanceof Blob || (file && typeof file === "object")) {
+          coverUrl = await fileToDataUrl(file as File);
+        } else if (typeof file === "string" && file.length > 0) {
+          coverUrl = file;
+        }
+      } else if (config.data && typeof config.data === "object") {
+        const raw = (config.data as any).CoverImg;
+        if (raw instanceof Blob) {
+          coverUrl = await fileToDataUrl(raw);
+        } else if (typeof raw === "string" && raw.length > 0) {
+          coverUrl = raw;
         }
       }
 

@@ -68,13 +68,13 @@ export default function UpdateProfileDialogContent({
           <img
             src={preview || "/user.png"}
             alt="Profile Preview"
-            className="w-24 h-24 rounded-full object-cover border"
+            className="w-24 h-24 rounded-full object-cover border-2 border-indigo-500/20 shadow-md"
           />
           <label
             htmlFor="profile-upload"
-            className="absolute bottom-0 right-0 bg-[var(--primary-color)] text-white p-2 rounded-full cursor-pointer hover:bg-[var(--secondary-color)]"
+            className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-500 shadow-sm transition"
           >
-            <FiEdit />
+            <FiEdit className="w-3.5 h-3.5" />
           </label>
           <input
             id="profile-upload"
@@ -87,28 +87,35 @@ export default function UpdateProfileDialogContent({
       </div>
 
       {/* Username */}
-      <input
-        type="text"
-        name="username"
-        placeholder="Full name"
-        value={formData.username}
-        onChange={handleInputChange} 
-        className="w-full border p-2 rounded border-gray-300 text-black"
-      />
+      <div className="space-y-1">
+        <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400">Username</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="Your username"
+          value={formData.username}
+          onChange={handleInputChange} 
+          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+        />
+      </div>
 
       {/* Bio */}
-      <textarea
-        name="bio"
-        placeholder="Bio"
-        value={formData.bio}
-        onChange={handleInputChange}
-        className="w-full border p-2 rounded border-gray-300 text-black"
-      />
+      <div className="space-y-1">
+        <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400">Bio</label>
+        <textarea
+          name="bio"
+          placeholder="Tell something about yourself..."
+          value={formData.bio}
+          onChange={handleInputChange}
+          rows={3}
+          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"
+        />
+      </div>
 
       {/* Save Button */}
       <button
         onClick={handleUpdateUserProfile}
-        className="w-full bg-[var(--primary-color)] cursor-pointer text-white py-2 rounded"
+        className="w-full bg-indigo-600 hover:bg-indigo-500 cursor-pointer text-white font-semibold py-2.5 rounded-xl shadow-sm transition"
       >
         Save Changes
       </button>

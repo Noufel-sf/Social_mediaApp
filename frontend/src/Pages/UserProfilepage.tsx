@@ -1,10 +1,11 @@
-import { useState , useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Camera } from "lucide-react";
+import { Camera, ArrowLeft, Calendar, UserCheck } from "lucide-react";
 import { useTheme } from "../Contexts/DarkModeContext";
 import { useAuthStates } from "../ZustandStates/AuthStates";
 import { useDirection } from "../hooks/useDirection";
+import Topbar from "../Components/TopBar";
 import PostCard from "../Components/PostCard";
 import UpdateProfileDialog from "../Components/UpdateProfileDialog";
 import UpdateProfileDialogContent from "../Components/UpdateProfileContent";
@@ -14,7 +15,6 @@ import ConfirmUserCoverImg from "../Components/ConfirmUserCoverimg";
 import { getUserProfilePageData } from "../ServisesApi/UserProfileApi";
 import type { Post } from "../Utils/Types";
 import { TailSpin } from "react-loader-spinner";
-import { Link } from "react-router-dom";
 
 export default function UserProfilePage() {
   const { forceLTR } = useDirection();
@@ -29,13 +29,11 @@ export default function UserProfilePage() {
   } = useQuery({
     queryKey: ["userProfile", id],
     queryFn: () => getUserProfilePageData(id!),
-    enabled: !!id, // only run if id exists
+    enabled: !!id,
   });
-  
-  const navigate = useNavigate();
+
   const [isAddStoryModalOpen, setIsAddStoryModalOpen] = useState(false);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
-
 
   const [UserCoverimg, setUserCoverimg] = useState<string | File>(
     userDetails?.CoverImg || ""
@@ -44,47 +42,47 @@ export default function UserProfilePage() {
     userDetails?.CoverImg || ""
   );
 
-  // 🔧 Update cover img when userDetails changes
-useEffect(() => {
-  if (userDetails?.CoverImg) {
-    setCoverImgpreview(userDetails.CoverImg);
-    setUserCoverimg(userDetails.CoverImg);
-  }
-}, [userDetails?.CoverImg]);
+  useEffect(() => {
+    if (userDetails?.CoverImg) {
+      setCoverImgpreview(userDetails.CoverImg);
+      setUserCoverimg(userDetails.CoverImg);
+    }
+  }, [userDetails?.CoverImg]);
 
-
-
-
-  // console.log("user cover img " ,userDetails?.CoverImg);
-  
   const [showConfirmCoverimg, setshowConfirmCoverimg] = useState(false);
 
   if (isLoading) {
     return (
-      <div className="flex justify-center text-center w-full items-center h-screen">
-        <TailSpin
-          height="80"
-          width="100"
-          color={"var(--primary-color)"}
-          ariaLabel="tail-spin-loading"
-          radius="1"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
+      <div className="flex flex-col min-h-screen">
+        <Topbar />
+        <div className="flex-1 flex justify-center items-center">
+          <TailSpin
+            height="60"
+            width="60"
+            color={"var(--primary-color)"}
+            ariaLabel="loading"
+          />
+        </div>
       </div>
     );
   }
+
   if (isError || !userDetails) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen gap-4">
-        <p className="text-lg">User profile not found.</p>
-        <button
-          onClick={() => navigate("/")}
-          className="px-4 py-2 bg-[var(--primary-color)] text-white rounded-lg"
-        >
-          Back to Home
-        </button>
+      <div className="flex flex-col min-h-screen">
+        <Topbar />
+        <div className="flex-1 flex flex-col items-center justify-center gap-4 p-8 text-center">
+          <h2 className="text-2xl font-bold">User profile not found</h2>
+          <p className="text-slate-500 dark:text-zinc-400">
+            The profile you are looking for might have been removed or does not exist.
+          </p>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-medium transition shadow-sm"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Home Feed
+          </Link>
+        </div>
       </div>
     );
   }
@@ -97,7 +95,20 @@ useEffect(() => {
       setCoverImgpreview(URL.createObjectURL(file));
       setUserCoverimg(file);
       setshowConfirmCoverimg(true);
+      e.target.value = "";
     }
+  };
+
+  const handleCancelCover = () => {
+    setCoverImgpreview(userDetails?.CoverImg || CurrentUser?.CoverImg || "");
+    setUserCoverimg(userDetails?.CoverImg || CurrentUser?.CoverImg || "");
+    setshowConfirmCoverimg(false);
+  };
+
+  const handleSuccessCover = (newCoverUrl: string) => {
+    setCoverImgpreview(newCoverUrl);
+    setUserCoverimg(newCoverUrl);
+    setshowConfirmCoverimg(false);
   };
 
   const onClose = () => setIsUpdateDialogOpen(false);
@@ -105,137 +116,219 @@ useEffect(() => {
   return (
     <div
       {...forceLTR()}
-      className={`w-full min-h-screen ${
-        theme === "dark" ? "bg-[#18181b] text-white" : "bg-gray-100"
+      className={`w-full min-h-screen flex flex-col transition-colors duration-200 ${
+        theme === "dark"
+          ? "bg-[var(--dark-bg)] text-zinc-100"
+          : "bg-[#f8fafc] text-slate-900"
       }`}
     >
-      {/* Cover Image */}
-      <div className="relative h-60">
-        <img
-          src={CoverImgpreview}
-          alt="cover"
-          className="w-full h-full object-cover"
+      {/* Universal TopBar */}
+      <Topbar />
+
+      <main className="flex-1 pb-16">
+        {/* Navigation Breadcrumb / Back Bar */}
+        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-700 dark:text-zinc-200 bg-white/80 dark:bg-zinc-800/80 hover:bg-slate-100 dark:hover:bg-zinc-700 border border-slate-200/80 dark:border-zinc-700 shadow-sm backdrop-blur-sm transition-all"
+          >
+            <ArrowLeft className="w-4 h-4 text-indigo-500" /> Back to Feed
+          </Link>
+
+          <span className="text-xs text-slate-400 dark:text-zinc-500 font-mono">
+            {isCurrentUser ? "Your Profile" : `@${userDetails.username}`}
+          </span>
+        </div>
+
+        {/* Cover Banner */}
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="relative h-56 sm:h-72 w-full rounded-2xl overflow-hidden shadow-sm border border-slate-200/60 dark:border-zinc-800/60 bg-slate-200 dark:bg-zinc-800">
+            <img
+              src={CoverImgpreview}
+              alt="Profile Cover"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+
+            {isCurrentUser && (
+              <label className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white backdrop-blur-md px-3.5 py-2 rounded-full shadow-md text-xs sm:text-sm font-medium flex items-center gap-1.5 cursor-pointer transition border border-white/20">
+                <Camera className="w-4 h-4" />
+                <span>Edit Cover</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageChange}
+                />
+              </label>
+            )}
+          </div>
+        </div>
+
+        {/* Cover Change Confirmation Bar */}
+        <ConfirmUserCoverImg
+          onCancel={handleCancelCover}
+          onSuccess={handleSuccessCover}
+          showConfirmCoverimg={showConfirmCoverimg}
+          newCover={UserCoverimg}
+          userId={userDetails?._id || CurrentUser?._id || ""}
         />
 
-        {isCurrentUser && (
-          <label className={`absolute bottom-3 right-3 bg-white px-3 py-1 rounded-md shadow text-sm font-medium flex items-center gap-1 cursor-pointer text-black`}>
-            <Camera className="w-4 h-4" />
-            Edit Cover Photo
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleImageChange}
-            />
-          </label>
-        )}
-      </div>
-
-      <ConfirmUserCoverImg
-        onCancel={() => setshowConfirmCoverimg(false)}
-        showConfirmCoverimg={showConfirmCoverimg}
-        newCover={UserCoverimg}
-        userId={userDetails?._id || ""}
-      />
-
-      {/* Profile Section */}
-      <div className="relative max-w-5xl mx-auto px-4">
-        <div className="mt-12 flex items-center gap-5">
-          <img
-            src={userDetails?.ProfileImg || "/user.png"}
-            alt={userDetails?.username}
-            className="w-40 h-40 rounded-full border-4 border-white object-cover"
-          />
-          <div className="flex flex-col">
-            <h1 className="text-4xl capitalize">{userDetails?.username}</h1>
-            <h1 className="text-xl">{userDetails?.nickname}</h1>
-          </div>
-        </div>
-
-        {isCurrentUser && (
-          <div className="mt-10 flex flex-col md:flex-row md:items-center md:justify-between">
-            <div className="flex gap-2 mt-3 md:mt-0">
-              <button
-                className="bg-[var(--primary-color)] text-white px-4 py-2 cursor-pointer rounded-md font-medium hover:bg-blue-700"
-                onClick={() => setIsAddStoryModalOpen(true)}
-              >
-                Add to Story
-              </button>
-
-              <AddStoryDialog
-                isOpen={isAddStoryModalOpen}
-                onClose={() => setIsAddStoryModalOpen(false)}
-              >
-                <AddStoryContent setIsModalOpen={setIsAddStoryModalOpen} />
-              </AddStoryDialog>
-
-              <button
-                className="bg-gray-200 px-4 py-2 rounded-md font-medium cursor-pointer text-black hover:bg-gray-300"
-                onClick={() => setIsUpdateDialogOpen(true)}
-              >
-                Edit Profile
-              </button>
-
-              <UpdateProfileDialog
-                isOpen={isUpdateDialogOpen}
-                onClose={onClose}
-              >
-                <UpdateProfileDialogContent
-                  setIsModalOpen={setIsUpdateDialogOpen}
+        {/* Profile Info Header */}
+        <div className="max-w-5xl mx-auto px-6 sm:px-8">
+          <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20">
+            {/* Avatar & Identifiers */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
+              <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-zinc-900 shadow-xl overflow-hidden bg-white dark:bg-zinc-800 flex-shrink-0">
+                <img
+                  src={userDetails?.ProfileImg || "/user.png"}
+                  alt={userDetails?.username}
+                  className="w-full h-full object-cover"
                 />
-              </UpdateProfileDialog>
-            </div>
-          </div>
-        )}
-
-        {/* Tabs */}
-        <div className="mt-6 border-t flex gap-6 text-gray-600 font-medium">
-          <button className="py-3 border-b-2 border-blue-600 text-blue-600">
-            Posts
-          </button>
-          <button className="py-3 hover:text-blue-600">More</button>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="max-w-5xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-[40%_60%] gap-6 px-4">
-        {/* Left Column */}
-        <div className="space-y-4">
-          <div className="p-4 rounded-lg shadow">
-            <h3 className="font-semibold mb-2 capitalize">Bio</h3>
-            <p className="text-sm">{userDetails?.bio}</p>
-          </div>
-
-          {/* Friends */}
-          {userDetails?.friends && userDetails.friends.length > 0 && (
-            <div className="p-4 rounded-lg shadow">
-              <h3 className="font-semibold mb-3">Friends</h3>
-              <div className="grid grid-cols-3 gap-2">
-                {userDetails.friends.map((friend: any) => (
-                  <Link to={`/userprofile/${friend._id}`} key={friend._id}> 
-                  <div key={friend._id} className="text-center">
-                    <img
-                      src={friend.ProfileImg || "/user.png"}
-                      alt={friend.username}
-                      className="w-full h-24 object-cover rounded"
-                    />
-                    <p className="text-xs mt-1 truncate">{friend.username}</p>
-                  </div>
-                </Link>
-                ))} 
               </div>
-
+              <div className="mb-2">
+                <div className="flex items-center gap-2 justify-center sm:justify-start">
+                  <h1 className="text-2xl sm:text-3xl font-bold tracking-tight capitalize">
+                    {userDetails?.username}
+                  </h1>
+                  <span className="p-1 rounded-full bg-indigo-500/10 text-indigo-500">
+                    <UserCheck className="w-4 h-4" />
+                  </span>
+                </div>
+                <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                  {userDetails?.nickname || `@${userDetails.username.toLowerCase()}`}
+                </p>
+                <p className="text-xs text-slate-400 dark:text-zinc-500 flex items-center justify-center sm:justify-start gap-1 mt-1">
+                  <Calendar className="w-3.5 h-3.5" /> Joined {new Date(userDetails.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
+                </p>
+              </div>
             </div>
-          )}
+
+            {/* Profile Action Buttons */}
+            {isCurrentUser ? (
+              <div className="flex items-center justify-center gap-2.5 pb-2">
+                <button
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-semibold text-sm shadow-sm transition-all hover:scale-[1.02] cursor-pointer"
+                  onClick={() => setIsAddStoryModalOpen(true)}
+                >
+                  + Add Story
+                </button>
+
+                <AddStoryDialog
+                  isOpen={isAddStoryModalOpen}
+                  onClose={() => setIsAddStoryModalOpen(false)}
+                >
+                  <AddStoryContent setIsModalOpen={setIsAddStoryModalOpen} />
+                </AddStoryDialog>
+
+                <button
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 rounded-full font-semibold text-sm border border-slate-200 dark:border-zinc-700 transition cursor-pointer"
+                  onClick={() => setIsUpdateDialogOpen(true)}
+                >
+                  Edit Profile
+                </button>
+
+                <UpdateProfileDialog
+                  isOpen={isUpdateDialogOpen}
+                  onClose={onClose}
+                >
+                  <UpdateProfileDialogContent
+                    setIsModalOpen={setIsUpdateDialogOpen}
+                  />
+                </UpdateProfileDialog>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-2.5 pb-2">
+                <Link
+                  to="/messages"
+                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-semibold text-sm shadow-sm transition cursor-pointer"
+                >
+                  Message
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Clean Segment Tabs */}
+          <div className="mt-8 border-b border-slate-200 dark:border-zinc-800 flex gap-8">
+            <button className="pb-3 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold text-sm">
+              Posts ({userDetails?.Posts?.length || 0})
+            </button>
+            <button className="pb-3 text-slate-500 dark:text-zinc-400 hover:text-indigo-500 text-sm font-medium transition">
+              About
+            </button>
+            <button className="pb-3 text-slate-500 dark:text-zinc-400 hover:text-indigo-500 text-sm font-medium transition">
+              Friends ({userDetails?.friends?.length || 0})
+            </button>
+          </div>
         </div>
 
-        {/* Right Column (Posts) */}
-        <div className="space-y-4">
-          {userDetails?.Posts?.map((post: Post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
+        {/* Main Content Layout */}
+        <div className="max-w-5xl mx-auto mt-6 grid grid-cols-1 md:grid-cols-[38%_62%] gap-6 px-4">
+          {/* Left Column (Bio + Friends) */}
+          <div className="space-y-5">
+            {/* Bio Card */}
+            <div className="p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800/80 shadow-sm">
+              <h3 className="font-bold text-sm tracking-wide uppercase text-slate-500 dark:text-zinc-400 mb-2.5">
+                Bio
+              </h3>
+              <p className="text-sm leading-relaxed text-slate-700 dark:text-zinc-300">
+                {userDetails?.bio || "No bio added yet."}
+              </p>
+            </div>
+
+            {/* Friends Card */}
+            {userDetails?.friends && userDetails.friends.length > 0 && (
+              <div className="p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800/80 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="font-bold text-base text-slate-900 dark:text-zinc-100">
+                      Friends
+                    </h3>
+                    <p className="text-xs text-slate-400 dark:text-zinc-500">
+                      {userDetails.friends.length} friends
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2.5">
+                  {userDetails.friends.map((friend: any) => (
+                    <Link
+                      to={`/userprofile/${friend._id}`}
+                      key={friend._id}
+                      className="group flex flex-col items-center text-center p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition"
+                    >
+                      <img
+                        src={friend.ProfileImg || "/user.png"}
+                        alt={friend.username}
+                        className="w-16 h-16 object-cover rounded-xl shadow-xs group-hover:scale-105 transition-transform"
+                      />
+                      <p className="text-xs font-medium mt-1.5 truncate w-full text-slate-700 dark:text-zinc-300 group-hover:text-indigo-500">
+                        {friend.username}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right Column (Posts List) */}
+          <div className="space-y-4">
+            {userDetails?.Posts && userDetails.Posts.length > 0 ? (
+              userDetails.Posts.map((post: Post) => (
+                <PostCard key={post._id} post={post} />
+              ))
+            ) : (
+              <div className="p-8 text-center rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800/80 shadow-sm">
+                <p className="text-slate-400 dark:text-zinc-500 text-sm">
+                  No posts published yet.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import InputSearchItem from "../ui/InputSearchItem";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -8,8 +7,6 @@ import {
   MdDarkMode,
   MdLightMode,
   MdLogout,
-  MdMenu,
-  MdClose,
   MdHome,
   MdChat,
 } from "react-icons/md";
@@ -17,211 +14,110 @@ import {
 const Topbar = () => {
   const { theme, setTheme } = useTheme();
   const { CurrentUser, logout } = useAuthStates();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
   return (
-    <section
-      className={` border-b-2  py-4 ${
-        theme === "light"
-          ? " text-black border-gray-200"
-          : " text-white border-gray-600"
-      }`}
-    >
-      <div className="flex items-center justify-between py-3 px-4 md:px-6 lg:px-8  mx-auto">
+    <header className="sticky top-0 z-40 w-full bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md border-b border-slate-200/80 dark:border-zinc-800/80 transition-colors duration-200">
+      <div className="flex items-center justify-between h-16 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* LEFT: Logo + Search */}
         <div className="flex items-center gap-4 flex-1">
-          <Link to="/" className="flex gap-2 items-center">
-            <img src="/favicon.ico" alt="Logo" className="w-6 h-6" />
-            <h1 className="capitalize font-bold text-lg  sm:block">
+          <Link to="/" className="flex gap-2.5 items-center group">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white font-bold text-base shadow-sm group-hover:scale-105 transition-transform">
+              C
+            </div>
+            <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent sm:block">
               CozMeet
-            </h1>
+            </span>
           </Link>
 
-          {/* Search bar - hidden on mobile */}
+          {/* Search bar */}
           <div className="hidden md:block flex-1 max-w-xs">
             <InputSearchItem />
           </div>
         </div>
 
-        {/* CENTER: Navigation Icons (Desktop only) */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+        {/* CENTER: Navigation Links */}
+        <nav className="flex items-center gap-1.5">
           <Link
             to="/"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-blue-50 text-[var(--primary-color)] transition"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-slate-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-zinc-800/80 transition-colors"
           >
             <MdHome className="text-xl" />
-            <span className="hidden lg:inline text-sm font-semibold">Home</span>
+            <span className="hidden md:inline text-sm font-semibold">Feed</span>
           </Link>
           <Link
             to="/messages"
-            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-slate-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-zinc-800/80 transition-colors"
           >
             <MdChat className="text-xl" />
+            <span className="hidden md:inline text-sm font-semibold">Chat</span>
           </Link>
-         
         </nav>
 
         {/* RIGHT: Actions + User */}
-        <div className="flex items-center gap-3">
-          {/* Language switcher - desktop only */}
-          <div className="hidden md:block">
-            <LanguageSwitcher />
-          </div>
+        <div className="flex items-center gap-2.5">
+          {/* Language switcher */}
+          <LanguageSwitcher />
 
-          {/* Theme toggle - desktop only */}
-          <button
+          {/* Theme toggle */}
+          {/* <button
             onClick={toggleTheme}
-            className="hidden md:flex items-center justify-center w-9 h-9 cursor-pointer rounded-full hover:bg-gray-100 transition"
+            className="flex items-center justify-center w-9 h-9 cursor-pointer rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-amber-400 transition"
             aria-label="Toggle theme"
+            title="Toggle Theme"
           >
             {theme === "dark" ? (
-              <MdLightMode className="text-xl" />
+              <MdLightMode className="text-lg" />
             ) : (
-              <MdDarkMode className="text-xl" />
+              <MdDarkMode className="text-lg text-indigo-600" />
             )}
-          </button>
+          </button> */}
 
           {/* User section */}
           {CurrentUser ? (
-            <div className="hidden md:flex items-center gap-2">
+            <div className="flex items-center gap-2.5 pl-2 border-l border-slate-200 dark:border-zinc-800">
               <Link
                 to={`/userprofile/${CurrentUser._id}`}
-                className="flex items-center gap-2 hover:opacity-80 transition"
+                className="flex items-center gap-2 p-1 pr-2 sm:pr-3 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 transition"
               >
                 <img
-                  className="rounded-full w-9 h-9 object-cover border-2 border-gray-200"
+                  className="rounded-full w-8 h-8 object-cover border border-indigo-500/40"
                   src={CurrentUser.ProfileImg || "/user.png"}
                   alt={CurrentUser.username}
                 />
-                <span className="hidden lg:block text-sm font-semibold">
+                <span className="hidden sm:block text-sm font-semibold text-slate-800 dark:text-zinc-200">
                   {CurrentUser.username}
                 </span>
               </Link>
               <button
                 onClick={logout}
-                className="flex items-center cursor-pointer justify-center w-9 h-9 rounded-full hover:bg-gray-100 transition"
+                className="flex items-center cursor-pointer justify-center w-9 h-9 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-slate-500 hover:text-rose-500 transition"
                 aria-label="Logout"
+                title="Logout"
               >
-                <MdLogout className="text-xl text-[var(--primary-color)]" />
+                <MdLogout className="text-lg" />
               </button>
             </div>
           ) : (
-            <div className="hidden md:flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Link to="/login">
-                <button className="text-sm font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition">
+                <button className="text-sm font-medium px-4 py-2 rounded-xl text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer">
                   Log In
                 </button>
               </Link>
               <Link to="/signup">
-                <button className="text-sm font-semibold px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">
+                <button className="text-sm font-medium px-4 py-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-500 transition shadow-xs cursor-pointer">
                   Sign Up
                 </button>
               </Link>
             </div>
           )}
-
-          {/* Mobile menu toggle */}
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="md:hidden text-2xl"
-            aria-label="Open sidebar"
-          >
-            <MdMenu />
-          </button>
         </div>
       </div>
-
-      {/* MOBILE SIDEBAR */}
-      <div
-        className={`fixed top-0 left-0 h-full w-64 ${
-          theme === "light" ? "bg-white" : "bg-[#18181b]"
-        } transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 z-50 flex flex-col p-6 shadow-2xl`}
-      >
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-xl font-bold">Menu</h2>
-          <button onClick={() => setSidebarOpen(false)} className="text-2xl">
-            <MdClose />
-          </button>
-        </div>
-
-        <div className="space-y-6">
-          {CurrentUser ? (
-            <div className="flex flex-col gap-4">
-              <Link
-                to={`/userprofile/${CurrentUser._id}`}
-                onClick={() => setSidebarOpen(false)}
-                className="flex items-center gap-3"
-              >
-                <img
-                  className="rounded-full w-11 h-11 object-cover border-2 border-gray-300"
-                  src={CurrentUser.ProfileImg || "/user.png"}
-                  alt={CurrentUser.username}
-                />
-                <span className="capitalize font-semibold">
-                  {CurrentUser.username}
-                </span>
-              </Link>
-              <button
-                onClick={() => {
-                  logout();
-                  setSidebarOpen(false);
-                }}
-                className="flex items-center cursor-pointer gap-2 w-full text-sm font-medium py-2 px-3 rounded-lg bg-[var(--primary-color)] hover:bg-gray-200 transition"
-              >
-                <MdLogout className="text-xl" /> Logout
-              </button>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-3">
-              <Link to="/login" onClick={() => setSidebarOpen(false)}>
-                <button className="w-full text-sm font-semibold py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition">
-                  Log In
-                </button>
-              </Link>
-              <Link to="/signup" onClick={() => setSidebarOpen(false)}>
-                <button className="w-full text-sm font-semibold bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-                  Sign Up
-                </button>
-              </Link>
-            </div>
-          )}
-
-          <button
-            onClick={toggleTheme}
-            className="w-full flex items-center gap-2 text-sm py-2 px-3 rounded-lg hover:bg-gray-100 transition"
-          >
-            {theme === "dark" ? (
-              <MdLightMode className="text-xl text-[var(--primary-color)]" />
-            ) : (
-              <MdDarkMode className="text-xl text-purple-500" />
-            )}
-            <span>Toggle Theme</span>
-          </button>
-
-          <LanguageSwitcher />
-          <Link to="messages" onClick={() => setSidebarOpen(false)}>
-            <button className="w-full flex items-center gap-2 text-sm py-2 px-3 rounded-lg hover:bg-gray-100 transition">
-              <MdChat className="text-xl" />
-              <span>Messages</span>
-            </button>
-          </Link>
-        </div>
-      </div>
-
-      {/* OVERLAY */}
-      {sidebarOpen && (
-        <div
-          onClick={() => setSidebarOpen(false)}
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-        />
-      )}
-    </section>
+    </header>
   );
 };
 

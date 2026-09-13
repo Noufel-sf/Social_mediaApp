@@ -53,34 +53,37 @@ export default function AddStoryContent({
   };
 
   return (
-    <div className="space-y-4 bg-white">
+    <div className="space-y-4">
       {/* Story Preview */}
-      <div className="flex flex-col items-center p-4 ">
-        <div className="relative w-full h-full">
+      <div className="flex flex-col items-center">
+        <div className="relative w-full h-[320px] rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center">
           {preview ? (
             <>
               {storyFile?.type.startsWith("video/") ? (
                 <video
                   src={preview}
                   controls
-                  className="w-full h-full  object-cover border"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <img
                   src={preview}
                   alt="Story Preview"
-                  className="w-full h-full rounded-lg object-cover "
+                  className="w-full h-full object-cover"
                 />
               )}
             </>
           ) : (
-            <div className="w-full h-[300px] flex items-center justify-center border-2 rounded-xl border-gray-300 text-gray-500">
-              No Story
+            <div className="flex flex-col items-center justify-center text-slate-400 dark:text-zinc-500 gap-2">
+              <span className="text-3xl">📷</span>
+              <span className="text-xs font-medium">Click the button below to upload photo or video</span>
             </div>
           )}
+
           <label
             htmlFor="story-upload"
-            className="absolute bottom-0 right-0 bg-[var(--primary-color)] text-white p-2 rounded-full cursor-pointer hover:bg-[var(--secondary-color)]"
+            className="absolute bottom-4 right-4 bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-full cursor-pointer shadow-lg transition"
+            title="Upload media"
           >
             ➕
           </label>
@@ -88,26 +91,29 @@ export default function AddStoryContent({
             id="story-upload"
             type="file"
             accept="image/*,video/*"
-            className="hidden border-2 border-gray-300"
+            className="hidden"
             onChange={handleFileChange}
           />
         </div>
       </div>
 
       {/* Caption */}
-      <textarea
-        placeholder="Write a caption (optional)"
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-        className="w-full  p-2 rounded border-2 border-gray-300"
-      />
+      <div className="space-y-1">
+        <textarea
+          placeholder="Write a caption (optional)..."
+          value={caption}
+          onChange={(e) => setCaption(e.target.value)}
+          rows={2}
+          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"
+        />
+      </div>
 
       {/* Add Story Button */}
       <button
         onClick={handleAddStory}
-        className="w-full bg-[var(--primary-color)] cursor-pointer text-white py-2 rounded"
+        className="w-full bg-indigo-600 hover:bg-indigo-500 cursor-pointer text-white font-semibold py-2.5 rounded-xl shadow-sm transition"
       >
-        Add Story
+        Share Story
       </button>
     </div>
   );

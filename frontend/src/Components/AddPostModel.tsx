@@ -77,20 +77,22 @@ export default function AddPostModel({ onClose }: AddPostModelProps) {
   };
 
   return (
-  <div className={`fixed inset-0 z-50 flex items-center justify-center ${theme === "dark" ? "bg-black" : "bg-white"}`}>
-       {/* overlay */}
-      <div className="absolute inset-0 bg-black/60" onClick={onClose}></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      {/* Click outside backdrop */}
+      <div className="absolute inset-0" onClick={onClose} />
 
       <div
-        className={`relative ${
-          theme === "dark" ? "bg-[var(--dark-bg)] text-white" : "bg-white"
-        } w-full max-w-xl rounded-lg shadow-lg z-10`}
+        className={`relative w-full max-w-xl rounded-2xl shadow-2xl z-10 overflow-hidden border transition-all ${
+          theme === "dark"
+            ? "bg-zinc-900 border-zinc-800 text-zinc-100"
+            : "bg-white border-slate-200 text-slate-900"
+        }`}
       >
-        <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 px-4 py-3">
-          <h2 className="font-semibold text-lg">Create a post</h2>
+        <div className="flex justify-between items-center border-b border-slate-200/80 dark:border-zinc-800 px-5 py-3.5">
+          <h2 className="font-bold text-base">Create Post</h2>
           <button
             onClick={onClose}
-            className="text-xl hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700 p-2 rounded-full transition"
+            className="text-lg text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 cursor-pointer p-1.5 rounded-full transition"
           >
             <FiX />
           </button>
