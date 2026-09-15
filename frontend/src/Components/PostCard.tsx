@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { FaHeart } from "react-icons/fa6";
 import type { Post } from "../Utils/Types";
-import { useTheme } from "../Contexts/DarkModeContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
@@ -19,7 +18,6 @@ import "swiper/css/navigation";
 import { useAuthStates } from "../ZustandStates/AuthStates";
 
 const PostCard = ({ post }: { post: Post }) => {
-  const { theme } = useTheme();
   const { CurrentUser } = useAuthStates();
   const [isLiked, setIsLiked] = useState(false);
   const [showDeletePost, setShowDeletePost] = useState(false);
@@ -36,11 +34,7 @@ const PostCard = ({ post }: { post: Post }) => {
   return (
     <div
       dir="ltr"
-      className={`rounded-2xl shadow-xs w-full overflow-hidden transition-all duration-200 border ${
-        theme === "dark"
-          ? "bg-zinc-900 border-zinc-800 text-zinc-100"
-          : "bg-white border-slate-200/80 text-slate-900"
-      }`}
+      className="rounded-2xl shadow-xs w-full overflow-hidden transition-all duration-200 border bg-zinc-900 border-zinc-800 text-zinc-100"
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 relative">
@@ -72,10 +66,10 @@ const PostCard = ({ post }: { post: Post }) => {
               e.stopPropagation();
               setShowDeletePost((prev) => !prev);
             }}
-            className="p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 text-slate-400 hover:text-slate-600 dark:hover:text-zinc-200 transition"
+            className="p-1.5 rounded-full hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 transition cursor-pointer"
             aria-label="Post options"
           >
-            <MoreHorizontal className="w-5 h-5 cursor-pointer" />
+            <MoreHorizontal className="w-5 h-5" />
           </button>
         )}
 
@@ -89,7 +83,7 @@ const PostCard = ({ post }: { post: Post }) => {
 
       {/* Media / Post Covers */}
       {post.PostCovers && post.PostCovers.length > 0 && (
-        <div className="w-full max-h-[600px] overflow-hidden relative bg-slate-950/5 dark:bg-black/40">
+        <div className="w-full max-h-[600px] overflow-hidden relative bg-black/40">
           {post.PostCovers.length === 1 ? (
             <>
               {post.PostCovers[0].endsWith(".mp4") ? (
@@ -188,7 +182,7 @@ const PostCard = ({ post }: { post: Post }) => {
       </div>
 
       {/* Likes Count */}
-      <div className="px-4 text-xs font-semibold text-slate-700 dark:text-zinc-300">
+      <div className="px-4 text-xs font-semibold text-zinc-300">
         {currentLikes.toLocaleString()} likes
       </div>
 
@@ -196,17 +190,17 @@ const PostCard = ({ post }: { post: Post }) => {
       <div className="px-4 py-2 text-sm leading-relaxed">
         <Link
           to={`/userprofile/${post.Author._id}`}
-          className="font-bold mr-2 text-slate-900 dark:text-zinc-100 hover:text-indigo-500 transition-colors"
+          className="font-bold mr-2 text-zinc-100 hover:text-indigo-400 transition-colors"
         >
           {post.Author.username}
         </Link>
-        <span className="text-slate-800 dark:text-zinc-200 whitespace-pre-wrap">
+        <span className="text-zinc-200 whitespace-pre-wrap">
           {post.content}
         </span>
       </div>
 
       {/* Timestamp */}
-      <div className="px-4 pb-3 pt-1 text-[11px] text-slate-400 dark:text-zinc-500">
+      <div className="px-4 pb-3 pt-1 text-[11px] text-zinc-500">
         {new Date(post.createdAt).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",

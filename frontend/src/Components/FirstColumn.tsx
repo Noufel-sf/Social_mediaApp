@@ -2,14 +2,12 @@ import Button from "../ui/Button";
 import { SidebarrItems } from "../Utils/data";
 import SidebarrItem from "../ui/SidebarrItem";
 import UserProfileCard from "./UserProfileCard";
-import { useTheme } from "../Contexts/DarkModeContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import AddPostModel from "./AddPostModel";
 import { useAuthStates } from "../ZustandStates/AuthStates";
 
 function FirstColumn() {
-  const { theme } = useTheme();
   const { t } = useTranslation();
   const [showAddpost, setShowAddpost] = useState(false);
   const { CurrentUser } = useAuthStates();
@@ -26,11 +24,7 @@ function FirstColumn() {
         following={590}
       />
 
-      <div
-        className={`flex flex-col gap-1 p-2 rounded-2xl shadow-xs border ${
-          theme === "dark" ? "bg-zinc-900 border-zinc-800" : "bg-white border-slate-200/80"
-        }`}
-      >
+      <div className="flex flex-col gap-1 p-2 rounded-2xl shadow-xs border bg-zinc-900 border-zinc-800">
         {SidebarrItems.map((item) => (
           <SidebarrItem
             key={item.id}

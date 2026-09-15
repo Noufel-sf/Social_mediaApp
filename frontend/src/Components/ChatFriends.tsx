@@ -32,7 +32,7 @@ function ChatFriends({
             className={`flex items-center gap-3 rounded-xl p-2.5 cursor-pointer transition-all ${
               isSelected
                 ? "bg-indigo-600 text-white shadow-xs"
-                : "hover:bg-slate-100 dark:hover:bg-zinc-800/70 text-slate-800 dark:text-zinc-200"
+                : "hover:bg-zinc-800/70 text-zinc-200"
             }`}
             onClick={() => setSelectedChatUser(friend)}
           >
@@ -40,13 +40,13 @@ function ChatFriends({
               <img
                 src={friend.ProfileImg}
                 alt={friend.username}
-                className="w-10 h-10 rounded-full object-cover border border-slate-200 dark:border-zinc-700"
+                className="w-10 h-10 rounded-full object-cover border border-zinc-700"
               />
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-zinc-900" />
+              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-zinc-900" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold truncate">{friend.username}</p>
-              <p className={`text-xs truncate ${isSelected ? "text-indigo-100" : "text-slate-400 dark:text-zinc-400"}`}>
+              <p className={`text-xs truncate ${isSelected ? "text-indigo-100" : "text-zinc-400"}`}>
                 {friend.nickname || `@${friend.username.toLowerCase()}`}
               </p>
             </div>

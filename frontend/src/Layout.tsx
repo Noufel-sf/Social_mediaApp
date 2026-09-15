@@ -7,7 +7,6 @@ import LoginForm from "./Pages/LoginForm";
 import SignupForm from "./Pages/SignupForm";
 import UserProfilePage from "./Pages/UserProfilepage";
 import MessagingPage from "./Pages/MessagingPage";
-import { useTheme } from "./Contexts/DarkModeContext";
 import { useAuthStates } from "./ZustandStates/AuthStates";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -15,7 +14,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 
 export default function Layout() {
-  const { theme } = useTheme();
   const { CurrentUser, loading, FetchCurrentUserData } = useAuthStates();
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,16 +40,12 @@ export default function Layout() {
 
   if (loading && !isAuthPage) {
     return (
-      <div
-        className={`flex flex-col items-center justify-center min-h-screen ${
-          theme === "dark" ? "bg-[var(--dark-bg)] text-zinc-100" : "bg-[#f8fafc] text-slate-900"
-        }`}
-      >
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#09090b] text-zinc-100">
         <div className="flex flex-col items-center gap-3">
           <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white font-black text-2xl shadow-lg animate-pulse">
             C
           </div>
-          <p className="text-xs font-semibold tracking-wide text-slate-400 dark:text-zinc-500">
+          <p className="text-xs font-semibold tracking-wide text-zinc-400">
             Entering CozMeet...
           </p>
         </div>
@@ -60,11 +54,7 @@ export default function Layout() {
   }
 
   return (
-    <main
-      className={`flex flex-col w-full min-h-screen transition-colors duration-200 ${
-        theme === "light" ? "bg-[#f8fafc] text-slate-900" : "bg-[#09090b] text-zinc-100"
-      }`}
-    >
+    <main className="flex flex-col w-full min-h-screen bg-[#09090b] text-zinc-100">
       <Routes>
         {/* authentication routes */}
         <Route element={<AuthLayout />}>

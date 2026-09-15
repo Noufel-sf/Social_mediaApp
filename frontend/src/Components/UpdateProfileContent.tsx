@@ -88,27 +88,27 @@ export default function UpdateProfileDialogContent({
 
       {/* Username */}
       <div className="space-y-1">
-        <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400">Username</label>
+        <label className="text-xs font-semibold text-zinc-400">Username</label>
         <input
           type="text"
           name="username"
           placeholder="Your username"
           value={formData.username}
           onChange={handleInputChange} 
-          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-700 bg-zinc-800 text-zinc-100 placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
         />
       </div>
 
       {/* Bio */}
       <div className="space-y-1">
-        <label className="text-xs font-semibold text-slate-500 dark:text-zinc-400">Bio</label>
+        <label className="text-xs font-semibold text-zinc-400">Bio</label>
         <textarea
           name="bio"
           placeholder="Tell something about yourself..."
           value={formData.bio}
           onChange={handleInputChange}
           rows={3}
-          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"
+          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-700 bg-zinc-800 text-zinc-100 placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"
         />
       </div>
 

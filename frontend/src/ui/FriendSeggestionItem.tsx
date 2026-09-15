@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { useTheme } from "../Contexts/DarkModeContext";
 import api from "../Utils/api";
 import type { User } from "../Utils/Types";
 import { Link } from "react-router-dom";
@@ -12,7 +11,6 @@ export default function FriendSuggestionItem({
 }: {
   friendSuggestion: User;
 }) {
-  const { theme } = useTheme();
   const { t } = useTranslation();
   const { CurrentUser } = useAuthStates();
 
@@ -35,13 +33,7 @@ export default function FriendSuggestionItem({
 
 
   return (
-    <div
-      className={`flex items-center justify-between gap-3 p-3 rounded-xl border transition-all ${
-        theme === "dark"
-          ? "bg-zinc-900/60 border-zinc-800/80 text-zinc-100 hover:border-zinc-700"
-          : "bg-slate-50/70 border-slate-200/80 text-slate-900 hover:border-slate-300"
-      }`}
-    >
+    <div className="flex items-center justify-between gap-3 p-3 rounded-xl border transition-all bg-zinc-800/60 border-zinc-800 text-zinc-100 hover:border-zinc-700">
       <Link
         to={`/userprofile/${friendSuggestion._id}`}
         className="flex items-center gap-3 min-w-0 group"
@@ -49,13 +41,13 @@ export default function FriendSuggestionItem({
         <img
           src={friendSuggestion.ProfileImg || "/user.png"}
           alt={friendSuggestion.username}
-          className="rounded-full w-9 h-9 object-cover flex-shrink-0 border border-slate-200 dark:border-zinc-700 group-hover:scale-105 transition-transform"
+          className="rounded-full w-9 h-9 object-cover flex-shrink-0 border border-zinc-700 group-hover:scale-105 transition-transform"
         />
         <div className="flex flex-col min-w-0">
-          <span className="text-xs font-semibold truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+          <span className="text-xs font-semibold truncate group-hover:text-indigo-400 transition-colors">
             {friendSuggestion.username}
           </span>
-          <span className="text-[11px] text-slate-400 dark:text-zinc-500 truncate">
+          <span className="text-[11px] text-zinc-500 truncate">
             {friendSuggestion.nickname?.startsWith('@') ? friendSuggestion.nickname : `@${friendSuggestion.nickname || friendSuggestion.username}`}
           </span>
         </div>

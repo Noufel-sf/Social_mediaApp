@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --primary-color: #6366f1;
   --primary-hover: #4f46e5;
   --secondary-color: #8b5cf6;
-  --background-color: #f8fafc;
-  --card-bg: #ffffff;
-  --border-color: #e2e8f0;
-  --text-color: #0f172a;
-  --text-muted: #64748b;
+  --background-color: #09090b;
+  --card-bg: #18181b;
+  --border-color: #27272a;
+  --text-color: #f4f4f5;
+  --text-muted: #a1a1aa;
 
   --dark-bg: #09090b;
   --dark-card: #18181b;
@@ -18,23 +20,17 @@
   --dark-muted: #a1a1aa;
 }
 
-/* Base Body Styles - Black / Dark Default */
+html {
+  background-color: #09090b !important;
+  color-scheme: dark;
+}
+
+/* Base Body Styles - Always Black / Dark */
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--dark-bg);
-  color: var(--dark-text);
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-html.dark body {
-  background-color: var(--dark-bg);
-  color: var(--dark-text);
-}
-
-html.light body {
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: #09090b !important;
+  color: #f4f4f5 !important;
 }
 
 /* Default font for all elements */
@@ -84,19 +80,11 @@ html.EnglishFont * {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #3f3f46;
   border-radius: 9999px;
 }
 
-html.dark ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
-}
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-html.dark ::-webkit-scrollbar-thumb:hover {
   background: #52525b;
 }
 

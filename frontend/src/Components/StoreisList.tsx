@@ -17,7 +17,7 @@ function StoriesList() {
 
   return (
     <div
-      className="flex gap-4 overflow-x-auto p-4 bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800/80 rounded-2xl shadow-xs no-scrollbar"
+      className="flex gap-4 overflow-x-auto p-4 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-xs no-scrollbar"
     >
       {storiesToRender.map((story) => (
         <StoryCard

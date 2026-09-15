@@ -10,7 +10,6 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import toast from "react-hot-toast";
 import api from "../Utils/api";
 import { useAuthStates } from "../ZustandStates/AuthStates";
-import { useTheme } from "../Contexts/DarkModeContext";
 import { useQueryClient } from "@tanstack/react-query";
 
 type AddPostModelProps = {
@@ -19,7 +18,6 @@ type AddPostModelProps = {
 
 export default function AddPostModel({ onClose }: AddPostModelProps) {
   const queryClient = useQueryClient();
-  const { theme } = useTheme();
   const { CurrentUser } = useAuthStates();
 
   const [content, setContent] = useState("");
@@ -82,17 +80,13 @@ export default function AddPostModel({ onClose }: AddPostModelProps) {
       <div className="absolute inset-0" onClick={onClose} />
 
       <div
-        className={`relative w-full max-w-xl rounded-2xl shadow-2xl z-10 overflow-hidden border transition-all ${
-          theme === "dark"
-            ? "bg-zinc-900 border-zinc-800 text-zinc-100"
-            : "bg-white border-slate-200 text-slate-900"
-        }`}
+        className="relative w-full max-w-xl rounded-2xl shadow-2xl z-10 overflow-hidden border border-zinc-800 bg-zinc-900 text-zinc-100 transition-all"
       >
-        <div className="flex justify-between items-center border-b border-slate-200/80 dark:border-zinc-800 px-5 py-3.5">
-          <h2 className="font-bold text-base">Create Post</h2>
+        <div className="flex justify-between items-center border-b border-zinc-800 px-5 py-3.5">
+          <h2 className="font-bold text-base text-zinc-100">Create Post</h2>
           <button
             onClick={onClose}
-            className="text-lg text-slate-500 hover:text-slate-800 dark:text-zinc-400 dark:hover:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 cursor-pointer p-1.5 rounded-full transition"
+            className="text-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 cursor-pointer p-1.5 rounded-full transition"
           >
             <FiX />
           </button>
@@ -187,8 +181,8 @@ export default function AddPostModel({ onClose }: AddPostModelProps) {
           )}
 
           {/* Footer */}
-          <div className="border-t border-gray-200 dark:border-gray-700 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-4 text-gray-600 dark:text-gray-300">
+          <div className="border-t border-zinc-800 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-4 text-zinc-400">
               <button
                 type="button"
                 className="hover:text-[var(--primary-color)] transition"

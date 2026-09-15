@@ -56,7 +56,7 @@ export default function AddStoryContent({
     <div className="space-y-4">
       {/* Story Preview */}
       <div className="flex flex-col items-center">
-        <div className="relative w-full h-[320px] rounded-2xl overflow-hidden bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center">
+        <div className="relative w-full h-[320px] rounded-2xl overflow-hidden bg-zinc-800 border border-zinc-700 flex items-center justify-center">
           {preview ? (
             <>
               {storyFile?.type.startsWith("video/") ? (
@@ -74,7 +74,7 @@ export default function AddStoryContent({
               )}
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center text-slate-400 dark:text-zinc-500 gap-2">
+            <div className="flex flex-col items-center justify-center text-zinc-500 gap-2">
               <span className="text-3xl">📷</span>
               <span className="text-xs font-medium">Click the button below to upload photo or video</span>
             </div>
@@ -104,7 +104,7 @@ export default function AddStoryContent({
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
           rows={2}
-          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50 dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 placeholder-slate-400 dark:placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"
+          className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-700 bg-zinc-800 text-zinc-100 placeholder-zinc-500 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"
         />
       </div>
 

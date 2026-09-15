@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Camera, ArrowLeft, Calendar, UserCheck, Check, X } from "lucide-react";
-import { useTheme } from "../Contexts/DarkModeContext";
 import { useAuthStates } from "../ZustandStates/AuthStates";
 import { useDirection } from "../hooks/useDirection";
 import Topbar from "../Components/TopBar";
@@ -20,7 +19,6 @@ import api from "../Utils/api";
 
 export default function UserProfilePage() {
   const { forceLTR } = useDirection();
-  const { theme } = useTheme();
   const { CurrentUser } = useAuthStates();
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
@@ -146,11 +144,7 @@ export default function UserProfilePage() {
   return (
     <div
       {...forceLTR()}
-      className={`w-full min-h-screen flex flex-col transition-colors duration-200 ${
-        theme === "dark"
-          ? "bg-[var(--dark-bg)] text-zinc-100"
-          : "bg-[#f8fafc] text-slate-900"
-      }`}
+      className="w-full min-h-screen flex flex-col bg-[#09090b] text-zinc-100"
     >
       {/* Universal TopBar */}
       <Topbar />
@@ -160,19 +154,19 @@ export default function UserProfilePage() {
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-medium text-slate-700 dark:text-zinc-200 bg-white/80 dark:bg-zinc-800/80 hover:bg-slate-100 dark:hover:bg-zinc-700 border border-slate-200/80 dark:border-zinc-700 shadow-sm backdrop-blur-sm transition-all"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-sm font-medium text-zinc-200 bg-zinc-800/80 hover:bg-zinc-700 border border-zinc-700 shadow-sm backdrop-blur-sm transition-all"
           >
             <ArrowLeft className="w-4 h-4 text-indigo-500" /> Back to Feed
           </Link>
 
-          <span className="text-xs text-slate-400 dark:text-zinc-500 font-mono">
+          <span className="text-xs text-zinc-500 font-mono">
             {isCurrentUser ? "Your Profile" : `@${userDetails.username}`}
           </span>
         </div>
 
         {/* Cover Banner */}
         <div className="max-w-5xl mx-auto px-4">
-          <div className="relative h-56 sm:h-72 w-full rounded-2xl overflow-hidden shadow-sm border border-slate-200/60 dark:border-zinc-800/60 bg-slate-200 dark:bg-zinc-800">
+          <div className="relative h-56 sm:h-72 w-full rounded-2xl overflow-hidden shadow-sm border border-zinc-800/60 bg-zinc-800">
             <img
               src={CoverImgpreview}
               alt="Profile Cover"
@@ -242,7 +236,7 @@ export default function UserProfilePage() {
           <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20">
             {/* Avatar & Identifiers */}
             <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
-              <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-white dark:border-zinc-900 shadow-xl overflow-hidden bg-white dark:bg-zinc-800 flex-shrink-0 z-30">
+              <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full border-4 border-zinc-900 shadow-xl overflow-hidden bg-zinc-800 flex-shrink-0 z-30">
                 <img
                   src={userDetails?.ProfileImg || "/user.png"}
                   alt={userDetails?.username}
@@ -251,17 +245,17 @@ export default function UserProfilePage() {
               </div>
               <div className="mb-2">
                 <div className="flex items-center gap-2 justify-center sm:justify-start">
-                  <h1 className="text-2xl sm:text-3xl font-bold tracking-tight capitalize">
+                  <h1 className="text-2xl sm:text-3xl font-bold tracking-tight capitalize text-zinc-100">
                     {userDetails?.username}
                   </h1>
                   <span className="p-1 rounded-full bg-indigo-500/10 text-indigo-500">
                     <UserCheck className="w-4 h-4" />
                   </span>
                 </div>
-                <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                <p className="text-sm font-medium text-indigo-400">
                   {userDetails?.nickname || `@${userDetails.username.toLowerCase()}`}
                 </p>
-                <p className="text-xs text-slate-400 dark:text-zinc-500 flex items-center justify-center sm:justify-start gap-1 mt-1">
+                <p className="text-xs text-zinc-500 flex items-center justify-center sm:justify-start gap-1 mt-1">
                   <Calendar className="w-3.5 h-3.5" /> Joined {new Date(userDetails.createdAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
                 </p>
               </div>
@@ -285,7 +279,7 @@ export default function UserProfilePage() {
                 </AddStoryDialog>
 
                 <button
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 rounded-full font-semibold text-sm border border-slate-200 dark:border-zinc-700 transition cursor-pointer"
+                  className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-full font-semibold text-sm border border-zinc-700 transition cursor-pointer"
                   onClick={() => setIsUpdateDialogOpen(true)}
                 >
                   Edit Profile
@@ -313,14 +307,14 @@ export default function UserProfilePage() {
           </div>
 
           {/* Clean Segment Tabs */}
-          <div className="mt-8 border-b border-slate-200 dark:border-zinc-800 flex gap-8">
-            <button className="pb-3 border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 font-semibold text-sm">
+          <div className="mt-8 border-b border-zinc-800 flex gap-8">
+            <button className="pb-3 border-b-2 border-indigo-600 text-indigo-400 font-semibold text-sm">
               Posts ({userDetails?.Posts?.length || 0})
             </button>
-            <button className="pb-3 text-slate-500 dark:text-zinc-400 hover:text-indigo-500 text-sm font-medium transition">
+            <button className="pb-3 text-zinc-400 hover:text-indigo-400 text-sm font-medium transition">
               About
             </button>
-            <button className="pb-3 text-slate-500 dark:text-zinc-400 hover:text-indigo-500 text-sm font-medium transition">
+            <button className="pb-3 text-zinc-400 hover:text-indigo-400 text-sm font-medium transition">
               Friends ({userDetails?.friends?.length || 0})
             </button>
           </div>
@@ -331,24 +325,24 @@ export default function UserProfilePage() {
           {/* Left Column (Bio + Friends) */}
           <div className="space-y-5">
             {/* Bio Card */}
-            <div className="p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800/80 shadow-sm">
-              <h3 className="font-bold text-sm tracking-wide uppercase text-slate-500 dark:text-zinc-400 mb-2.5">
+            <div className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-sm">
+              <h3 className="font-bold text-sm tracking-wide uppercase text-zinc-400 mb-2.5">
                 Bio
               </h3>
-              <p className="text-sm leading-relaxed text-slate-700 dark:text-zinc-300">
+              <p className="text-sm leading-relaxed text-zinc-300">
                 {userDetails?.bio || "No bio added yet."}
               </p>
             </div>
 
             {/* Friends Card */}
             {userDetails?.friends && userDetails.friends.length > 0 && (
-              <div className="p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800/80 shadow-sm">
+              <div className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <h3 className="font-bold text-base text-slate-900 dark:text-zinc-100">
+                    <h3 className="font-bold text-base text-zinc-100">
                       Friends
                     </h3>
-                    <p className="text-xs text-slate-400 dark:text-zinc-500">
+                    <p className="text-xs text-zinc-500">
                       {userDetails.friends.length} friends
                     </p>
                   </div>
@@ -359,14 +353,14 @@ export default function UserProfilePage() {
                     <Link
                       to={`/userprofile/${friend._id}`}
                       key={friend._id}
-                      className="group flex flex-col items-center text-center p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition"
+                      className="group flex flex-col items-center text-center p-2 rounded-xl hover:bg-zinc-800/60 transition"
                     >
                       <img
                         src={friend.ProfileImg || "/user.png"}
                         alt={friend.username}
                         className="w-16 h-16 object-cover rounded-xl shadow-xs group-hover:scale-105 transition-transform"
                       />
-                      <p className="text-xs font-medium mt-1.5 truncate w-full text-slate-700 dark:text-zinc-300 group-hover:text-indigo-500">
+                      <p className="text-xs font-medium mt-1.5 truncate w-full text-zinc-300 group-hover:text-indigo-400">
                         {friend.username}
                       </p>
                     </Link>
@@ -383,8 +377,8 @@ export default function UserProfilePage() {
                 <PostCard key={post._id} post={post} />
               ))
             ) : (
-              <div className="p-8 text-center rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200/80 dark:border-zinc-800/80 shadow-sm">
-                <p className="text-slate-400 dark:text-zinc-500 text-sm">
+              <div className="p-8 text-center rounded-2xl bg-zinc-900 border border-zinc-800 shadow-sm">
+                <p className="text-zinc-500 text-sm">
                   No posts published yet.
                 </p>
               </div>

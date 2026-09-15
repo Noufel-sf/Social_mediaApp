@@ -18,10 +18,10 @@ const StoryCard = ({ story, SeeStory }: StoryCardProps) => {
         <img
           src={image}
           alt={username}
-          className="w-full h-full object-cover rounded-full border-2 border-white dark:border-zinc-900"
+          className="w-full h-full object-cover rounded-full border-2 border-zinc-900"
         />
       </div>
-      <p className="text-xs mt-1.5 font-medium truncate w-18 text-center text-slate-700 dark:text-zinc-300 group-hover:text-indigo-500 transition-colors">
+      <p className="text-xs mt-1.5 font-medium truncate w-18 text-center text-zinc-300 group-hover:text-indigo-400 transition-colors">
         {username}
       </p>
     </div>

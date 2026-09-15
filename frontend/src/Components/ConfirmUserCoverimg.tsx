@@ -55,7 +55,7 @@ const ConfirmUserCoverImg: React.FC<ConfirmUserCoverImgProps> = ({
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md text-slate-900 dark:text-zinc-100 shadow-md border-b border-slate-200 dark:border-zinc-800 transition-colors animate-in fade-in slide-in-from-top duration-200">
+    <div className="fixed top-0 left-0 w-full z-50 bg-zinc-900/95 backdrop-blur-md text-zinc-100 shadow-md border-b border-zinc-800 transition-colors animate-in fade-in slide-in-from-top duration-200">
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
         <span className="font-medium text-xs sm:text-sm">
           You have unsaved changes to your cover photo
@@ -64,7 +64,7 @@ const ConfirmUserCoverImg: React.FC<ConfirmUserCoverImgProps> = ({
           <button
             onClick={onCancel}
             disabled={loading}
-            className="px-3.5 py-1.5 cursor-pointer text-xs sm:text-sm font-medium rounded-lg border border-slate-300 dark:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-800 transition disabled:opacity-50"
+            className="px-3.5 py-1.5 cursor-pointer text-xs sm:text-sm font-medium rounded-lg border border-zinc-700 hover:bg-zinc-800 text-zinc-200 transition disabled:opacity-50"
           >
             Cancel
           </button>

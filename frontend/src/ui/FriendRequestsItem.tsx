@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { useTheme } from "../Contexts/DarkModeContext";
 import api from "../Utils/api";
 import type { FriendRequest } from "../Utils/Types";
 import toast from "react-hot-toast";
@@ -7,7 +6,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function FriendRequestsItem({ friendRequest }: { friendRequest: FriendRequest }) {
 
-  const { theme } = useTheme();
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
@@ -51,13 +49,7 @@ export default function FriendRequestsItem({ friendRequest }: { friendRequest: F
 
 
   return (
-    <div
-      className={`flex flex-col gap-2.5 p-3 rounded-xl border transition-all ${
-        theme === "dark"
-          ? "bg-zinc-900/60 border-zinc-800/80 text-zinc-100"
-          : "bg-slate-50/70 border-slate-200/80 text-slate-900"
-      }`}
-    >
+    <div className="flex flex-col gap-2.5 p-3 rounded-xl border transition-all bg-zinc-800/60 border-zinc-800 text-zinc-100">
       <div className="flex items-center gap-3">
         <img
           src={friendRequest.senderId.ProfileImg || "/user.png"}
@@ -86,7 +78,7 @@ export default function FriendRequestsItem({ friendRequest }: { friendRequest: F
         <button
           onClick={() => rejectRequestMutation.mutate()}
           disabled={acceptRequestMutation.isPending || rejectRequestMutation.isPending}
-          className="py-1.5 px-3 bg-slate-200 dark:bg-zinc-800 hover:bg-slate-300 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 rounded-lg text-xs font-medium transition cursor-pointer disabled:opacity-50"
+          className="py-1.5 px-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-medium transition cursor-pointer disabled:opacity-50"
         >
           {rejectRequestMutation.isPending ? t("deleting...") : t("delete")}
         </button>

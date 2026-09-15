@@ -37,36 +37,45 @@ export default function SignupForm() {
 
 
   return (
-    <div className="flex flex-col w-[90%] md:w-1/2 items-center justify-center min-h-screen">
-      <div className="w-full p-5 md:p-12 space-y-8 rounded-lg">
-        <h1 className="text-6xl font-bold text-center mb-3 text-white capitalize">
-          Sign up
-        </h1>
+    <div className="flex flex-col w-full max-w-md mx-auto items-center justify-center min-h-screen px-4 py-8">
+      <div className="w-full bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl transition-all">
+        {/* Logo & Header */}
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 text-white font-black text-2xl shadow-md mb-3">
+            C
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-100">
+            Create an Account
+          </h1>
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1">
+            Join CozMeet to connect and share moments
+          </p>
+        </div>
 
         <form
-          className="space-y-3 flex flex-col gap-2"
+          className="space-y-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          
           {/* Username */}
-          <div>
-            <label htmlFor="username" className="block capitalize text-sm font-medium text-white">
+          <div className="space-y-1.5">
+            <label htmlFor="username" className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
               Username
             </label>
             <input
               id="username"
               type="text"
               {...register("username")}
-              className="mt-1 block w-full px-5 py-3 text-white rounded-md outline-none bg-gray-600"
+              className="w-full px-4 py-2.5 text-sm rounded-xl border border-zinc-700 bg-zinc-800/80 text-zinc-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition placeholder-zinc-500"
+              placeholder="e.g. john_doe"
             />
             {errors.username && (
-              <p className="text-sm text-red-600 mt-1">{errors.username.message}</p>
+              <p className="text-xs text-rose-500 mt-1">{errors.username.message}</p>
             )}
           </div>
 
           {/* Email */}
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-white">
+          <div className="space-y-1.5">
+            <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
               Email
             </label>
             <input
@@ -74,65 +83,68 @@ export default function SignupForm() {
               type="email"
               autoComplete="email"
               {...register("email")}
-              className="mt-1 block w-full px-5 py-3 text-white rounded-md outline-none bg-gray-600"
+              className="w-full px-4 py-2.5 text-sm rounded-xl border border-zinc-700 bg-zinc-800/80 text-zinc-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition placeholder-zinc-500"
+              placeholder="name@example.com"
             />
             {errors.email && (
-              <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>
+              <p className="text-xs text-rose-500 mt-1">{errors.email.message}</p>
             )}
           </div>
 
           {/* Nickname */}
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-white">
-              Nickname
+          <div className="space-y-1.5">
+            <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+              Display Name
             </label>
             <input
               id="name"
               type="text"
               {...register("nickname")}
-              className="mt-1 block w-full px-5 py-3 text-white rounded-md outline-none bg-gray-600"
+              className="w-full px-4 py-2.5 text-sm rounded-xl border border-zinc-700 bg-zinc-800/80 text-zinc-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition placeholder-zinc-500"
+              placeholder="e.g. John Doe"
             />
             {errors.nickname && (
-              <p className="text-sm text-red-600 mt-1">{errors.nickname.message}</p>
+              <p className="text-xs text-rose-500 mt-1">{errors.nickname.message}</p>
             )}
           </div>
 
           {/* Password */}
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-white">
+          <div className="space-y-1.5">
+            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
               Password
             </label>
             <input
               id="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               {...register("password")}
-              className="mt-1 block w-full px-5 py-3 text-white rounded-md outline-none bg-gray-600"
+              className="w-full px-4 py-2.5 text-sm rounded-xl border border-zinc-700 bg-zinc-800/80 text-zinc-100 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition placeholder-zinc-500"
+              placeholder="••••••••"
             />
             {errors.password && (
-              <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>
+              <p className="text-xs text-rose-500 mt-1">{errors.password.message}</p>
             )}
           </div>
 
           {/* Submit */}
-          <div>
+          <div className="pt-2">
             <button
               type="submit"
-              className="w-full text-white bg-[var(--primary-color)] hover:bg-[var(--secondary-color)] rounded-lg font-bold cursor-pointer py-2"
+              className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 active:scale-[0.99] text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               Sign up
             </button>
           </div>
         </form>
 
-        <div className="mt-2 text-center">
-          <p className="text-sm text-white">
+        <div className="mt-6 pt-5 border-t border-zinc-800 text-center">
+          <p className="text-xs text-zinc-400">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="font-medium text-red-600 hover:text-red-500 cursor-pointer"
+              className="font-medium text-indigo-400 hover:text-indigo-300 transition"
             >
-              Login
+              Sign In
             </Link>
           </p>
         </div>

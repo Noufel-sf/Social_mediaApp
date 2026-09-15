@@ -18,7 +18,7 @@ const Topbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/85 dark:bg-zinc-950/85 backdrop-blur-md border-b border-slate-200/80 dark:border-zinc-800/80 transition-colors duration-200">
+    <header className="sticky top-0 z-40 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800 text-zinc-100 transition-colors duration-200">
       <div className="flex items-center justify-between h-16 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* LEFT: Logo + Search */}
         <div className="flex items-center gap-4 flex-1">
@@ -41,14 +41,14 @@ const Topbar = () => {
         <nav className="flex items-center gap-1.5">
           <Link
             to="/"
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-slate-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-zinc-800/80 transition-colors"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-zinc-200 hover:text-indigo-400 hover:bg-zinc-800/80 transition-colors"
           >
             <MdHome className="text-xl" />
             <span className="hidden md:inline text-sm font-semibold">Feed</span>
           </Link>
           <Link
             to="/messages"
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-slate-700 dark:text-zinc-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-zinc-800/80 transition-colors"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-zinc-200 hover:text-indigo-400 hover:bg-zinc-800/80 transition-colors"
           >
             <MdChat className="text-xl" />
             <span className="hidden md:inline text-sm font-semibold">Chat</span>
@@ -60,39 +60,25 @@ const Topbar = () => {
           {/* Language switcher */}
           <LanguageSwitcher />
 
-          {/* Theme toggle */}
-          {/* <button
-            onClick={toggleTheme}
-            className="flex items-center justify-center w-9 h-9 cursor-pointer rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-700 dark:text-amber-400 transition"
-            aria-label="Toggle theme"
-            title="Toggle Theme"
-          >
-            {theme === "dark" ? (
-              <MdLightMode className="text-lg" />
-            ) : (
-              <MdDarkMode className="text-lg text-indigo-600" />
-            )}
-          </button> */}
-
           {/* User section */}
           {CurrentUser ? (
-            <div className="flex items-center gap-2.5 pl-2 border-l border-slate-200 dark:border-zinc-800">
+            <div className="flex items-center gap-2.5 pl-2 border-l border-zinc-800">
               <Link
                 to={`/userprofile/${CurrentUser._id}`}
-                className="flex items-center gap-2 p-1 pr-2 sm:pr-3 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800 transition"
+                className="flex items-center gap-2 p-1 pr-2 sm:pr-3 rounded-full hover:bg-zinc-800 transition"
               >
                 <img
                   className="rounded-full w-8 h-8 object-cover border border-indigo-500/40"
                   src={CurrentUser.ProfileImg || "/user.png"}
                   alt={CurrentUser.username}
                 />
-                <span className="hidden sm:block text-sm font-semibold text-slate-800 dark:text-zinc-200">
+                <span className="hidden sm:block text-sm font-semibold text-zinc-200">
                   {CurrentUser.username}
                 </span>
               </Link>
               <button
                 onClick={handleLogout}
-                className="flex items-center cursor-pointer justify-center w-9 h-9 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-slate-500 hover:text-rose-500 transition"
+                className="flex items-center cursor-pointer justify-center w-9 h-9 rounded-xl hover:bg-rose-950/40 text-zinc-400 hover:text-rose-400 transition"
                 aria-label="Logout"
                 title="Logout"
               >
@@ -102,7 +88,7 @@ const Topbar = () => {
           ) : (
             <div className="flex items-center gap-2">
               <Link to="/login">
-                <button className="text-sm font-medium px-4 py-2 rounded-xl text-slate-700 dark:text-zinc-200 hover:bg-slate-100 dark:hover:bg-zinc-800 transition cursor-pointer">
+                <button className="text-sm font-medium px-4 py-2 rounded-xl text-zinc-200 hover:bg-zinc-800 transition cursor-pointer">
                   Log In
                 </button>
               </Link>

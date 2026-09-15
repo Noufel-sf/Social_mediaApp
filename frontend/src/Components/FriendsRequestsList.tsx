@@ -1,12 +1,10 @@
 import type { FriendRequest } from "../Utils/Types";
 import { useTranslation } from "react-i18next";
 import FriendRequestsItem from "../ui/FriendRequestsItem";
-import { useTheme } from "../Contexts/DarkModeContext";
 import { useQuery } from "@tanstack/react-query";
 import { getFriendRequests } from "../ServisesApi/FriendRequestApi";
 
 export default function FriendsRequestsList() {
-  const { theme } = useTheme();
   const { t } = useTranslation();
 
   const {
@@ -34,15 +32,9 @@ export default function FriendsRequestsList() {
     );
 
   return (
-    <div
-      className={`flex flex-col gap-3 p-4 rounded-2xl shadow-xs border ${
-        theme === "dark"
-          ? "bg-zinc-900 border-zinc-800 text-zinc-100"
-          : "bg-white border-slate-200/80 text-slate-900"
-      }`}
-    >
+    <div className="flex flex-col gap-3 p-4 rounded-2xl shadow-xs border bg-zinc-900 border-zinc-800 text-zinc-100">
       <div className="flex items-center justify-between pb-1">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-zinc-400">
           {t("requestsTitle")}
         </h3>
         <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-500 font-medium">
